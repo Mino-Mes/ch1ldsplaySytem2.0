@@ -10,11 +10,11 @@
     <title>Untitled</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <script type='text/javascript' src='unitegallery-master/package/unitegallery/js/jquery-11.0.min.js'></script>
-    <script type='text/javascript' src='unitegallery-master/package/unitegallery/js/unitegallery.min.js'></script>
-    <link rel="stylesheet" href="assets/css/main.css" />
-    <link rel='stylesheet' href='unitegallery-master/package/unitegallery/css/unite-gallery.css' type='text/css' />
-    <script type='text/javascript' src='unitegallery-master/package/unitegallery/themes/tiles/ug-theme-tiles.js'></script>
+    <script type='text/javascript' src='../unitegallery-master/package/unitegallery/js/jquery-11.0.min.js'></script>
+    <script type='text/javascript' src='../unitegallery-master/package/unitegallery/js/unitegallery.min.js'></script>
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel='stylesheet' href='../unitegallery-master/package/unitegallery/css/unite-gallery.css' type='text/css' />
+    <script type='text/javascript' src='../unitegallery-master/package/unitegallery/themes/tiles/ug-theme-tiles.js'></script>
 
     <style>
 
@@ -107,10 +107,10 @@ HAD TO DELETE FROM THE TEMPLATE.
 			<script src="assets/js/jquery.scrolly.min.js"></script>
 
 			-->
-<script src="assets/js/browser.min.js"></script>
-<script src="assets/js/breakpoints.min.js"></script>
-<script src="assets/js/util.js"></script>
-<script src="assets/js/main.js"></script>
+<script src="../assets/js/browser.min.js"></script>
+<script src="../assets/js/breakpoints.min.js"></script>
+<script src="../assets/js/util.js"></script>
+<script src="../assets/js/main.js"></script>
 
 <script type="text/javascript">
 

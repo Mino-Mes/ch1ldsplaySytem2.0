@@ -16,7 +16,7 @@ btn_reg.onclick = function() {
     //document.getElementById("popup_content").innerHTML += '<?php require_once("Util/Layout.php");create_login_form();?>';
     document.getElementById("popup_content")
         .innerHTML =
-        '<div class="inner"><form method="post" action="reg.php" class="alt"><div class="row gtr-uniform">' +
+        '<div class="inner"><form method="post" action="../Util/reg.php" class="alt"><div class="row gtr-uniform">' +
         '<div class="col-12"><h2 style="color:black;">REGISTER</h2></div>' +
         '<div class="col-12"><label style="color:black;">First Name</label><input type="text" name="reg_fname" id="reg_fname" value="" placeholder="First Name" required></div>' +
         '<div class="col-12"><label style="color:black;">Last Name</label><input type="text" name="reg_lname" id="reg_lname" value="" placeholder="Last Name" required></div>' +
@@ -36,7 +36,7 @@ btn_log.onclick = function(){
     modal.style.display = "block";
     //document.getElementById("popup_content").innerHTML += '<?php require_once("Util/Layout.php");create_login_form();?>';
     document.getElementById("popup_content").innerHTML =
-        '<div class="inner"><form method="post" action="Login.php" class="alt"><div class="row gtr-uniform">'+
+        '<div class="inner"><form method="post" action="../Util/Login.php" class="alt"><div class="row gtr-uniform">'+
         '<div class="col-12"><h2 style="color:black;">LOGIN</h2></div>'+
         '<div class="col-12"><label style="color:black;">Username / Email</label><input type="text" name="log_username" id="log_username" value="" placeholder="Username or Email" required></div>'+
         '<div class="col-12"><label style="color:black;">Password</label><input type="text" name="log_password" id="log_password" value="" placeholder="Password" required></div>'+

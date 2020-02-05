@@ -6,12 +6,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Unite Gallery - Tiles - Columns</title>
 
-	<script type='text/javascript' src='unitegallery-master/package/unitegallery/js/jquery-11.0.min.js'></script>
-	<script type='text/javascript' src='unitegallery-master/package/unitegallery/js/unitegallery.min.js'></script>
+	<script type='text/javascript' src='../unitegallery-master/package/unitegallery/js/jquery-11.0.min.js'></script>
+	<script type='text/javascript' src='../unitegallery-master/package/unitegallery/js/unitegallery.min.js'></script>
 
-	<link rel='stylesheet' href='unitegallery-master/package/unitegallery/css/unite-gallery.css' type='text/css' />
+	<link rel='stylesheet' href='../unitegallery-master/package/unitegallery/css/unite-gallery.css' type='text/css' />
 	
-	<script type='text/javascript' src='unitegallery-master/package/unitegallery/themes/tiles/ug-theme-tiles.js'></script>
+	<script type='text/javascript' src='../unitegallery-master/package/unitegallery/themes/tiles/ug-theme-tiles.js'></script>
 	
 	
 </head>

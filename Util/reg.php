@@ -2,7 +2,7 @@
 session_start();
 
 //this path needs to be changed and the action in the index
-include ("Util/dbconn.php");
+include("Util/dbconn.php");
 
 //keeping track that a registration was attempted
 $_SESSION['reg_attempt'] = true;

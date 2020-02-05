@@ -13,9 +13,9 @@ require "Util/dbconn.php";
     <title>Untitled</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
-    <link rel="stylesheet" href="assets/css/main.css"/>
-    <link rel="stylesheet" href="snack_back.css"/>
-    <link rel="stylesheet" href="Style/Stylesheet_popup.css">
+    <link rel="stylesheet" href="../assets/css/main.css"/>
+    <link rel="stylesheet" href="../css/snack_back.css"/>
+    <link rel="stylesheet" href="../css/Stylesheet_popup.css">
 
     <style>
 
@@ -174,7 +174,7 @@ require "Util/dbconn.php";
                 personally contact you via email.</p>
         </header>
         <div class="inner">
-            <form method="post" action="Functions.php" name="emailForm" id="emailForm" class="alt">
+            <form method="post" action="../Util/Functions.php" name="emailForm" id="emailForm" class="alt">
                 <div class="row gtr-uniform">
                     <div class="col-6 col-12-xsmall">
                         <label>
@@ -264,15 +264,15 @@ require "Util/dbconn.php";
 </div>
 
 <!-- Scripts -->
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/jquery.dropotron.min.js"></script>
-<script src="assets/js/jquery.scrollex.min.js"></script>
-<script src="assets/js/jquery.scrolly.min.js"></script>
-<script src="assets/js/browser.min.js"></script>
-<script src="assets/js/breakpoints.min.js"></script>
-<script src="assets/js/util.js"></script>
-<script src="assets/js/main.js"></script>
-<script src="Script_popup.js"></script>
+<script src="../assets/js/jquery.min.js"></script>
+<script src="../assets/js/jquery.dropotron.min.js"></script>
+<script src="../assets/js/jquery.scrollex.min.js"></script>
+<script src="../assets/js/jquery.scrolly.min.js"></script>
+<script src="../assets/js/browser.min.js"></script>
+<script src="../assets/js/breakpoints.min.js"></script>
+<script src="../assets/js/util.js"></script>
+<script src="../assets/js/main.js"></script>
+<script src="../js/Script_popup.js"></script>
 
 </body>
 </html>
