@@ -40,7 +40,7 @@ include '../Util/Popup_return_handler.php';
 
         <!-- Nav -->
         <nav id="nav">
-            <ul>
+            <ul id="nav_ul">
                 <li class="current"><a href="index.php">Home</a></li>
                 <li><a href="#scrollToAl">Album</a></li>
                 <li><a href="#scrollToB">Inquiries</a></li>

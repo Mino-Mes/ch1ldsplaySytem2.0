@@ -17,16 +17,15 @@
                 switch($_SESSION['ln_usertype']){
                     case 'customer':
                     case 'collaborator':
-                        ?></script><li><a href="">Your Photographs</a></li><script>
-                            /*
-                            nav_a.innerHTML = 'Your Photographs';
-                            nav_a.setAttribute('href',''); // <-- add to this later
+                        ?>
+                            document.getElementById('nav_ul').innerHTML += '<li><a href="">Your Photographs</a></li>';
                             sb_txt = 'Login Successful!';
-                             */
+
                         <?php
                         break;
                     case 'administrator':
-                        ?></script><li><a href="Admin_tasks.php">Administrative Tasks</a></li><script>
+                        ?>
+                            document.getElementById('nav_ul').innerHTML += '<li><a href="Manage_users.php">Manage Users</a></li><li><a href="Reports.php">Reports</a></li>';
                             sb_txt = 'Login Successful!';
                         <?php
                         break;
