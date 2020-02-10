@@ -7,6 +7,9 @@ var btn_reg = document.getElementById("btn_register");
 //Get the login button
 var btn_log = document.getElementById("btn_login");
 
+//the logout button
+var btn_logout = document.getElementById("btn_logout");
+
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 
@@ -39,7 +42,7 @@ btn_log.onclick = function(){
         '<div class="inner"><form method="post" action="../Util/Login.php" class="alt"><div class="row gtr-uniform">'+
         '<div class="col-12"><h2 style="color:black;">LOGIN</h2></div>'+
         '<div class="col-12"><label style="color:black;">Username / Email</label><input type="text" name="log_username" id="log_username" value="" placeholder="Username or Email" required></div>'+
-        '<div class="col-12"><label style="color:black;">Password</label><input type="text" name="log_password" id="log_password" value="" placeholder="Password" required></div>'+
+        '<div class="col-12"><label style="color:black;">Password</label><input type="password" name="log_password" id="log_password" value="" placeholder="Password" required></div>'+
         '<div class="col-12" id="center_button" class="reg_log_submit_btn"><input type="submit" value="Login"></div>'+
         '</div></form>'+
         '<h5 id="popup_err_txt"></h5>'+
