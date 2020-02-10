@@ -11,6 +11,11 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="../assets/css/main.css" />
+        <style>
+         th,td {
+               vertical-align: middle;}
+
+        </style>
 	</head>
 	<body class="is-preload">
 
@@ -135,8 +140,17 @@
                                         {
                                             $typeId=$row["typeId"];
                                             $typeName=$row["typeName"];
+                                            $typeActive=$row["isActive"];
 
-                                            echo "<tr><td>$typeId</td><td>$typeName</td><td></td></td><td><ul class=\"actions fit small\"><li><a href=\"#\" class=\"button fit small\">Update</a></li></ul></td></tr>";
+                                            if($typeActive==1)
+                                            {
+                                                $typeActive ="Active";
+                                            }else
+                                            {
+                                                $typeActive="Not Active";
+                                            }
+
+                                            echo "<tr><td>$typeId</td><td>$typeName</td><td>$typeActive</td></td><td><ul class=\"actions fit small\"><li><a href=\"#\" class=\"button fit small\" style='width:60%;padding-left:1%;padding-right:1%;'>Update</a></li></ul></td></tr>";
                                         }
                                     }
                                     ?>

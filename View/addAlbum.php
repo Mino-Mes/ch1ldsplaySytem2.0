@@ -9,7 +9,7 @@
 		<title>Untitled</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="../orange/assets/css/main.css" />
+        <link rel="stylesheet" href="../assets/css/main.css" />
 	</head>
 	<body class="is-preload">
 
@@ -59,14 +59,66 @@
                             <p>This page allows the administrator to add an album, to do so simply fill in the form.</p>
 						</header>
 						<div class="inner style2">
-							<div class="image main" data-position="center"><img src="../orange/images/banner.jpg" alt="" /></div>
-							<h3>Magna feugiat consequat</h3>
-							<p>Vis accumsan feugiat adipiscing nisl amet adipiscing accumsan blandit accumsan sapien blandit ac amet faucibus aliquet placerat commodo. Interdum ante aliquet commodo accumsan vis phasellus adipiscing. Ornare a in lacinia. Vestibulum accumsan ac metus massa tempor. Accumsan in lacinia ornare massa amet. Ac interdum ac non praesent. Cubilia lacinia interdum massa faucibus blandit nullam. Accumsan phasellus nunc integer. Accumsan euismod nunc adipiscing lacinia erat ut sit. Arcu amet. Id massa aliquet arcu accumsan lorem amet accumsan.</p>
-							<p>Amet nibh adipiscing adipiscing. Commodo ante vis placerat interdum massa massa primis. Tempus condimentum tempus non ac varius cubilia adipiscing placerat lorem turpis at. Aliquet lorem porttitor interdum. Amet lacus. Aliquam lobortis faucibus blandit ac phasellus. In amet magna non interdum volutpat porttitor metus a ante ac neque. Nisi turpis. Commodo col. Interdum adipiscing mollis ut aliquam id ante adipiscing commodo integer arcu amet Ac interdum ac non praesent. Cubilia lacinia interdum massa faucibus blandit nullam. Accumsan phasellus nunc integer. Accumsan euismod nunc adipiscing lacinia erat ut sit. Arcu amet. Id massa aliquet arcu accumsan lorem amet accumsan commodo odio cubilia ac eu interdum placerat placerat arcu commodo lobortis adipiscing semper ornare pellentesque. Lorem turpis ipsum dolor sit amet at. Aliquet lorem porttitor interdum. Amet lacus. Aliquam lobortis faucibus blandit ac phasellus. In amet magna non interdum volutpat porttitor metus a ante ac neque. Nisi turpis. Commodo col. Interdum adipiscing mollis ut aliquam id ante adipiscing commodo integer arcu amet blandit adipiscing arcu ante. Amet nibh adipiscing adipiscing. Commodo ante vis placerat interdum massa massa primis. Tempus condimentum tempus.</p>
-							<hr class="major" />
-							<h3>Etiam aliquam sed adipiscing</h3>
-							<p>Vis accumsan feugiat adipiscing nisl amet adipiscing accumsan blandit accumsan sapien blandit ac amet faucibus aliquet placerat commodo. Interdum ante aliquet commodo accumsan vis phasellus adipiscing. Ornare a in lacinia. Vestibulum accumsan ac metus massa tempor. Accumsan in lacinia ornare massa amet. Ac interdum ac non praesent. Cubilia lacinia interdum massa faucibus blandit nullam. Accumsan phasellus nunc integer. Accumsan euismod nunc adipiscing lacinia erat ut sit. Arcu amet. Id massa aliquet arcu accumsan lorem amet accumsan.</p>
-							<p>Faucibus volutpat porttitor metus a ante ac neque. Nisi turpis. Commodo col. Interdum adipiscing mollis ut aliquam id ante adipiscing commodo integer arcu amet Ac interdum ac non praesent. Cubilia lacinia interdum massa faucibus blandit nullam. Accumsan phasellus nunc integer. Accumsan euismod nunc adipiscing lacinia erat ut sit. Arcu amet. Id massa aliquet arcu accumsan lorem amet accumsan commodo odio cubilia ac eu interdum placerat placerat arcu commodo lobortis adipiscing semper ornare pellentesque. Lorem turpis ipsum dolor sit amet at. Aliquet lorem porttitor interdum. Amet lacus. Aliquam lobortis faucibus blandit ac phasellus. In amet magna non interdum volutpat porttitor metus a ante ac neque. Nisi turpis. Commodo col. Interdum adipiscing mollis ut aliquam id ante adipiscing commodo integer arcu amet blandit adipiscing arcu ante. Amet nibh adipiscing adipiscing. Commodo ante vis placerat interdum.</p>
+                            <form method="post" action="#" class="alt">
+                                <div class="row gtr-uniform">
+                                    <div class="col-12">
+                                        <span class="image fit"><img id="uploadPreview" alt="" /></span>
+                                        <label>
+                                           Enter gallery image file
+                                        </label>
+                                        <input id="uploadImage" type="file" name="myPhoto" onchange="PreviewImage();" />
+                                    </div>
+                                    <div class="col-6 col-12-xsmall">
+                                        <label>
+                                            Enter the album title
+                                        </label>
+                                        <input type="text" name="title" id="title" value="" placeholder="Album Title" />
+                                    </div>
+                                    <div class="col-6 col-12-xsmall">
+                                        <label>
+                                            Enter the album Label
+                                        </label>
+                                        <input type="text" name="label" id="label" value="" placeholder="Album label" />
+                                    </div>
+                                    <!-- Break -->
+                                    <div class="col-10">
+                                        <label>
+                                            Select Album Type
+                                        </label>
+                                        <select name="demo-category" id="demo-category">
+                                            <option value="">- Category -</option>
+                                            <option value="1">Manufacturing</option>
+                                            <option value="1">Shipping</option>
+                                            <option value="1">Administration</option>
+                                            <option value="1">Human Resources</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-2">
+                                        <ul class="actions small">
+                                            <li><a href="#" class="button small">+ Add a Type</a></li>
+                                        </ul>
+                                    </div>
+                                    <!-- Break -->
+                                    <div class="col-12">
+                                        <label>
+                                            Enter album description
+                                        </label>
+                                        <textarea name="description" id="description" placeholder="Album Description" rows="6"></textarea>
+                                    </div>
+                                    <!-- Break -->
+                                    <div class="col-6 col-12-small">
+                                        <input type="checkbox" id="demo-human" name="demo-human" checked>
+                                        <label for="demo-human">I am a human</label>
+                                    </div>
+
+                                    <!-- Break -->
+                                    <div class="col-12">
+                                        <ul class="actions special">
+                                            <li><button class="button next" type="button"  id="submit">Create Album</button></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </form>
 						</div>
 					</section>
 
@@ -94,6 +146,18 @@
 			<script src="../orange/assets/js/breakpoints.min.js"></script>
 			<script src="../orange/assets/js/util.js"></script>
 			<script src="../orange/assets/js/main.js"></script>
+
+    <script>
+        function PreviewImage() {
+            var oFReader = new FileReader();
+            oFReader.readAsDataURL(document.getElementById("uploadImage").files[0]);
+
+            oFReader.onload = function (oFREvent) {
+                document.getElementById("uploadPreview").src = oFREvent.target.result;
+            };
+        };
+
+    </script>
 
 	</body>
 </html>
