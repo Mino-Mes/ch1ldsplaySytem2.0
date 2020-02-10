@@ -44,17 +44,8 @@ include '../Util/Popup_return_handler.php';
                 <li class="current"><a href="index.php">Home</a></li>
                 <li><a href="#scrollToAl">Album</a></li>
                 <li><a href="#scrollToB">Inquiries</a></li>
-                <li><a id="nav_a" href=""></a></li>
                 <?php
-                    $count =1;
-
-                    if($count == 1)
-                    {
-                        ?>
-                        <li><a href="">asdasdasdasd</a></li>
-                <?php
-                    }
-
+                include '../Util/page_nav.php';
                 ?>
             </ul>
         </nav>
@@ -273,9 +264,6 @@ include '../Util/Popup_return_handler.php';
     xhttp.send();
 
 </script>
-<?php
-include '../Util/page_nav.php';
-?>
 
 </body>
 </html>

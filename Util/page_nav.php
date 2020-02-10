@@ -1,12 +1,14 @@
+<script src="../assets/js/jquery.min.js"></script>
 <script>
     $(document).ready(function(){
 
-        var nav_a = document.getElementById('nav_a');
+        //var nav_a = document.getElementById('nav_a');
         var sb_txt = '';
         //two session variables that are set on successful login attempt
         //we'll also inlude a snackbar in here aswell
 
         //WORK OUT THIS FOR MOBILE AS WELL (PROBABLY NEEDS TO BE DONE IN THE MAIN JS FILE)
+        //maybe try creating and appending an element instead of modifying an existing one!
 
         <?php
             if(isset($_SESSION['ln_username']) && isset($_SESSION['ln_usertype']) && !isset($_SESSION['ln_already'])){
@@ -15,16 +17,16 @@
                 switch($_SESSION['ln_usertype']){
                     case 'customer':
                     case 'collaborator':
-                        ?>
+                        ?></script><li><a href="">Your Photographs</a></li><script>
+                            /*
                             nav_a.innerHTML = 'Your Photographs';
                             nav_a.setAttribute('href',''); // <-- add to this later
                             sb_txt = 'Login Successful!';
+                             */
                         <?php
                         break;
                     case 'administrator':
-                        ?>
-                            nav_a.innerHTML = 'Manage Users';
-                            nav_a.setAttribute('href','../Util/manage_users.php');
+                        ?></script><li><a href="Admin_tasks.php">Administrative Tasks</a></li><script>
                             sb_txt = 'Login Successful!';
                         <?php
                         break;
@@ -39,7 +41,7 @@
                 }
                 ?>
                     document.getElementById('parent_log_reg_btn')
-                        .innerHTML="<span id='btn_logout' class='slowOver btn_reg_log'><a href='../Util/logout.php'>Logout</a></span>"
+                        .innerHTML="<span id='btn_logout' class='slowOver btn_reg_log'><a href='../Util/logout.php'>Logout</a></span>";
                     //create a logout file to unset some session vars,
                     //and change back the the above element
 
@@ -51,11 +53,5 @@
             }
         ?>
 
-
-
-
-
     });
-
-
 </script>
