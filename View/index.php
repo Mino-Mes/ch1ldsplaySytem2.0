@@ -1,7 +1,8 @@
 <?php
 session_start();
-require "Util/dbconn.php";
- include 'Util/Popup_return_handler.php';?>
+require "../Util/dbconn.php";
+include '../Util/Popup_return_handler.php';
+?>
 <!DOCTYPE HTML>
 <!--
 	Relativity by Pixelarity
@@ -10,12 +11,14 @@ require "Util/dbconn.php";
 -->
 <html>
 <head>
-    <title>Untitled</title>
+    <title>Ch1ldsplay Media Production | Home</title>
     <meta charset="utf-8"/>
+    <script src="jquery-3.4.1.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
     <link rel="stylesheet" href="../assets/css/main.css"/>
     <link rel="stylesheet" href="../css/snack_back.css"/>
     <link rel="stylesheet" href="../css/Stylesheet_popup.css">
+    <link rel="stylesheet" href="../css/stylesheet_main.css">
 
     <style>
 
@@ -42,6 +45,17 @@ require "Util/dbconn.php";
                 <li><a href="#scrollToAl">Album</a></li>
                 <li><a href="#scrollToB">Inquiries</a></li>
                 <li><a href="">YourPhotographs</a></li>
+                <?php
+                    $count =1;
+
+                    if($count == 1)
+                    {
+                        ?>
+                        <li><a href="">asdasdasdasd</a></li>
+                <?php
+                    }
+
+                ?>
             </ul>
         </nav>
 
@@ -57,116 +71,37 @@ require "Util/dbconn.php";
     <!-- Section -->
     <section class="main alt" id="first">
         <header>
-            <h2 id="scrollToAl">Album</h2>
+            <h2>Album</h2>
             <p>Select a type of album you which to view.</p>
         </header>
 
-        <form method="post" action="index.php" id="galleryForm">
-            <select name="galleryType" id="demo-category" style="width:50%;margin-left:25%;">
-                <?php
-                $sql = "SELECT * FROM type";
-                $result = $conn->query($sql);
-
-                if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-                        ?>
-                        <option value="<?php echo $row["typeId"] ?>"><?php echo $row["typeName"] ?></option>
-                        <?php
-                    }
-                }
-                ?>
-            </select>
-            <div style="margin-left:42%;margin-bottom:2%;">
-                <input type="submit" value="Search" class="button" style="margin-top:2%;">
-                <input type="reset" value="All" class="button alt">
-            </div>
-        </form>
-
-        <div class="inner">
+        <select name="galleryType" id="demo-category" style="width:50%;margin-left:25%;">
             <?php
-            if (isset($_POST["galleryForm"])) {
-                $g_type = $_POST["galleryType"];
+            $sql = "SELECT * FROM type";
+            $result = $conn->query($sql);
 
-               header("Location:adasdasd.php");
-               exit;
-
-                $sql2 = "SELECT * FROM album WHERE album_type=". $g_type;
-                $result2 = $conn->query($sql2);
-
-                if ($result2->num_rows > 0) {
-                    while ($album = $result2->fetch_assoc()) {
-                        ?>
-                        <article class="post style2 alt">
-                            <div class="content">
-                                <header>
-                                    <span class="category"><?php echo $album["album_label"]; ?></span>
-                                    <h3><?php echo $album["album_title"] ?></h3>
-                                </header>
-                                <p><?php echo $album["album_description"] ?></p>
-                                <ul class="actions">
-                                    <li><a href="album.php?id=<?php echo $album['album_id'];?>" class="button next">View Full Album</a></li>
-                                </ul>
-                            </div>
-                            <div class="image" data-position="center"><img src="<?php echo $album["album_img"] ?>"
-                                                                           alt=""/></div>
-                        </article>
-                        <?php
-                    }
-                }
-            } else {
-                $sql2 = "SELECT * FROM album";
-                $result2 = $conn->query($sql2);
-
-                $count = 0;
-
-                if ($result2->num_rows > 0) {
-                    while ($album = $result2->fetch_assoc()) {
-
-                        $count++;
-                        if ($count % 2 == 0) {
-                            ?>
-                            <article class="post style2 alt">
-                                <div class="content" style="margin-left:30%;">
-                                    <header>
-                                        <span class="category"><?php echo $album["album_label"]; ?></span>
-                                        <h3><?php echo $album["album_title"] ?></h3>
-                                    </header>
-                                    <p><?php echo $album["album_description"] ?></p>
-                                    <ul class="actions">
-                                        <li><a href="album.php?id=<?php echo $album['album_id'];?>" class="button next">View Full Album</a></li>
-                                    </ul>
-                                </div>
-                                <div class="image" data-position="center"><img src="<?php echo $album["album_img"] ?>"
-                                                                               alt="" style="width: 230%;"/></div>
-                            </article>
-                            <?php
-                        } else {
-                            ?>
-                            <article class="post style2">
-                                <div class="content" style="width:40%;">
-                                    <header>
-                                        <span class="category"><?php echo $album["album_label"]; ?></span>
-                                        <h3><?php echo $album["album_title"] ?></h3>
-                                    </header>
-                                    <p><?php echo $album["album_description"] ?></p>
-                                    <ul class="actions">
-                                        <li><a href="album.php?id=<?php echo $album['album_id'];?>" class="button next">View Full Album</a></li>
-                                    </ul>
-                                </div>
-                                <div class="image" data-position="center"><img src="<?php echo $album["album_img"] ?>"
-                                                                               alt="" style="width:150%;"/></div>
-                            </article>
-                            <?php
-                        }
-                    }
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    ?>
+                    <option value="<?php echo $row["typeId"] ?>"><?php echo $row["typeName"] ?></option>
+                    <?php
                 }
             }
-
             ?>
+        </select>
+        <div style="margin-left:42%;margin-bottom:2%;">
+            <input type="button" onclick="getGalleryType()" id="submit" value="Search" style="margin-top:2%;">
+            <input type="button" onclick="showAll()" value="All" class="button alt">
+
+            <div id="test"></div>
+        </div>
+    <!-- Div container of the gallery which is generated by php-->
+        <div class="inner" id="galleryContainer">
+
         </div>
     </section>
     <!-- Section -->
-    <section class="main alt special">
+    <section class="main alt special" id="second">
         <header>
             <h2 id="scrollToB">Business Inquiries</h2>
             <p>Request a photoshoot or Contact me by filling the form bellow, a confimation will be sent. From there I
@@ -222,29 +157,19 @@ require "Util/dbconn.php";
                                   rows="6"></textarea>
                     </div>
                     <!-- Break -->
-                    <div class="col-12" id="center_button">
-                        <input type="submit" id="emailSubmitBtn" value="Send Message"/>
-                    </div>
+                 <!--   <div class="col-12 text-center" id="center_button" style="margin-left:40%;margin-right:60%;">
+                        <input type="button" onclick="sendEmail()" id="emailSubmitBtn"  value="Send Message"/>
+                    </div>-->
+                    <ul class="actions special">
+                        <li><button class="button next" type="button" onclick="sendEmail()" id="emailSubmitBtn">Send Message</button></li>
+                    </ul>
                 </div>
             </form>
-            <?php
-            if(isset($_GET["mail_message"]))
-            {
-                echo " <div id=\"snackbar\">".$_GET["mail_message"]."</div>"
-                ?>
 
+             <div id="snackbar"></div>
                 <script>
-                    function myFunction() {
-                        var x = document.getElementById("snackbar");
-                        x.className = "show";
-                        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
-                    }
-                    myFunction();
+
                 </script>
-                <?php
-                //echo "<p id=\"errorMessage\" style=\"color:Red;text-align: center;\"> ".$_GET['mail_message']."</p>  ";
-            }
-            ?>
         </div>
     </section>
 
@@ -260,7 +185,6 @@ require "Util/dbconn.php";
         </ul>
         <p class="copyright">&copy; Untitled. All rights reserved.</p>
     </footer>
-
 </div>
 
 <!-- Scripts -->
@@ -273,6 +197,71 @@ require "Util/dbconn.php";
 <script src="../assets/js/util.js"></script>
 <script src="../assets/js/main.js"></script>
 <script src="../js/Script_popup.js"></script>
+
+<script>
+    function sendEmail(){
+        var fname=document.getElementById("fname").value;
+        var lname=document.getElementById("lname").value;
+        var email=document.getElementById("email").value;
+        var description=document.getElementById("description").value;
+        var avail=document.getElementById("availabilities").value;
+
+        var dropdownServ = document.getElementById("service");
+        var service = dropdownServ.options[dropdownServ.selectedIndex].value;
+
+        var xhttp=new XMLHttpRequest();
+        xhttp.onreadystatechange=function(){
+            if(this.readyState==4 && this.status ==200)
+            {
+                var x = document.getElementById("snackbar");
+                x.innerHTML=this.responseText;
+                    x.className = "show";
+                    setTimeout(function () {
+                        x.className = x.className.replace("show", "");
+                    }, 3000);
+            }
+        };
+        xhttp.open("POST", "../Util/Functions.php", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("fname="+fname+"&"+"lname="+lname+"&"+"email="+email+"&"+"description="+description+"&"+"avail="+avail+"&"+"service="+service);
+    }
+    function showAll(){
+        var xhttp=new XMLHttpRequest();
+        xhttp.onreadystatechange=function(){
+            if(this.readyState==4 && this.status ==200)
+            {
+                document.getElementById("galleryContainer").innerHTML=this.responseText;
+            }
+        };
+        xhttp.open("POST", "../Util/selectGalleryType.php", true);
+        xhttp.send();
+    }
+    function getGalleryType() {
+        var dropdownType = document.getElementById("demo-category");
+        var type = dropdownType.options[dropdownType.selectedIndex].value;
+
+        var xhttp1=new XMLHttpRequest();
+        xhttp1.onreadystatechange=function(){
+            if(this.readyState==4 && this.status ==200)
+            {
+                document.getElementById("galleryContainer").innerHTML=this.responseText;
+            }
+        };
+        xhttp1.open("POST", "../Util/selectGalleryType.php", true);
+        xhttp1.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp1.send("type="+type);
+    }
+    var xhttp=new XMLHttpRequest();
+    xhttp.onreadystatechange=function(){
+        if(this.readyState==4 && this.status ==200)
+        {
+            document.getElementById("galleryContainer").innerHTML=this.responseText;
+        }
+    };
+    xhttp.open("POST", "../Util/selectGalleryType.php", true);
+    xhttp.send();
+
+</script>
 
 </body>
 </html>

@@ -1,4 +1,4 @@
-<?php require "Util/dbconn.php"; ?>
+<?php require "../Util/dbconn.php"; ?>
 <!DOCTYPE HTML>
 <!--
 	Relativity by Pixelarity
@@ -8,13 +8,14 @@
 <html>
 <head>
     <title>Untitled</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
     <script type='text/javascript' src='../unitegallery-master/package/unitegallery/js/jquery-11.0.min.js'></script>
     <script type='text/javascript' src='../unitegallery-master/package/unitegallery/js/unitegallery.min.js'></script>
-    <link rel="stylesheet" href="../assets/css/main.css" />
-    <link rel='stylesheet' href='../unitegallery-master/package/unitegallery/css/unite-gallery.css' type='text/css' />
-    <script type='text/javascript' src='../unitegallery-master/package/unitegallery/themes/tiles/ug-theme-tiles.js'></script>
+    <link rel="stylesheet" href="../assets/css/main.css"/>
+    <link rel='stylesheet' href='../unitegallery-master/package/unitegallery/css/unite-gallery.css' type='text/css'/>
+    <script type='text/javascript'
+            src='../unitegallery-master/package/unitegallery/themes/tiles/ug-theme-tiles.js'></script>
 
     <style>
 
@@ -36,17 +37,17 @@
         <!-- Nav -->
         <nav id="nav">
             <ul>
-                <li class="current"><a href="index.php">Home</a></li>
-                <li><a href="generic.html">Album</a></li>
-                <li><a href="elements.html">Inquiries</a></li>
-                <li><a href="elements.html">YourPhotographs</a></li>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="index.php" class="current">Album</a></li>
+                <li><a href="index.php">Inquiries</a></li>
+                <li><a href="index.php">YourPhotographs</a></li>
             </ul>
         </nav>
 
     </header>
     <?php
-         $sql = "SELECT * FROM album WHERE album_id=".$_GET["id"];
-        $result = $conn->query($sql);
+    $sql = "SELECT * FROM album WHERE album_id=" . $_GET["id"];
+    $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
@@ -55,15 +56,15 @@
     <section class="main alt">
         <header>
             <h1><?php echo $row["album_title"] ?></h1>
-            <p>Place Holder Text</p>
+            <p><?php echo "by ".$row["album_label"] ?></p>
             <?php
-            }
+              }
             }
             ?>
         </header>
         <div id="gallery" style="display:none;width:90%;margin-left:5%;margin-right:5%;">
             <?php
-            $sql = "SELECT * FROM photo WHERE album_id=".$_GET["id"];
+            $sql = "SELECT * FROM photo WHERE album_id=" . $_GET["id"];
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {
@@ -114,7 +115,7 @@ HAD TO DELETE FROM THE TEMPLATE.
 
 <script type="text/javascript">
 
-    jQuery(document).ready(function(){
+    jQuery(document).ready(function () {
 
         jQuery("#gallery").unitegallery({
             theme_enable_preloader: false,

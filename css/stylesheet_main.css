@@ -1,0 +1,19 @@
+#banner1 > .more2 {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 3rem 1.5rem;
+    width: 6rem;
+    height: 6rem;
+    text-align: center;
+    color: #ffffff;
+    border-bottom: 0;
+    position: absolute;
+    bottom: 0;
+    left: calc(50% - 3rem);
+    text-indent: 6rem;
+    white-space: nowrap;
+    overflow: hidden;
+    z-index: 1;
+}
+
+

@@ -1,7 +1,7 @@
 <?php
-require("PHPMailer/PHPMailer.php");
-require("PHPMailer/SMTP.php");
-require("PHPMailer/Exception.php");
+require("../PHPMailer/PHPMailer.php");
+require("../PHPMailer/SMTP.php");
+require("../PHPMailer/Exception.php");
 
 
 function IsInjected($str)
@@ -38,7 +38,7 @@ function sendEmail($fname,$lname,$email,$subject,$body)
     $mail->Username = "meslevrai@gmail.com";
     $mail->Password = "sasuke12345";
     try {
-        $mail->AddAddress("chi1dsplayphotoshoot1@gmail.com");
+        $mail->AddAddress("aladdinemes@gmail.com");
     } catch (\PHPMailer\PHPMailer\Exception $e) {}
     try {
         $mail->SetFrom("meslevrai@gmail.com");
@@ -123,7 +123,7 @@ function sendEmail($fname,$lname,$email,$subject,$body)
             $message = "An email has been sent,<br>the owner will contact you soon, Thank you !";
         }
     }
-    header("Location: index.php?mail_message=$message#mailMessage");
-    exit();
+    echo $message;
+
 
 
