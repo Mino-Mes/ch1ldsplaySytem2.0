@@ -1,6 +1,6 @@
 <?php
 session_start();
-require "Util/dbconn.php";
+require "dbconn.php";
 
 $_SESSION['reg_attempt'] = false;
 $_SESSION['log_attempt'] = true;
@@ -9,6 +9,8 @@ $_SESSION['log_attempt'] = true;
 //rather we will just inform the user that they have entered incorrect credentials
 //so if someone was trying to get into someone else's account, we wouldn't help them
 //by telling them what part of the login they're getting wrong
+
+//this code needs to be better optimized
 
 $_SESSION['log_msg'] = '';
 $_SESSION['log_err'] = false;
@@ -41,7 +43,7 @@ if(isset($_POST))
 
     if($userExists)
     {
-        $getPsswdSQL = "SELECT user_password FROM user WHERE user_username ='$username' OR user_email='$username' LIMIT 1";
+        $getPsswdSQL = "SELECT user_password,user_authentication FROM user WHERE user_username ='$username' OR user_email='$username' LIMIT 1";
         $result2=$conn->query($getPsswdSQL);
 
         if(!empty($result2) && $result2->num_rows>0)
@@ -50,9 +52,18 @@ if(isset($_POST))
             {
                 if(password_verify($password, $row2["user_password"]))
                 {
-                    //echo "You are logged in";
+                    //ln = logged in
+                    $_SESSION['ln_usertype'] = $row2['user_authentication'];
+                    $_SESSION['ln_username'] = $username;
                     $conn->close();
-                    header('Location: index.php');
+                    header('Location: ../View/index.php');
+                }
+                else{
+                    $_SESSION['log_err'] = true;
+                    $_SESSION['log_msg'] = 'Error: incorrect Username or Password';
+                    //echo "Not found";
+                    $conn->close();
+                    header('Location: ../View/index.php');
                 }
             }
         }
@@ -62,17 +73,16 @@ if(isset($_POST))
             $_SESSION['log_msg'] = 'Error: incorrect Username or Password';
             //echo "Not found";
             $conn->close();
-            header('Location: index.php');
+            header('Location: ../View/index.php');
+
         }
     }
     else{
         $_SESSION['log_err'] = true;
         $_SESSION['log_msg'] = 'Error: incorrect Username or Password';
         $conn->close();
-        header('Location: index.php');
+        header('Location: ../View/index.php');
     }
-
-
-
+    echo 'test 1';
 }
-
+echo 'test 2';

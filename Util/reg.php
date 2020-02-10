@@ -2,7 +2,7 @@
 session_start();
 
 //this path needs to be changed and the action in the index
-include("Util/dbconn.php");
+include("dbconn.php");
 
 //keeping track that a registration was attempted
 $_SESSION['reg_attempt'] = true;
@@ -132,7 +132,7 @@ foreach($arr_err as $key => $value)
         $_SESSION['reg_arr_err'] = $arr_err;
         $_SESSION['reg_arr_form_vals'] = $arr_form_vals;
         $conn->close();
-       header('Location: index.php');
+       header('Location: ../View/index.php');
         exit();
     }
 }
@@ -167,7 +167,7 @@ if($res->num_rows > 0)
         $_SESSION['reg_msg'] = $msg;
         $res->close();
         $conn->close();
-        header('Location: index.php');
+        header('Location: ../View/index.php');
         exit();
     }
     elseif($arr_err['email'] && !$arr_err['username'])
@@ -179,7 +179,7 @@ if($res->num_rows > 0)
         $_SESSION['reg_msg'] = $msg;
         $res->close();
         $conn->close();
-        header('Location: index.php');
+        header('Location: ../View/index.php');
         exit();
     }
     elseif($arr_err['username'] && $arr_err['email'])
@@ -191,7 +191,7 @@ if($res->num_rows > 0)
         $_SESSION['reg_msg'] = $msg;
         $res->close();
         $conn->close();
-        header('Location: index.php');
+        header('Location: ../View/index.php');
         exit();
     }
     else{
@@ -227,7 +227,7 @@ if($no_err)
     $reg_success = true;
     $_SESSION['reg_success'] = $reg_success;
 
-    header('Location: index.php');
+    header('Location: ../View/index.php');
     exit();
 }
 else{
@@ -235,7 +235,7 @@ else{
     $_SESSION['reg_msg'] = $msg;
     $_SESSION['reg_arr_form_vals'] = $arr_form_vals;
 
-    header('Location: index.php?message=1');
+    header('Location: ../View/index.php?message=1');
     exit();
 }
 

@@ -13,11 +13,11 @@ include '../Util/Popup_return_handler.php';
 <head>
     <title>Ch1ldsplay Media Production | Home</title>
     <meta charset="utf-8"/>
-    <script src="jquery-3.4.1.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
     <link rel="stylesheet" href="../assets/css/main.css"/>
     <link rel="stylesheet" href="../css/snack_back.css"/>
     <link rel="stylesheet" href="../css/Stylesheet_popup.css">
+    <link rel="stylesheet" href="../css/ln_snackbar.css">
     <link rel="stylesheet" href="../css/stylesheet_main.css">
 
     <style>
@@ -35,7 +35,7 @@ include '../Util/Popup_return_handler.php';
 
         <!-- Logo -->
         <div class="logo">
-            <a href="index.php"><strong>Login/Register</strong></a>
+            <strong><div id='parent_log_reg_btn'><span id="btn_login" class="slowOver btn_reg_log">Login</span>/<span id="btn_register" class="btn_reg_log slowOver">Register</span></div></strong>
         </div>
 
         <!-- Nav -->
@@ -44,7 +44,7 @@ include '../Util/Popup_return_handler.php';
                 <li class="current"><a href="index.php">Home</a></li>
                 <li><a href="#scrollToAl">Album</a></li>
                 <li><a href="#scrollToB">Inquiries</a></li>
-                <li><a href="">YourPhotographs</a></li>
+                <li><a id="nav_a" href=""></a></li>
                 <?php
                     $count =1;
 
@@ -187,6 +187,17 @@ include '../Util/Popup_return_handler.php';
     </footer>
 </div>
 
+<div id="myModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div id="popup_content"></div>
+    </div>
+</div>
+
+<div id='ln_snackbar'></div>
+
+
 <!-- Scripts -->
 <script src="../assets/js/jquery.min.js"></script>
 <script src="../assets/js/jquery.dropotron.min.js"></script>
@@ -262,6 +273,9 @@ include '../Util/Popup_return_handler.php';
     xhttp.send();
 
 </script>
+<?php
+include '../Util/page_nav.php';
+?>
 
 </body>
 </html>
