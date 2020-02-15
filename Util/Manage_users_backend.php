@@ -22,7 +22,8 @@ if(isset($_REQUEST['term'])){
             $result = mysqli_stmt_get_result($stmt);
 
             if(mysqli_num_rows($result) > 0){
-                echo '<table>'
+                echo '<div class="table-wrapper"><table>'
+                    .'<thead>'
                     .'<tr>'
                     .'<th>Last Name</th>'
                     .'<th>First Name</th>'
@@ -30,7 +31,8 @@ if(isset($_REQUEST['term'])){
                     .'<th>Username</th>'
                     .'<th>Authentication</th>'
                     .'<th>Actions</th>'
-                    .'</tr>';
+                    .'</tr>'
+                    .'</thead><tbody>';
 
                 while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
                     //there needs to be another hidden form value here whose value is the username
@@ -69,11 +71,14 @@ if(isset($_REQUEST['term'])){
                         echo '<td><form method="post" action="Manage_users_modify.php">'
                             .'<input type="hidden" name="action" value="ban">'
                             .'<input type="hidden" name="user" value="'.$row['user_username'].'">'
-                            .'<input id="ban_' .$row['user_username'].'" id="btn_ban" class="btn" type="submit" value="BAN"></form></td>';
+                            .'<input id="ban_' .$row['user_username'].'" id="btn_ban" class="btn" type="submit" value="BAN"></form></td>'
+                            .'<td><form method="post" action="hrefgoeshere.php">'
+                            .'<input type="hidden" name="action" value="add">'
+                            .'<input type="hidden" name="user" value="'.$row['user_username'].'">'
+                            .'<input id="add_' .$row['user_username'].'" id="btn_add" class="btn" type="submit" value="ADD PHOTO"></form></td>';
                     }
                 }
-
-                echo '</tr></table>';
+                echo '</tbody></tr></table>';
             }
             else{echo '<p>No matches found!</p>';}
         }

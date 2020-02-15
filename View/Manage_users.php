@@ -1,9 +1,7 @@
-<!DOCTYPE HTML>
-<!--
-	Relativity by Pixelarity
-	pixelarity.com | hello@pixelarity.com
-	License: pixelarity.com/license
--->
+<?php
+session_start();
+$_SESSION['current_page'] = 'admin_command';
+?>
 <html>
 	<head>
 		<title>Untitled</title>
@@ -62,20 +60,25 @@
 
                             <form method="post" action="#" class="alt">
                                 <div class="row gtr-uniform">
-                                    <div class="col-12 col-12-xsmall">
-                                        <input type="text" name="demo-name" id="demo-name" value="" placeholder="Name" />
+                                    <div class="col-12 col-12-xsmall" class="search-box">
+                                        <input type="text" name="demo-name" id="demo-name" value="" placeholder="Search username..." />
                                     </div>
                                     <div class="col-4 col-12-xsmall">
                                         <input type="checkbox" id="demo-human" name="demo-human" checked>
                                         <label for="demo-human">Include banned users</label>
                                     </div>
-                                    <div class="col-8 col-12-xsmall">
-                                        <ul class="actions">
-                                            <li><input type="submit" value="Search" /></li>
-                                        </ul>
-                                    </div>
                                 </div>
                             </form>
+                            <!-- the dynamic table goes here -->
+                            <div class="result">
+                                <?php
+                                if(isset($_SESSION['msg_modify'])){
+                                    echo $_SESSION['msg_modify'];
+                                    unset($_SESSION['msg_modify']);
+                                }
+                                ?>
+                            </div>
+
 						</div>
 					</section>
 
@@ -96,5 +99,22 @@
 			<script src="../orange/assets/js/util.js"></script>
 			<script src="../orange/assets/js/main.js"></script>
 
+            <script type="text/javascript">
+                $(document).ready(function(){
+                    $('.search-box input[type="text"]').on("keyup input", function(){
+                        /* Get input value on change */
+                        var inputVal = $(this).val();
+                        var resultDropdown = $(".result");
+                        if(inputVal.length){
+                            $.get("Manage_users_backend.php", {term: inputVal}).done(function(data){
+                                // Display the returned data in browser
+                                resultDropdown.html(data);
+                            });
+                        } else{
+                            resultDropdown.empty();
+                        }
+                    });
+                });
+            </script>
 	</body>
 </html>
