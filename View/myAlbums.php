@@ -183,16 +183,39 @@
                 <label for="seeActive">Show Active Types Only</label>
             </div>
             <div class="col-6 col-12-small">
-                <input type="checkbox" id="activeAlb" name="activeAlb">
+                <input type="checkbox" id="activeAlb" name="activeAlb" onclick="showAlbumList()">
                 <label for="activeAlb">Show Active Albums Only</label>
             </div>
-            <button class="tablink" onclick="openPage('Albums', this, 'black')" id="defaultOpen">Albums</button>
+            <button class="tablink" onclick="openPage('Albums', this, 'black'), showAlbumList()" id="defaultOpen">Albums</button>
             <button class="tablink" onclick="openPage('types', this, 'black'),showTypeList()">Types</button>
+<?php
+//Just in case I use these values in the code
+$sql = "SELECT * from album";
+$result = $conn->query($sql);
 
+if ($result->num_rows > 0) {
+    while ($albums = $result->fetch_assoc()) {
+        $id = $albums["album_id"];
+        $user_id = $albums["user_id"];
+        $album_title = $albums["album_description"];
+        $album_description = $albums["album_description"];
+        $album_label = $albums["album_label"];
+        $album_img = $albums["album_img"];
+        $album_isActive = $albums["album_isActive"];
+        $album_type = $albums["typeId"];
+
+        if ($album_isActive == 1) {
+            $album_isActive = "Active";
+        } else {
+            $album_isActive = "Disabled";
+        }
+    }
+}
+?>
             <div id="Albums" class="tabcontent">
                 <h4>List of Current Albums</h4>
                 <div class="table-wrapper">
-                    <table>
+                    <table style="width:100%;">
                         <thead>
                         <tr>
                             <th>Image Path</th>
@@ -204,34 +227,11 @@
                             <th>Type Id</th>
                             <th>isActive</th>
                             <th>Update</th>
+                            <th>Delete</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <?php
-                        $sql = "SELECT * from album";
-                        $result = $conn->query($sql);
+                        <tbody id="albumContainer">
 
-                        if ($result->num_rows > 0) {
-                            while ($albums = $result->fetch_assoc()) {
-                                $id = $albums["album_id"];
-                                $user_id = $albums["user_id"];
-                                $album_title = $albums["album_description"];
-                                $album_description = $albums["album_description"];
-                                $album_label = $albums["album_label"];
-                                $album_img = $albums["album_img"];
-                                $album_isActive = $albums["album_isActive"];
-                                $album_type = $albums["typeId"];
-
-                                if ($album_isActive == 1) {
-                                    $album_isActive = "Active";
-                                } else {
-                                    $album_isActive = "Disabled";
-                                }
-
-                                echo "<tr><td><div class=\"row gtr-1 gtr-uniform\"><div class=\"col-12\"><span class=\"image fit\"><img src='$album_img' alt=\"\" /></span></div></div></td><td>$id</td><td>$user_id</td><td>$album_title</td><td>$album_description</td><td>$album_label</td><td>$album_type</td><td>$album_isActive</td><td><ul class=\"actions fit small\"><li><a href=\"viewAlbum.php?id=$id\" class=\"button fit small\">Update</a></li></ul></td></tr>";
-                            }
-                        }
-                        ?>
                     </table>
                 </div>
             </div>
@@ -266,7 +266,6 @@
                 </li>
             </ul>
         </div>
-        <div id="snackbar"></div>
     </div>
 </div>
 <div id="updateType" class="modal">
@@ -298,7 +297,21 @@
         <div id="snackbar1" class="snackbar"></div>
     </div>
 </div>
-
+<div id="delete" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h4 style="text-align: center">Are you sure you want to delete this element ? </h4>
+        <input type="hidden" id="hiddenId"/>
+        <input type="hidden" id="functionName">
+        <ul class="actions special">
+            <li>
+                <button class="button next" type="button"  onclick="deleteObject()" style="background-color: red;" id="deleteBtn">Delete</button>
+            </li>
+        </ul>
+    </div>
+</div>
+<div id="snackbar"></div>
 <!-- Footer -->
 <footer id="footer">
     <ul class="icons">
@@ -466,6 +479,75 @@
         xhttp.send("active=" + active);
     }
 
+    function showAlbumList()
+    {
+        if (document.getElementById("activeAlb").checked) {
+            var active = 1;
+        } else {
+            var active = 0;
+        }
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("albumContainer").innerHTML = this.responseText;
+            }
+        };
+        xhttp.open("POST", "../Util/showAlbumList.php", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("active=" + active);
+    }
+
+
+ function openDeleteModal(id,fname)
+ {
+     // Get the modal
+     var modal = document.getElementById("delete");
+
+
+     // Get the <span> element that closes the modal
+     var span = document.getElementsByClassName("close")[2];
+
+     // When the user clicks the button, open the modal
+     modal.style.display = "block";
+
+     span.onclick = function () {
+         modal.style.display = "none";
+     }
+
+
+     document.getElementById("hiddenId").value=id;
+     document.getElementById("functionName").value=fname;
+     // When the user clicks anywhere outside of the modal, close it
+     window.onclick = function (event) {
+         if (event.target == modal) {
+             modal.style.display = "none";
+         }
+     }
+ }
+
+ function deleteObject()
+ {
+     var id=document.getElementById("hiddenId").value;
+     var fname=document.getElementById("functionName").value;
+
+     var xhttp = new XMLHttpRequest();
+     xhttp.onreadystatechange = function () {
+         if (this.readyState == 4 && this.status == 200) {
+             var x = document.getElementById("snackbar");
+             x.innerHTML = this.responseText;
+             x.className = "show";
+             setTimeout(function () {
+                 x.className = x.className.replace("show", "");
+             }, 3000);
+             showTypeList();
+             showAlbumList();
+         }
+     };
+     xhttp.open("POST", "../Util/delete.php", true);
+     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+     xhttp.send("id=" + id+" & fname="+fname);
+ }
 
 </script>
 

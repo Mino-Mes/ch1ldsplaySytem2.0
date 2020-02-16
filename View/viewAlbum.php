@@ -17,6 +17,7 @@
         th, td {
             vertical-align: middle;
         }
+
         .modal {
             display: none; /* Hidden by default */
             position: fixed; /* Stay in place */
@@ -149,25 +150,28 @@
         ?>
         <div class="inner style2">
 
-            <form method="post" action="#" class="alt" enctype="multipart/form-data">
+            <form method="post" action="../Util/updateAlbumInfo.php" class="alt" enctype="multipart/form-data"
+                  id="albumInfo">
                 <div class="row gtr-uniform">
                     <!-- Break -->
                     <div class="col-12">
                         <ul class="actions" style="float:right">
-                            <li><input type="submit" value="Update Album Information" /></li>
+                            <li><input type="submit" value="Update Album Information" form="albumInfo"/></li>
+                            <li><a href="javascript:void(0)" onclick="addPhotoModal()" class="button alt">+Add a
+                                    photograph</a></li>
                         </ul>
                     </div>
                     <div class="col-6 col-12-xsmall">
                         <label>
                             Album Title
                         </label>
-                        <input type="text" name="albumTitle" id="albumTitle" value="<?=$albumTitle?>" />
+                        <input type="text" name="albumTitle" id="albumTitle" value="<?= $albumTitle ?>"/>
                     </div>
                     <div class="col-6 col-12-xsmall">
                         <label>
                             Album Label
                         </label>
-                        <input type="email" name="albumLabel" id="albumLabel" value="<?=$label?>"/>
+                        <input type="text" name="albumLabel" id="albumLabel" value="<?= $label ?>"/>
                     </div>
                     <!-- Break -->
                     <div class="col-12">
@@ -181,56 +185,76 @@
 
                             if ($result->num_rows > 0) {
                                 while ($row = $result->fetch_assoc()) {
-                                     if($type == $row["typeId"])
-                                     {?>
-                                         <option value="<?php echo $row["typeId"] ?>" selected><?php echo $row["typeName"] ?></option>
-                                         <?php
-                                     }else
-                                     {?>
-                                         <option value="<?php echo $row["typeId"] ?>"><?php echo $row["typeName"] ?></option>
+                                    if ($type == $row["typeId"]) {
+                                        ?>
+                                        <option value="<?php echo $row["typeId"] ?>"
+                                                selected><?php echo $row["typeName"] ?></option>
+                                        <?php
+                                    } else {
+                                        ?>
+                                        <option value="<?php echo $row["typeId"] ?>"><?php echo $row["typeName"] ?></option>
                                     <?php }
                                 }
                             }
                             ?>
                         </select>
                     </div>
+                    <input type="hidden" value="<?= $_GET["id"] ?>" id="id" name="id"/>
                     <!-- Break -->
                     <div class="col-6 col-12-small">
                         <?php
-                            if($isActive == 1)
-                            {?>
-                                <input type="checkbox" id="isActive" name="isActive" checked>
+                        if ($isActive == 1) {
+                            ?>
+                            <input type="checkbox" id="isActive" name="isActive" checked>
                             <?php
-                            }
-                            else{
-                                ?>
-                                <input type="checkbox" id="isActive" name="isActive">
+                        } else {
+                            ?>
+                            <input type="checkbox" id="isActive" name="isActive">
                             <?php
-                            }
+                        }
                         ?>
 
                         <label for="isActive">Album is Active</label>
                     </div>
                     <!-- Break -->
                     <div class="col-12">
-                        <textarea name="albumDescription" id="albumDescription" rows="6"></textarea><script>document.getElementById("albumDescription").value="<?=$description?>"</script>
+                        <textarea name="description" id="description" rows="6"></textarea>
+                        <script>document.getElementById("description").value = "<?=$description?>"</script>
+                    </div>
+                    <input type="hidden" value="<?= $img ?>" id="dfltImage" name="dfltImage"/>
+                    <div class="col-6">
+                        <h4>Album Cover Image</h4>
+                        <span class="image fit"><img src="<?= $img ?>" style="width:100%;" id="uploadPreview"
+                                                     alt=""/></span>
                     </div>
 
-                <div class="col-6">
-                    <h4>Album Cover Image</h4>
-                    <span class="image fit"><img src="<?=$img?>" style="width:100%;" id="uploadPreview" alt="" /></span>
-                </div>
-                <div class="col-6" >
-                    <label>
-                        Enter gallery image file
-                    </label>
-                    <input id="uploadImage" type="file" name="myPhoto" id="myPhoto" onchange="PreviewImage();" />
-                </div>
+                    <div class="col-6">
+                        <label>
+                            Enter gallery image file
+                        </label>
+                        <input id="uploadImage" type="file" name="myPhoto" id="myPhoto" onchange="PreviewImage();"/>
+                    </div>
             </form>
+            <?php
+            $sql2 = "SELECT * from photo WHERE album_id =" . $_GET["id"];
+            $result2 = $conn->query($sql2);
 
-            <ul class='actions' >
-                <li><a href="javascript:void(0)" onclick="addPhotoModal()" class="button alt">+Add a photograph</a></li>
-            </ul>
+            if ($result2->num_rows > 0) {
+                while ($photo = $result2->fetch_assoc()) {
+                    $photo_id = $photo["photo_id"];
+                    $user_id = $photo["user_id"];
+                    $photo_img = $photo["photo_img"];
+                    $photo_isActive = $photo["photo_isActive"];
+
+                    if ($photo_isActive == 1) {
+                        $photo_isActive = "Active";
+                    } else {
+                        $photo_isActive = "Disabled";
+                    }
+                }
+            }
+            ?>
+
             <h4>List of Photographs in album</h4>
             <div class="table-wrapper">
                 <table>
@@ -241,29 +265,12 @@
                         <th>Creator Id</th>
                         <th>album_id</th>
                         <th>isActive</th>
+                        <th>Delete</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="listContainer">
                     <?php
-                    $sql2 = "SELECT * from photo WHERE album_id =" . $_GET["id"];
-                    $result2 = $conn->query($sql2);
 
-                    if ($result2->num_rows > 0) {
-                        while ($photo = $result2->fetch_assoc()) {
-                            $photo_id = $photo["photo_id"];
-                            $user_id = $photo["user_id"];
-                            $photo_img = $photo["photo_img"];
-                            $photo_isActive = $photo["photo_isActive"];
-
-                            if ($photo_isActive == 1) {
-                                $photo_isActive = "Active";
-                            } else {
-                                $photo_isActive = "Disabled";
-                            }
-
-                            echo "<tr><td style='width:30%;'><img src='$photo_img' alt=\"\" style='width:90%;'/></td><td>$photo_id</td><td>$user_id</td><td>$photo_isActive</td><td><ul class=\"actions fit small\"><li><a href=\"#\" class=\"button fit small\">Update</a></li></ul></td></tr>";
-                        }
-                    }
                     ?>
                 </table>
             </div>
@@ -275,24 +282,59 @@
     <div class="modal-content">
         <span class="close">&times;</span>
         <h1 style="text-align: center">Add a Photograph</h1>
-        <div class="row gtr-uniform">
-            <div class="col-12">
-                <label>
-                    Input the Files
-                </label>
-                <input id="photos" type="file" name="photos" multiple/>
+        <form method="POST" action="../Util/addPhoto.php" enctype="multipart/form-data" class="alt">
+            <div class="row gtr-uniform">
+                <div class="col-12">
+                    <label>
+                        Input the Files
+                    </label>
+                    <input id="photos[]" type="file" name="photos[]" multiple="multiple"/>
+                </div>
             </div>
-        </div>
-        <br>
-        <div class="col-12">
-            <ul class="actions special">
-                <li>
-                    <button class="button next" type="button" id="submit" onclick="addImage()" >Add Photo</button>
-                </li>
-            </ul>
-        </div>
-        <div id="snackbar"></div>
+            <input type="hidden" name="albumId" id="albumId" value="<?= $_GET["id"] ?>"
+            <br>
+            <div class="col-12">
+                <ul class="actions special">
+                    <li>
+                        <button class="button next" type="submit" id="submit">Add Photo</button>
+                    </li>
+                </ul>
+            </div>
+        </form>
     </div>
+</div>
+<div id="deleteP" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h4 style="text-align: center">Are you sure you want to delete the photograph ? </h4>
+        <input type="hidden" id="photoIdHidden"/>
+        <ul class="actions special">
+            <li>
+                <button class="button next" type="button"  onclick="deletePhoto()" style="background-color: red;" id="deleteBtn">Delete Photo</button>
+            </li>
+        </ul>
+    </div>
+</div>
+<div id="snackbar"></div>
+<?php
+if (isset($_GET["message"])) {
+    ?>
+    <script>
+        function showSnackBar() {
+            var x = document.getElementById("snackbar");
+            x.innerHTML = "<?=$_GET["message"]?>";
+            x.className = "show";
+            setTimeout(function () {
+                x.className = x.className.replace("show", "");
+            }, 3000);
+        }
+
+        showSnackBar();
+    </script>
+    <?php
+}
+?>
 
 <!-- Footer -->
 <footer id="footer">
@@ -328,6 +370,7 @@
             document.getElementById("uploadPreview").src = oFREvent.target.result;
         };
     };
+
     function addPhotoModal() {
         // Get the modal
         var modal = document.getElementById("myModal");
@@ -354,10 +397,9 @@
         }
     }
 
-    function addImage()
-    {
+    function addImage() {
 
-        var imgfiles=document.getElementById("photos");
+        var imgfiles = document.getElementById("photos");
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
@@ -372,7 +414,83 @@
         };
         xhttp.open("POST", "../Util/addPhoto.php", true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send("id="+<?=$_GET["id"]?>  + "&files=" + imgfiles);
+        xhttp.send("id=" + <?=$_GET["id"]?> + "&files=" + imgfiles.value);
+    }
+
+    function showAlbumPhotoList() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var x = document.getElementById("listContainer");
+                x.innerHTML = this.responseText;
+            }
+        };
+        xhttp.open("POST", "../Util/showPhotoList.php", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("id=" + <?=$_GET["id"]?>);
+    }
+
+    showAlbumPhotoList();
+
+    function isActive(id) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                showAlbumPhotoList();
+            }
+        };
+        xhttp.open("POST", "../Util/isPhotoActive.php", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("photoId=" + id + " &isActive=1");
+    }
+
+    function openDeleteModal(id)
+    {
+        // Get the modal
+        var modal = document.getElementById("deleteP");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[1];
+
+        // When the user clicks the button, open the modal
+        modal.style.display = "block";
+
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+
+        document.getElementById("photoIdHidden").value=id;
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    }
+
+
+    function deletePhoto() {
+
+        var id=document.getElementById("photoIdHidden").value;
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                showAlbumPhotoList();
+                var x = document.getElementById("snackbar");
+                x.innerHTML = this.responseText;
+                x.className = "show";
+                setTimeout(function () {
+                    x.className = x.className.replace("show", "");
+                }, 3000);
+            }
+        };
+        xhttp.open("POST", "../Util/isPhotoActive.php", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("photoId=" + id + " &deleteP=1");
     }
 
 </script>

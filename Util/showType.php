@@ -12,6 +12,7 @@ if (isset($_POST)) {
     $list .= "<th>Type Name</th>";
     $list .= "<th>Is Active</th>";
     $list .= "<th>Update</th>";
+    $list .="<th>Delete</th>";
     $list .= "</tr>";
     $list .= "</thead>";
     $list .= "<tbody>";
@@ -41,7 +42,7 @@ if (isset($_POST)) {
                 $typeActive = "Not Active";
             }
 
-            $list .= "<tr><td>$typeId</td><td>$typeName</td><td>$typeActive</td></td><td><ul class=\"actions fit small\"><li><a href=\"javascript:void(0)\" class=\"button fit small\" id='updateTypeBtn' onclick='updateType(".$count.")' style='width:60%;padding-left:1%;padding-right:1%;'>Update</a></li></ul></td></tr>";
+            $list .= "<tr><td>$typeId</td><td>$typeName</td><td>$typeActive</td></td><td><ul class=\"actions fit small\"><li><a href=\"javascript:void(0)\" class=\"button fit small\" id='updateTypeBtn' onclick='updateType(".$count.")' style='width:60%;padding-left:1%;padding-right:1%;'>Update</a></li></ul></td><td><ul class=\"actions fit small\"><li><a href=\"javascript:void(0)\" class=\"button fit small\" id='deleteType' onclick='openDeleteModal($typeId,\"t\")' style='width:80%;padding-left:1%;padding-right:1%;background-color:red;'>Delete</a></li></ul></td></tr>";
         }
     }
     $list .= "</table>";

@@ -5,37 +5,34 @@ require "../Util/dbconn.php";
 
 function createDir($dirName)
 {
-    if (file_exists("../Images/" . $dirName)) {
-        return "../Images/" . $dirName . "/";
+    if (file_exists("../Images/album_". $dirName)) {
+        return "../Images/album_" . $dirName . "/";
     } else {
-        mkdir("../Images/" . $dirName, 0777);
+        mkdir("../Images/album_". $dirName, 0777);
 
-        return "../Images/" . $dirName . "/";
+        return "../Images/album_" . $dirName . "/";
     }
 }
 
 
-function getDir($title)
+function getDir($id)
 {
     $title = $_POST["title"];
     $fileName = $_FILES['myPhoto']['name'];
 
-    $img = "../Images/" . $title . "/" . basename($fileName);
+    $img = "../Images/album_" . $id . "/" . basename($fileName);
     return $img;
 }
 
-function albDir($title)
+function albDir($id)
 {
-    $title = $_POST["title"];
-    $fileName = $_FILES['myPhoto']['name'];
-
-    $img = "../Images/" . $title;
+    $img = "../Images/album_" . $id;
     return $img;
 }
 
-function uploadImage()
+function uploadImage($id)
 {
-    $uploadDirectory = createDir($_POST["title"]);
+    $uploadDirectory = createDir($id);
 
     $fileName = $_FILES['myPhoto']['name'];
     $fileTmpName = $_FILES['myPhoto']['tmp_name'];
@@ -106,7 +103,7 @@ if (isset($_POST)) {
         $message = "In order to add an album fill in all the form";
     } else if ($verified_description == false && $verified_title == false && $verified_service == false && $verified_label == false && $verified_img == false && $images_add ==false) {
 
-        uploadImage();
+
 
         $title = $_POST["title"];
         $description = $_POST["description"];
@@ -119,9 +116,8 @@ if (isset($_POST)) {
         } else {
             $active = 0;
         }
-        $img = getDir("$title");
 
-        $sql = "INSERT INTO album(user_id,album_title,album_description,album_label,album_isActive,album_img,typeId) VALUES('1','$title','$description','$label','$active','$img','$type')";
+        $sql = "INSERT INTO album(user_id,album_title,album_description,album_label,album_isActive,typeId) VALUES('1','$title','$description','$label','$active','$type')";
 
         if ($conn->query($sql) == true) {
             $album_created=true;
@@ -139,19 +135,36 @@ if (isset($_POST)) {
                    }
         if($album_created)
         {
-            for ($i = 0; $i < $total; $i++) {
-                $tmpFilePath = $_FILES['albumImages']['tmp_name'][$i];
-                $dir = albDir($_POST["title"]);
-                $newFilePath = $dir . "/" . $_FILES["albumImages"]["name"][$i];
+            uploadImage($album_id);
+            $img=getDir($album_id);
+            $inserted_album=false;
 
-                if (move_uploaded_file($tmpFilePath, $newFilePath)) {
+            $sql4 = "UPDATE album SET album_img='$img' WHERE album_id=".$album_id;
+
+            if($conn->query($sql4) == true)
+            {
+                $inserted_album=true;
+            }else
+            {
+                $message ="The Album image could not have been uploaded ".$conn->error();
+            }
+
+            if($inserted_album)
+            {
+                for ($i = 0; $i < $total; $i++) {
+                    $tmpFilePath = $_FILES['albumImages']['tmp_name'][$i];
+                    $dir = albDir($album_id);
+                    $newFilePath = $dir . "/" . $_FILES["albumImages"]["name"][$i];
+
+                    if (move_uploaded_file($tmpFilePath, $newFilePath)) {
 
                         $sql3 = "INSERT INTO photo(user_id,photo_img,photo_isActive,album_id) VALUES('1','$newFilePath','1', $album_id)";
 
-                    if ($conn->query($sql3) == true) {
-                        $message = "The Album has been created, great work!";
-                    } else {
-                        $message = "The Album was not created, please contact the administrator Error: " . $conn->error;;
+                        if ($conn->query($sql3) == true) {
+                            $message = "The Album has been created, great work!";
+                        } else {
+                            $message = "The Album was not created, please contact the administrator Error: " . $conn->error;;
+                        }
                     }
                 }
             }
