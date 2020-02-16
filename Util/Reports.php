@@ -1,6 +1,6 @@
 <?php
 session_start();
-$_SESSION['current_page'] = 'admin_command';
+$_SESSION['current_page'] = 'admin_reports';
 ?>
 <html>
 <head>
@@ -108,10 +108,8 @@ $_SESSION['current_page'] = 'admin_command';
 
         function show_ex_inputs(){
             if(rpt_type.options[rpt_type.selectedIndex].value == 'exception'){
-                //document.write('works');
                 switch(rpt_subject.options[rpt_subject.selectedIndex].value){
                     case 'user':
-                        //document.write('works1');
                         ex_row.innerHTML =
                             '<div class="col-6-large">\n' +
                             '<strong>User type</strong>'+
@@ -134,7 +132,6 @@ $_SESSION['current_page'] = 'admin_command';
                             '</div>';
                         break;
                     case 'album':
-                        //document.write('works2');
                         ex_row.innerHTML =
                             '<div class="col-6-large">\n' +
                                 '<strong>Sort by username</strong>'+
@@ -148,7 +145,6 @@ $_SESSION['current_page'] = 'admin_command';
                             '<strong>Sort by username</strong>'+
                             '<input type="text" id="enter_username" placeholder="Enter username">'+
                             '</div>';
-
                         break;
                     default:
                         ex_row.innerHTML = '';
@@ -170,36 +166,42 @@ $_SESSION['current_page'] = 'admin_command';
 
         var btn_generate = document.getElementById('btn_generate');
         btn_generate.addEventListener('click',function(){
-            //get the values from the different inputs
-            //needs to be optimized
 
-            var row_1_opt_1 = rpt_type.options[rpt_type.selectedIndex].value;
-            var row_1_opt_2 = rpt_subject.options[rpt_subject.selectedIndex].value;
-
-            var row_2_opt_1 = ''; //this will either be usertype select for user exception reports or text input of customer name
-            var row_2_opt_2 = ''; //this will be the order by for user exception report or nothing
-
-            //now do the exception stuff
-            if(row_1_opt_1 == 'exception'){
-                switch(row_1_opt_2) {
+            var type = document.getElementById('select-report-type').value;
+            var subject = document.getElementById('select-report-subject').value;
+            var input_1 = '';
+            var input_2 = '';
+            
+            //here, get the data that will be sent over
+            if(type == 'exception')
+            {
+                switch(document.getElementById('select-report-subject').value){
                     case 'user':
-                        row_2_opt_1 = document.getElementById('select_user_type');
-                        row_2_opt_2 = document.getElementById('select_order_by');
+                        input_1 = document.getElementById('select_user_type').options[document.getElementById('select_user_type').selectedIndex].value;
+                        input_2 = document.getElementById('select_order_by').options[document.getElementById('select_order_by').selectedIndex].value;
                         break;
                     case 'album':
                     case 'photo':
-                        row_2_opt_1 = document.getElementById('enter_username');
+                        input_1 = document.getElementById('enter_username').value;
+                        input_2 = 'n/a';
                         break;
                 }
             }
+            else if(type == 'summary' || type == 'detail'){
+                input_1 = 'n/a';
+                input_2 = 'n/a';
+            }
 
-            var input_type = row_1_opt_1;
-            var input_1 = row_2_opt_1;
-            var input_2 = row_2_opt_2;
-
-            $.get('Reports_backend.php', {input1: input_type,input2: input_1,input3:input_2}).done(function(data){
-                document.getElementById('res').html(data);
+            $.ajax({
+                url: 'Reports_backend.php',
+                type: "POST",
+                dataType:'json', // add json datatype to get json
+                data: ({type: type,subject: subject,input_1: input_1,input_2: input_2}),
+                success: function(data){
+                    document.getElementById('res').innerHTML = data;
+                }
             });
+
         });
 
     });
