@@ -43,7 +43,7 @@ if(isset($_POST))
 
     if($userExists)
     {
-        $getPsswdSQL = "SELECT user_password,user_authentication FROM user WHERE user_username ='$username' OR user_email='$username' LIMIT 1";
+        $getPsswdSQL = "SELECT user_password,user_authentication,user_id FROM user WHERE user_username ='$username' OR user_email='$username' LIMIT 1";
         $result2=$conn->query($getPsswdSQL);
 
         if(!empty($result2) && $result2->num_rows>0)
@@ -55,6 +55,7 @@ if(isset($_POST))
                     //ln = logged in
                     $_SESSION['ln_usertype'] = $row2['user_authentication'];
                     $_SESSION['ln_username'] = $username;
+                    $_SESSION['ln_userId']=$row2["user_id"];
                     $conn->close();
                     header('Location: ../View/index.php');
                 }

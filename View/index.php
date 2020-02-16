@@ -66,7 +66,7 @@ include '../Util/Popup_return_handler.php';
             <p>Select a type of album you which to view.</p>
         </header>
 
-        <select name="galleryType" id="demo-category" style="width:50%;margin-left:25%;">
+        <select name="galleryType" id="typeDrop" style="width:50%;margin-left:25%;">
             <?php
             $sql = "SELECT * FROM type";
             $result = $conn->query($sql);
@@ -158,9 +158,6 @@ include '../Util/Popup_return_handler.php';
             </form>
 
              <div id="snackbar"></div>
-                <script>
-
-                </script>
         </div>
     </section>
 
@@ -239,7 +236,7 @@ include '../Util/Popup_return_handler.php';
         xhttp.send();
     }
     function getGalleryType() {
-        var dropdownType = document.getElementById("demo-category");
+        var dropdownType = document.getElementById("typeDrop");
         var type = dropdownType.options[dropdownType.selectedIndex].value;
 
         var xhttp1=new XMLHttpRequest();

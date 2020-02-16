@@ -70,9 +70,8 @@
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                     ?>
-                    <img alt="Peppers"
+                    <img alt=""
                          src="<?php echo $row["photo_img"]; ?>"
-                         data-description="Those are peppers"
                          style="display:none">
                     <?php
                 }

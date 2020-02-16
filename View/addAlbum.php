@@ -1,3 +1,6 @@
+<?php
+require "../Util/dbconn.php";
+?>
 <!DOCTYPE HTML>
 <!--
 	Relativity by Pixelarity
@@ -10,6 +13,8 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <link rel="stylesheet" href="../assets/css/main.css" />
+        <link rel="stylesheet" href="../css/snack_back.css"/>
+        <link rel="stylesheet" href="../css/ln_snackbar.css">
 	</head>
 	<body class="is-preload">
 
@@ -59,14 +64,14 @@
                             <p>This page allows the administrator to add an album, to do so simply fill in the form.</p>
 						</header>
 						<div class="inner style2">
-                            <form method="post" action="#" class="alt">
+                            <form method="POST" action="addAlbumLogic.php" enctype="multipart/form-data" class="alt">
                                 <div class="row gtr-uniform">
                                     <div class="col-12">
                                         <span class="image fit"><img id="uploadPreview" alt="" /></span>
                                         <label>
                                            Enter gallery image file
                                         </label>
-                                        <input id="uploadImage" type="file" name="myPhoto" onchange="PreviewImage();" />
+                                        <input id="uploadImage" type="file" name="myPhoto" id="myPhoto" onchange="PreviewImage();" />
                                     </div>
                                     <div class="col-6 col-12-xsmall">
                                         <label>
@@ -85,12 +90,21 @@
                                         <label>
                                             Select Album Type
                                         </label>
-                                        <select name="demo-category" id="demo-category">
-                                            <option value="">- Category -</option>
-                                            <option value="1">Manufacturing</option>
-                                            <option value="1">Shipping</option>
-                                            <option value="1">Administration</option>
-                                            <option value="1">Human Resources</option>
+                                        <select name="typeDrop" id="typeDrop" >
+                                            <option value="0" selected>- Type -</option>
+                                            <?php
+                                            $sql = "SELECT * FROM type";
+                                            $result = $conn->query($sql);
+
+                                            if ($result->num_rows > 0) {
+                                                while ($row = $result->fetch_assoc()) {
+                                                    ?>
+                                                    <option value="<?php echo $row["typeId"] ?>"><?php echo $row["typeName"] ?></option>
+                                                    <?php
+                                                }
+                                            }
+                                            ?>
+
                                         </select>
                                     </div>
                                     <div class="col-2">
@@ -106,17 +120,50 @@
                                         <textarea name="description" id="description" placeholder="Album Description" rows="6"></textarea>
                                     </div>
                                     <!-- Break -->
-                                    <div class="col-6 col-12-small">
-                                        <input type="checkbox" id="demo-human" name="demo-human" checked>
-                                        <label for="demo-human">I am a human</label>
+                                    <div class="col-12">
+                                        <span class="image fit"><img id="uploadPreview" alt="" /></span>
+                                        <label>
+                                            Enter gallery image file
+                                        </label>
+                                        <input id="albumImages[]" type="file" name="albumImages[]"  onchange="PreviewImages()"  multiple="multiple" />
                                     </div>
+                                    <!-- Break -->
+                                    <div class="col-12">
+                                        <div class="box alt">
+                                            <div class="row gtr-50 gtr-uniform" id="albumContainer">
 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Break -->
+                                    <div class="col-6 col-12-small">
+                                        <input type="checkbox" id="active" name="active" checked>
+                                        <label for="active">Make Album Active</label>
+                                    </div>
                                     <!-- Break -->
                                     <div class="col-12">
                                         <ul class="actions special">
-                                            <li><button class="button next" type="button"  id="submit">Create Album</button></li>
+                                            <li><button class="button next" type="submit" id="submit">Create Album</button></li>
                                         </ul>
                                     </div>
+                                    <div id="snackbar"></div>
+                                   <?php
+                                    if(isset($_GET["message"]))
+                                    {?>
+                                        <script>
+                                            function showSnackBar(){
+                                                var x = document.getElementById("snackbar");
+                                                x.innerHTML="<?=$_GET["message"]?>";
+                                                x.className = "show";
+                                                setTimeout(function () {
+                                                    x.className = x.className.replace("show", "");
+                                                }, 3000);
+                                            }
+                                                showSnackBar();
+                                        </script>
+                                        <?php
+                                    }
+                                        ?>
                                 </div>
                             </form>
 						</div>
@@ -148,6 +195,7 @@
 			<script src="../orange/assets/js/main.js"></script>
 
     <script>
+
         function PreviewImage() {
             var oFReader = new FileReader();
             oFReader.readAsDataURL(document.getElementById("uploadImage").files[0]);
@@ -157,6 +205,20 @@
             };
         };
 
+        function PreviewImages(){
+            var images =document.getElementById("albumImages[]");
+            var output =document.getElementById("albumContainer");
+
+            for(var i=0;i<images.files.length;i++)
+            {
+                var oFReader = new FileReader();
+                oFReader.readAsDataURL(images.files[i]);
+
+                oFReader.onload = function (oFREvent) {
+                    output.innerHTML +="<div class='col-4'><span class='image fit'><img src= " + oFREvent.target.result +" alt='Album Image'/></span></div>";
+                };
+            }
+        }
     </script>
 
 	</body>
