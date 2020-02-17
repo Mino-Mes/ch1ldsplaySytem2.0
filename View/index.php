@@ -58,7 +58,24 @@ include '../Util/Popup_return_handler.php';
             Ch1ldsplay Media Production</h1>
         <a href="#first" class="more scrolly">Learn More</a>
     </section>
-
+    <!--Section -->
+    <section class="main accent2">
+        <header>
+            <h2>About Us</h2>
+        </header>
+        <div class="inner">
+            <article class="post alt">
+                <div class="content">
+                    <header>
+                        <span class="category">Text</span>
+                        <h3>About Us</h3>
+                    </header>
+                    <p>dESCRIPTION</p>
+                </div>
+                <div class="image" data-position="center"><img src="../images/logo.png" alt="Logo of the company" /></div>
+            </article>
+        </div>
+    </section>
     <!-- Section -->
     <section class="main alt" id="first">
         <header>
