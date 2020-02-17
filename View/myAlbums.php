@@ -179,41 +179,20 @@
                         Type </a></li>
             </ul>
             <div class="col-6 col-12-small">
-                <input type="checkbox" id="seeActive" name="seeActive" onclick='showTypeList()' >
+                <input type="checkbox" id="seeActive" name="seeActive" onclick='showTypeList()'>
                 <label for="seeActive">Show Active Types Only</label>
             </div>
             <div class="col-6 col-12-small">
                 <input type="checkbox" id="activeAlb" name="activeAlb" onclick="showAlbumList()">
                 <label for="activeAlb">Show Active Albums Only</label>
             </div>
-            <button class="tablink" onclick="openPage('Albums', this, 'black'), showAlbumList()" id="defaultOpen">Albums</button>
+
+            <button class="tablink" onclick="openPage('Albums', this, 'black'), showAlbumList()" id="defaultOpen">
+                Albums
+            </button>
             <button class="tablink" onclick="openPage('types', this, 'black'),showTypeList()">Types</button>
             <button class="tablink" onclick="openPage('userAlbum', this, 'black')">User Albums</button>
 
-<?php
-//Just in case I use these values in the code
-$sql = "SELECT * from album";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    while ($albums = $result->fetch_assoc()) {
-        $id = $albums["album_id"];
-        $user_id = $albums["user_id"];
-        $album_title = $albums["album_description"];
-        $album_description = $albums["album_description"];
-        $album_label = $albums["album_label"];
-        $album_img = $albums["album_img"];
-        $album_isActive = $albums["album_isActive"];
-        $album_type = $albums["typeId"];
-
-        if ($album_isActive == 1) {
-            $album_isActive = "Active";
-        } else {
-            $album_isActive = "Disabled";
-        }
-    }
-}
-?>
             <div id="Albums" class="tabcontent">
                 <h4>List of Current Albums</h4>
                 <div class="table-wrapper">
@@ -245,98 +224,121 @@ if ($result->num_rows > 0) {
             </div>
 
             <div id="userAlbum" class="tabcontent">
-                <div id="search-box">
-                    <input type="text" placeholder="Search username" />
-                </div>
-                <div id="search-result">
-                </div>
-
-            </div>
-        </div>
-</div>
-
-</section>
-<div id="myModal" class="modal">
-    <!-- Modal content -->
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h1 style="text-align: center">Add a Type</h1>
-        <div class="row gtr-uniform">
-            <div class="col-12">
                 <label>
-                    Enter Type Name
+                    Input User username (<em>Write 'All' to view All users</em>)
                 </label>
-                <input id="name" type="text" name="name"/>
+                <input id="search-box" type="text" placeholder="Search username"/>
+                <div id="search-table" class="table-wrapper" style="margin-top:4%;">
+
+                </div>
             </div>
         </div>
-        <br>
-        <div class="col-12">
+    </section>
+
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h1 style="text-align: center">Add a Type</h1>
+            <div class="row gtr-uniform">
+                <div class="col-12">
+                    <label>
+                        Enter Type Name
+                    </label>
+                    <input id="name1" type="text" name="name1"/>
+                </div>
+            </div>
+            <br>
+            <div class="col-12">
+                <ul class="actions special">
+                    <li>
+                        <button class="button next" type="button" id="submit" onclick="UploadType(),showTypeList()">
+                            Create
+                            Type
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="updateType" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h1 style="text-align: center">Update a Type</h1>
+            <div class="row gtr-uniform">
+                <div class="col-12">
+                    <label>
+                        Type Name
+                    </label>
+                    <input id="typeName" type="text" name="typeName"/>
+                </div>
+                <div class="col-12">
+                    <input type="checkbox" id="active" name="active">
+                    <label for="active">Set type to Active</label>
+                </div>
+                <input type="hidden" id="id" name="id"/>
+            </div>
+            <br>
+            <div class="col-12">
+                <ul class="actions special">
+                    <li>
+                        <button class="button next" type="button" id="submit" onclick="updateTypeSQL()">Update Type
+                        </button>
+                    </li>
+                </ul>
+            </div>
+            <div id="snackbar1" class="snackbar"></div>
+        </div>
+    </div>
+    <div id="delete" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h4 style="text-align: center">Are you sure you want to delete this element ? </h4>
+            <input type="hidden" id="hiddenId"/>
+            <input type="hidden" id="functionName">
             <ul class="actions special">
                 <li>
-                    <button class="button next" type="button" id="submit" onclick="UploadType(),showTypeList()">Create
-                        Type
+                    <button class="button next" type="button" onclick="deleteObject()" style="background-color: red;"
+                            id="deleteBtn">Delete
                     </button>
                 </li>
             </ul>
         </div>
     </div>
-</div>
-<div id="updateType" class="modal">
-    <!-- Modal content -->
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h1 style="text-align: center">Update a Type</h1>
-        <div class="row gtr-uniform">
-            <div class="col-12">
+    <div id="addPhotographs" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h4 style="text-align: center">Add Photos to a User</h4>
+            <form id="addPhotoUserForm" method="post" enctype="multipart/form-data">
+                <input type="hidden" id="hiddenUserId" name="hiddenUserId"/>
                 <label>
-                    Type Name
+                    Insert Files
                 </label>
-                <input id="typeName" type="text" name="typeName"/>
-            </div>
-            <div class="col-12">
-                <input type="checkbox" id="active" name="active">
-                <label for="active">Set type to Active</label>
-            </div>
-            <input type="hidden" id="id" name="id"/>
+                <input type="file" id="userPhotos[]" name="userPhotos[]" multiple="multiple" style="margin-bottom:5%; "/>
+                <ul class="actions special">
+                    <li>
+                        <button class="button next" type="submit" id="addPhotoBtn">Add Photographs Button</button>
+                    </li>
+                </ul>
+            </form>
         </div>
-        <br>
-        <div class="col-12">
-            <ul class="actions special">
-                <li>
-                    <button class="button next" type="button" id="submit" onclick="updateTypeSQL()">Update Type</button>
-                </li>
-            </ul>
-        </div>
-        <div id="snackbar1" class="snackbar"></div>
     </div>
-</div>
-<div id="delete" class="modal">
-    <!-- Modal content -->
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h4 style="text-align: center">Are you sure you want to delete this element ? </h4>
-        <input type="hidden" id="hiddenId"/>
-        <input type="hidden" id="functionName">
-        <ul class="actions special">
-            <li>
-                <button class="button next" type="button"  onclick="deleteObject()" style="background-color: red;" id="deleteBtn">Delete</button>
-            </li>
+    <div id="snackbar"></div>
+    <!-- Footer -->
+    <footer id="footer">
+        <ul class="icons">
+            <li><a href="#" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+            <li><a href="#" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
+            <li><a href="#" class="icon alt fa-instagram"><span class="label">Instagram</span></a></li>
+            <li><a href="#" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+            <li><a href="#" class="icon alt fa-phone"><span class="label">Phone</span></a></li>
+            <li><a href="#" class="icon alt fa-envelope-o"><span class="label">Email</span></a></li>
         </ul>
-    </div>
-</div>
-<div id="snackbar"></div>
-<!-- Footer -->
-<footer id="footer">
-    <ul class="icons">
-        <li><a href="#" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
-        <li><a href="#" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
-        <li><a href="#" class="icon alt fa-instagram"><span class="label">Instagram</span></a></li>
-        <li><a href="#" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
-        <li><a href="#" class="icon alt fa-phone"><span class="label">Phone</span></a></li>
-        <li><a href="#" class="icon alt fa-envelope-o"><span class="label">Email</span></a></li>
-    </ul>
-    <p class="copyright">&copy; Untitled. All rights reserved.</p>
-</footer>
+        <p class="copyright">&copy; Untitled. All rights reserved.</p>
+    </footer>
 
 </div>
 
@@ -392,6 +394,53 @@ if ($result->num_rows > 0) {
             }
         }
     }
+
+    $("form#addPhotoUserForm").submit(function (e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+
+        $.ajax({
+            url:"../Util/addPhotoUser.php",
+            type: 'POST',
+            data: formData,
+            success: function (data) {
+                var x = document.getElementById("snackbar");
+                x.innerHTML = data;
+                x.className = "show";
+                setTimeout(function () {
+                    x.className = x.className.replace("show", "");
+                }, 3000);
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+        });
+    });
+
+    function addPhotoModal(userId) {
+        // Get the modal
+        var modal = document.getElementById("addPhotographs");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[3];
+
+        document.getElementById("hiddenUserId").value = userId;
+        // When the user clicks the button, open the modal
+        modal.style.display = "block";
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    }
+
 
     function updateType(row) {
         var name = document.getElementById("typeTable").rows[row].cells[1].innerHTML;
@@ -455,7 +504,7 @@ if ($result->num_rows > 0) {
     }
 
     function UploadType() {
-        var typeName = document.getElementById("name").value;
+        var typeName = document.getElementById("name1").value;
 
         var xhttp1 = new XMLHttpRequest();
         xhttp1.onreadystatechange = function () {
@@ -492,8 +541,7 @@ if ($result->num_rows > 0) {
         xhttp.send("active=" + active);
     }
 
-    function showAlbumList()
-    {
+    function showAlbumList() {
         if (document.getElementById("activeAlb").checked) {
             var active = 1;
         } else {
@@ -512,67 +560,64 @@ if ($result->num_rows > 0) {
     }
 
 
- function openDeleteModal(id,fname)
- {
-     // Get the modal
-     var modal = document.getElementById("delete");
+    function openDeleteModal(id, fname) {
+        // Get the modal
+        var modal = document.getElementById("delete");
 
 
-     // Get the <span> element that closes the modal
-     var span = document.getElementsByClassName("close")[2];
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[2];
 
-     // When the user clicks the button, open the modal
-     modal.style.display = "block";
+        // When the user clicks the button, open the modal
+        modal.style.display = "block";
 
-     span.onclick = function () {
-         modal.style.display = "none";
-     }
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
 
 
-     document.getElementById("hiddenId").value=id;
-     document.getElementById("functionName").value=fname;
-     // When the user clicks anywhere outside of the modal, close it
-     window.onclick = function (event) {
-         if (event.target == modal) {
-             modal.style.display = "none";
-         }
-     }
- }
+        document.getElementById("hiddenId").value = id;
+        document.getElementById("functionName").value = fname;
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    }
 
- function deleteObject()
- {
-     var id=document.getElementById("hiddenId").value;
-     var fname=document.getElementById("functionName").value;
+    function deleteObject() {
+        var id = document.getElementById("hiddenId").value;
+        var fname = document.getElementById("functionName").value;
 
-     var xhttp = new XMLHttpRequest();
-     xhttp.onreadystatechange = function () {
-         if (this.readyState == 4 && this.status == 200) {
-             var x = document.getElementById("snackbar");
-             x.innerHTML = this.responseText;
-             x.className = "show";
-             setTimeout(function () {
-                 x.className = x.className.replace("show", "");
-             }, 3000);
-             showTypeList();
-             showAlbumList();
-         }
-     };
-     xhttp.open("POST", "../Util/delete.php", true);
-     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-     xhttp.send("id=" + id+" & fname="+fname);
- }
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var x = document.getElementById("snackbar");
+                x.innerHTML = this.responseText;
+                x.className = "show";
+                setTimeout(function () {
+                    x.className = x.className.replace("show", "");
+                }, 3000);
+                showTypeList();
+                showAlbumList();
+            }
+        };
+        xhttp.open("POST", "../Util/delete.php", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("id=" + id + " & fname=" + fname);
+    }
 
-    $('#search-box input[type="text"]').on("keyup input",function(){
-       var input = $(this).val();
-       var result = $("#search-result");
-       if(input.length){
-           $.get("../Util/myAlbums_user_search.php" , {term: input}).done(function(data){
-               result.html(data);
-           });
-       }
-       else{
-           result.empty();
-       }
+    $('#search-box').on("keyup input", function () {
+        var input = $('#search-box').val();
+        var result = $("#search-table");
+        if (input.length) {
+            $.get("../Util/myAlbums_user_search.php", {term: input}).done(function (data) {
+                result.html(data);
+            });
+        } else {
+            result.empty();
+        }
     });
 
 
