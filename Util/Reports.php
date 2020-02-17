@@ -124,10 +124,10 @@ $_SESSION['current_page'] = 'admin_reports';
                             '<strong>Order by</strong>'+
                             '<select name="demo-category" id="select_order_by" class="row_2_opts">\n' +
                             '<option value="">- Order by -</option>\n' +
-                            '<option value="fname">First name</option>\n' +
-                            '<option value="lname">Last name</option>\n' +
-                            '<option value="email">Email Address</option>\n' +
-                            '<option value="usertype">User Type</option>\n' +
+                            '<option value="user_fname">First name</option>\n' +
+                            '<option value="user_lname">Last name</option>\n' +
+                            '<option value="user_email">Email Address</option>\n' +
+                            '<option value="user_authentication">User Type</option>\n' +
                             '</select>\n' +
                             '</div>';
                         break;
