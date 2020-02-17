@@ -188,7 +188,7 @@
             </div>
             <button class="tablink" onclick="openPage('Albums', this, 'black'), showAlbumList()" id="defaultOpen">Albums</button>
             <button class="tablink" onclick="openPage('types', this, 'black'),showTypeList()">Types</button>
-            <button class="tablink" onclick="openPage('userAlbum', this, 'black'),showTypeList()">User Albums</button>
+            <button class="tablink" onclick="openPage('userAlbum', this, 'black')">User Albums</button>
 
 <?php
 //Just in case I use these values in the code
@@ -245,6 +245,11 @@ if ($result->num_rows > 0) {
             </div>
 
             <div id="userAlbum" class="tabcontent">
+                <div id="search-box">
+                    <input type="text" placeholder="Search username" />
+                </div>
+                <div id="search-result">
+                </div>
 
             </div>
         </div>
@@ -557,17 +562,11 @@ if ($result->num_rows > 0) {
      xhttp.send("id=" + id+" & fname="+fname);
  }
 
-    //search for users front-end code
-    //document ready probably isn't needed
-
-    //the jquery for the front-end is done,
-    //you just need to a div with an id of search-box and but an input of type text inside of it where you want
-
     $('#search-box input[type="text"]').on("keyup input",function(){
        var input = $(this).val();
-       var result = $("#result");
-       if(inputVAl.length){
-           $.get("myAlbums_user_search.php" , {term: input}).done(function(data){
+       var result = $("#search-result");
+       if(input.length){
+           $.get("../Util/myAlbums_user_search.php" , {term: input}).done(function(data){
                result.html(data);
            });
        }

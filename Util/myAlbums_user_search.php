@@ -17,9 +17,6 @@
 
             if(mysqli_stmt_execute($stmt)){
                 $result = mysqli_stmt_get_result($stmt);
-
-                //im not sure exactly what you want to see in the table
-                //make any changes you'd like to in the echo
                 if(mysqli_num_rows($result) > 0){
                     echo '<div class="table-wrapper"><table>'
                         .'<thead>'
@@ -31,7 +28,7 @@
                         .'<th>User type</th>'
                         .'</tr>'
                         .'</thead><tbody>';
-                    //change the echo in here too if you want
+
                     while($row = mysqli_fetch_array($result,MYSQLI_ASSOC)){
                         echo '<tr>'
                             .'<td>'.$row['user_lname'].'</td>'
@@ -49,5 +46,5 @@
         }
         mysqli_stmt_close($stmt);
     }
-    mysqli_stmt_close($conn);
+    mysqli_close($conn);
 ?>
