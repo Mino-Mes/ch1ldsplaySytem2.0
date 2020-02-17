@@ -106,7 +106,7 @@ $_SESSION['current_page'] = 'admin_command';
                         var inputVal = $(this).val();
                         var resultDropdown = $(".result");
                         if(inputVal.length){
-                            $.get("Manage_users_backend.php", {term: inputVal}).done(function(data){
+                            $.get("../Util/Manage_users_backend.php", {term: inputVal}).done(function(data){
                                 // Display the returned data in browser
                                 resultDropdown.html(data);
                             });

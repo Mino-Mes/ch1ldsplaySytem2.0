@@ -188,6 +188,8 @@
             </div>
             <button class="tablink" onclick="openPage('Albums', this, 'black'), showAlbumList()" id="defaultOpen">Albums</button>
             <button class="tablink" onclick="openPage('types', this, 'black'),showTypeList()">Types</button>
+            <button class="tablink" onclick="openPage('userAlbum', this, 'black'),showTypeList()">User Albums</button>
+
 <?php
 //Just in case I use these values in the code
 $sql = "SELECT * from album";
@@ -237,6 +239,12 @@ if ($result->num_rows > 0) {
             </div>
 
             <div id="types" class="tabcontent">
+                <div id="result">
+
+                </div>
+            </div>
+
+            <div id="userAlbum" class="tabcontent">
 
             </div>
         </div>
