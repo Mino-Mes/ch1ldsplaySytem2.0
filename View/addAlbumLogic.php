@@ -163,7 +163,7 @@ if (isset($_POST)) {
                         if ($conn->query($sql3) == true) {
                             $message = "The Album has been created, great work!";
                         } else {
-                            $message = "The Album was not created, please contact the administrator Error: " . $conn->error;;
+                            $message = "The Album was not created, please contact the administrator Error: " . $conn->error;
                         }
                     }
                 }
