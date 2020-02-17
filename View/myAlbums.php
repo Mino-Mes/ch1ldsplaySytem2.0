@@ -557,6 +557,26 @@ if ($result->num_rows > 0) {
      xhttp.send("id=" + id+" & fname="+fname);
  }
 
+    //search for users front-end code
+    //document ready probably isn't needed
+
+    //the jquery for the front-end is done,
+    //you just need to a div with an id of search-box and but an input of type text inside of it where you want
+
+    $('#search-box input[type="text"]').on("keyup input",function(){
+       var input = $(this).val();
+       var result = $("#result");
+       if(inputVAl.length){
+           $.get("myAlbums_user_search.php" , {term: input}).done(function(data){
+               result.html(data);
+           });
+       }
+       else{
+           result.empty();
+       }
+    });
+
+
 </script>
 
 </body>
