@@ -57,6 +57,20 @@
             background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
         }
 
+        .modal1 {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0); /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+        }
+
         /* Modal Content */
         .modal-content {
             background-color: #fefefe;
@@ -64,6 +78,17 @@
             padding: 20px;
             border: 1px solid #888;
             width: 40%;
+            -webkit-animation-name: animatetop;
+            -webkit-animation-duration: 1s;
+            animation-name: animatetop;
+            animation-duration: 1s
+        }
+        .modal1-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
             -webkit-animation-name: animatetop;
             -webkit-animation-duration: 1s;
             animation-name: animatetop;
@@ -326,6 +351,31 @@
             </form>
         </div>
     </div>
+    <div id="viewYourPhotographs" class="modal1">
+        <!-- Modal content -->
+        <div class="modal1-content">
+            <span class="close">&times;</span>
+            <h4>List of Photographs in album</h4>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Image Path</th>
+                        <th>Photo Id</th>
+                        <th>Creator Id</th>
+                        <th>Active</th>
+                        <th>Update</th>
+                        <th>Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody id="listContainer">
+
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
     <div id="snackbar"></div>
     <!-- Footer -->
     <footer id="footer">
@@ -441,6 +491,44 @@
         }
     }
 
+    function showYourPhotographListModal(id)
+    {
+        showYourPhotographList(id);
+        // Get the modal
+        var modal = document.getElementById("viewYourPhotographs");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[4];
+
+        // When the user clicks the button, open the modal
+        modal.style.display = "block";
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    }
+
+    function showYourPhotographList(id)
+    {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var x = document.getElementById("listContainer");
+                x.innerHTML = this.responseText;
+            }
+        };
+        xhttp.open("POST", "../Util/showYourPhotographList.php", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("id=" + id);
+    }
 
     function updateType(row) {
         var name = document.getElementById("typeTable").rows[row].cells[1].innerHTML;
@@ -619,6 +707,38 @@
             result.empty();
         }
     });
+
+    function deletePhoto(id) {
+        var modal = document.getElementById("viewYourPhotographs");
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var x = document.getElementById("snackbar");
+                x.innerHTML = this.responseText;
+                x.className = "show";
+                setTimeout(function () {
+                    x.className = x.className.replace("show", "");
+                }, 3000);
+
+                modal.style.display = "none";
+            }
+        };
+        xhttp.open("POST", "../Util/isPhotoActive.php", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("photoId=" + id + " &deleteP=2");
+    }
+
+    function isActive(id) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+               showYourPhotographList(id);
+            }
+        };
+        xhttp.open("POST", "../Util/isPhotoActive.php", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("photoId=" + id + " &isActive=2");
+    }
 
 
 </script>

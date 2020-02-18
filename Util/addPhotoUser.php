@@ -32,11 +32,11 @@ if (isset($_POST)) {
             $newFilePath = $dir . "/" . $_FILES["userPhotos"]["name"][$i];
 
             if (move_uploaded_file($tmpFilePath, $newFilePath)) {
-                $sql = "INSERT INTO my_photograph VALUES(DEFAULT, $userId,'$newFilePath')";
+                $sql = "INSERT INTO my_photograph VALUES(DEFAULT, $userId,'$newFilePath',1)";
                 if ($conn->query($sql) == true) {
                     $message = "The Photos have been added, great work!";
                 } else {
-                    $message = "The Photos have not been added,, please contact the administrator Error: " . $conn->error;
+                    $message = "The Photos have not been added,, please contact the administrator Error: $newFilePath" . $conn->error;
                 }
             }else
             {

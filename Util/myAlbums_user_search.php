@@ -36,6 +36,7 @@ $returnString="";
                         .'<th>Username</th>'
                         .'<th>User type</th>'
                         .'<th>Add Photograph</th>'
+                        .'<th>View YourPhotograph</th>'
                         .'</tr>'
                         .'</thead><tbody>';
 
@@ -48,7 +49,8 @@ $returnString="";
                             .'<td>'.$row['user_email'].'</td>'
                             .'<td>'.$row['user_username'].'</td>'
                             .'<td>'.$row['user_authentication'].'</td>'
-                            .'<td><ul class="actions fit small"><li><a href="javascript:void(0)" class="button fit small" onclick="addPhotoModal('.$userId.')" style="padding-left:1%;padding-right:1%;">Add Photographs</a></li></ul></td></tr>';
+                            .'<td><ul class="actions fit small"><li><a href="javascript:void(0)" class="button fit small" onclick="addPhotoModal('.$userId.')" style="padding-left:1%;padding-right:1%;">Add Photographs</a></li></ul></td>'
+                            .'<td><ul class="actions fit small"><li><a href="javascript:void(0)" class="button alt fit small" onclick="showYourPhotographListModal('.$userId.')" style="padding-left:1%;padding-right:1%;">View</a></li></ul></td></tr>';
                     }
                     $returnString .= '</tbody></table>';
 
