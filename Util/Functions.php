@@ -49,7 +49,7 @@ function sendEmail($fname,$lname,$email,$subject,$body)
     try {
         if (!$mail->Send()) {
             echo "Mailer Error: " . $mail->ErrorInfo;
-        } else {}
+        } else { return true;}
     } catch (\PHPMailer\PHPMailer\Exception $e) {}
 }
 
@@ -78,7 +78,7 @@ if (isset($_POST)) {
         $message = "Please, the First Name and Last Name field must be filled and can not be numeric values";
     }
 
-    if (empty($email)) {
+    if (empty($email) || !(filter_var($email, FILTER_VALIDATE_EMAIL))) {
         //Error the email is not valid.
         $verified_email = true;
         $message = "Invalid Email";
@@ -103,7 +103,7 @@ if (isset($_POST)) {
     {
         $message = "Please fill in the form completely in order to contact our photographer";
     }
-    if ($verified_service == false && $verified_availabilities == false && $verified_email == false && $verified_last_name == false && $verified_first_name == false && $verified_email == false) {
+    else if ($verified_service == false && $verified_availabilities == false && $verified_email == false && $verified_last_name == false && $verified_first_name == false && $verified_email == false) {
         $email_subject = "CHI1DSPLAY MEDIA PRODUCTION - New Photoshoot Request from";
         $email_body = "You have receive a new Schedule Request from <em> $first_name $last_name</em> :
                 <br>
@@ -120,7 +120,9 @@ if (isset($_POST)) {
            &nbsp;&nbsp; $availabilities";
 
         sendEmail($first_name,$last_name,$email,$email_subject,$email_body);
-        $message = "An email has been sent,<br>the owner will contact you soon, Thank you !";
+
+         $message = "An email has been sent,<br>the owner will contact you soon, Thank you !";
     }
+
 }
 echo $message;

@@ -215,9 +215,7 @@ if($no_err)
 
     $date = date('Y-m-d',time());
 
-
     $sql->execute();
-
     $sql->close();
     $conn->close();
 
@@ -225,6 +223,18 @@ if($no_err)
     $_SESSION['reg_msg'] = $msg;
 
     $reg_success = true;
+
+    $sql2="SELECT user_fname,user_authentication,user_id FROM user WHERE user_id=LAST_INSERT_ID";
+    $result2=$conn->query($sql2);
+    if($result2->num_rows >0)
+    {
+        while($row=$result2->fetch_assoc())
+        {
+            $_SESSION['ln_usertype'] =$row["user_authentication"];
+            $_SESSION['ln_username'] =$row["user_fname"];
+            $_SESSION['ln_userId']=$row["user_id"];
+        }
+    }
     $_SESSION['reg_success'] = $reg_success;
 
     header('Location: ../View/index.php');

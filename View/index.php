@@ -93,7 +93,7 @@ include '../Util/Popup_return_handler.php';
                         <label>
                             Email
                         </label>
-                        <input type="email" name="email" id="email" placeholder="Email" required/>
+                        <input type="email" name="email" id="email" placeholder="Email" required>
                     </div>
                     <div class="col-6 col-12-xsmall">
                         <label>
@@ -121,16 +121,11 @@ include '../Util/Popup_return_handler.php';
                         <textarea name="avail" id="availabilities" placeholder="Explain Availabilities"
                                   rows="6" required></textarea>
                     </div>
-                    <!-- Break -->
-                 <!--   <div class="col-12 text-center" id="center_button" style="margin-left:40%;margin-right:60%;">
-                        <input type="button" onclick="sendEmail()" id="emailSubmitBtn"  value="Send Message"/>
-                    </div>-->
                     <ul class="actions special">
                         <li><button class="button next" type="button" onclick="sendEmail()" id="emailSubmitBtn">Send Message</button></li>
                     </ul>
                 </div>
             </form>
-
              <div id="snackbar"></div>
         </div>
     </section>
@@ -156,7 +151,6 @@ include '../Util/Popup_return_handler.php';
 
 <div id='ln_snackbar'></div>
 
-
 <!-- Scripts -->
 <script src="../assets/js/jquery.min.js"></script>
 <script src="../assets/js/jquery.dropotron.min.js"></script>
@@ -168,61 +162,9 @@ include '../Util/Popup_return_handler.php';
 <script src="../assets/js/main.js"></script>
 <script src="../js/Script_popup.js"></script>
 <script src="../js/jump.js"></script>
+<script src="../Util/indexFunctions.js"></script>
 
 <script>
-    function sendEmail(){
-        var fname=document.getElementById("fname").value;
-        var lname=document.getElementById("lname").value;
-        var email=document.getElementById("email").value;
-        var description=document.getElementById("description").value;
-        var avail=document.getElementById("availabilities").value;
-
-        var dropdownServ = document.getElementById("service");
-        var service = dropdownServ.options[dropdownServ.selectedIndex].value;
-
-        var xhttp=new XMLHttpRequest();
-        xhttp.onreadystatechange=function(){
-            if(this.readyState==4 && this.status ==200)
-            {
-                var x = document.getElementById("snackbar");
-                x.innerHTML=this.responseText;
-                    x.className = "show";
-                    setTimeout(function () {
-                        x.className = x.className.replace("show", "");
-                    }, 3000);
-            }
-        };
-        xhttp.open("POST", "../Util/Functions.php", true);
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send("fname="+fname+"&"+"lname="+lname+"&"+"email="+email+"&"+"description="+description+"&"+"avail="+avail+"&"+"service="+service);
-    }
-    function showAll(){
-        var xhttp=new XMLHttpRequest();
-        xhttp.onreadystatechange=function(){
-            if(this.readyState==4 && this.status ==200)
-            {
-                $("#galleryBox").addClass(".fade-in");
-                document.getElementById("galleryContainer").innerHTML=this.responseText;
-            }
-        };
-        xhttp.open("POST", "../Util/selectGalleryType.php", true);
-        xhttp.send();
-    }
-    function getGalleryType() {
-        var dropdownType = document.getElementById("typeDrop");
-        var type = dropdownType.options[dropdownType.selectedIndex].value;
-
-        var xhttp1=new XMLHttpRequest();
-        xhttp1.onreadystatechange=function(){
-            if(this.readyState==4 && this.status ==200)
-            {
-                document.getElementById("galleryContainer").innerHTML=this.responseText;
-            }
-        };
-        xhttp1.open("POST", "../Util/selectGalleryType.php", true);
-        xhttp1.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp1.send("type="+type);
-    }
     var xhttp=new XMLHttpRequest();
     xhttp.onreadystatechange=function(){
         if(this.readyState==4 && this.status ==200)
@@ -232,7 +174,6 @@ include '../Util/Popup_return_handler.php';
     };
     xhttp.open("POST", "../Util/selectGalleryType.php", true);
     xhttp.send();
-
 </script>
 
 </body>
