@@ -1,5 +1,5 @@
 <?php
-    //call this function immediately on all admin pages
+
 function onlyAdmin(){
     //checks if the user is an admin, if not, send them back to index
     if(isset($_SESSION['ln_usertype'])){
@@ -25,6 +25,18 @@ function isCollab()
         header('Location: ../View/index.php');
     }
 }
+    //call this function immediately on all admin pages
+    function check_auth($authorization){
+        //checks if the user is an admin, if not, send them back to index
+        if(isset($_SESSION['ln_usertype'])){
+            if($_SESSION['ln_usertype'] != $authorization) {
+                unset($_SESSION['ln_usertype']);
+                unset($_SESSION['ln_username']);
+                unset($_SESSION['ln_userId']);
+                header('Location: ../View/index.php');
+            }
+        }
+    }
     function logout(){
         unset($_SESSION['ln_username']);
         unset($_SESSION['ln_usertype']);
@@ -39,7 +51,7 @@ function isCollab()
             if($_SESSION["ln_usertype"] == "administrator")
             {
 
-                echo "<header id=\"header\" class=\"alt\">
+                echo "<header id=\"header\" >
 
         <!-- Logo -->
         <div class=\"logo\">
@@ -63,7 +75,7 @@ function isCollab()
             }
             else if($_SESSION["ln_usertype"] == "collaborator")
             {
-                echo "<header id=\"header\" class=\"alt\">
+                echo "<header id=\"header\">
 
         <!-- Logo -->
         <div class=\"logo\">
@@ -85,7 +97,7 @@ function isCollab()
             else if($_SESSION["ln_usertype"] == "customer")
             {
                     $id=$_SESSION["ln_userId"];
-                echo "<header id=\"header\" class=\"alt\">
+                echo "<header id=\"header\" >
 
         <!-- Logo -->
         <div class=\"logo\">
@@ -105,7 +117,7 @@ function isCollab()
             }
         }else
         {
-            echo "<header id=\"header\" class=\"alt\">
+            echo "<header id=\"header\" >
         <!-- Logo -->
         <div class=\"logo\" style='display: inline'>
             <strong><a href='javascript:void(0)'  style='display: inline' onclick='Login()'>Login</a>/<a href='javascript:void(0)' onclick='Reg()' style='display: inline'>Register</a></strong>
