@@ -1,4 +1,5 @@
 <?php
+/* THIS CODE IS NOW IN functions.php*/
 //checks if the user is an admin, if not, send them back to index
 if(isset($_SESSION['ln_usertype'])){
     if($_SESSION['ln_usertype'] != 'administrator') {

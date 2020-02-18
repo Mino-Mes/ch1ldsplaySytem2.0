@@ -2,9 +2,7 @@
 <script>
     $(document).ready(function(){
 
-        /*
-        THIS CODE WILL NO LONGER BE IN USE, A FUNCTION WILL BE USED INSTEAD
-         */
+        /* THIS CODE IS NOW IN functions.php*/
 
 
         //var nav_a = document.getElementById('nav_a');
