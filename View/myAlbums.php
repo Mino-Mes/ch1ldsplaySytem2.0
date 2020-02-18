@@ -1,4 +1,9 @@
-<?php require "../Util/dbconn.php"; ?>
+<?php
+session_start();
+require "../Util/dbconn.php";
+require "../Util/navOtherPages.php";
+isCollab();
+?>
 <!DOCTYPE HTML>
 <!--
 	Relativity by Pixelarity
@@ -7,194 +12,37 @@
 -->
 <html>
 <head>
-    <title>MyAlbums</title>
+    <title>CH1ldsplay Media Production | MyAlbums</title>
     <meta charset="utf-8"/>
+    <link rel="icon" href="../Images/logo.png" type="image/gif" sizes="16x16">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <link rel="stylesheet" href="../css/myAlbums.css">
     <link rel="stylesheet" href="../assets/css/main.css"/>
     <link rel="stylesheet" href="../css/snack_back.css"/>
     <link rel="stylesheet" href="../css/ln_snackbar.css">
     <style>
+
         th, td {
             vertical-align: middle;
         }
 
-        /* Style tab links */
-        .tablink {
-            background-color: #3dc5ad;
-            color: white;
-            float: left;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            padding: 14px 16px;
-            font-size: 17px;
-            width: 20%;
-        }
-
-        .tablink:hover {
-            background-color: #777;
-        }
-
-        /* Style the tab content (and add height:100% for full page content) */
-        .tabcontent {
-            display: none;
-            padding: 100px 20px;
-            height: 100%;
-        }
-
-        /* The Modal (background) */
-        .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1; /* Sit on top */
-            padding-top: 100px; /* Location of the box */
-            left: 0;
-            top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgb(0, 0, 0); /* Fallback color */
-            background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
-        }
-
-        .modal1 {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1; /* Sit on top */
-            padding-top: 100px; /* Location of the box */
-            left: 0;
-            top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgb(0, 0, 0); /* Fallback color */
-            background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
-        }
-
-        /* Modal Content */
-        .modal-content {
-            background-color: #fefefe;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 40%;
-            -webkit-animation-name: animatetop;
-            -webkit-animation-duration: 1s;
-            animation-name: animatetop;
-            animation-duration: 1s
-        }
-        .modal1-content {
-            background-color: #fefefe;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            -webkit-animation-name: animatetop;
-            -webkit-animation-duration: 1s;
-            animation-name: animatetop;
-            animation-duration: 1s
-        }
-
-        /* The Close Button */
-        .close {
-            color: #aaaaaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: #000;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        @-webkit-keyframes animatetop {
-            from {
-                top: -500px;
-                opacity: 0
-            }
-            to {
-                top: 0;
-                opacity: 1
-            }
-        }
-
-        @keyframes animatetop {
-            from {
-                top: -500px;
-                opacity: 0
-            }
-            to {
-                top: 0;
-                opacity: 1
-            }
-        }
-
-        .tabcontent {
-            animation: fadeEffect 1s; /* Fading effect takes 1 second */
-        }
-
-        /* Go from zero to full opacity */
-        @keyframes fadeEffect {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
     </style>
+
 </head>
 <body class="is-preload">
 
 <!-- Wrapper -->
 <div id="wrapper">
 
-    <!-- Header -->
-    <header id="header">
-
-        <!-- Logo -->
-        <div class="logo">
-            <a href="index.php"><strong>Relativity</strong> by Pixelarity</a>
-        </div>
-
-        <!-- Nav -->
-        <nav id="nav">
-            <ul>
-                <li><a href="index.php">Home</a></li>
-                <li>
-                    <a href="#" class="icon fa-angle-down">Dropdown</a>
-                    <ul>
-                        <li><a href="#">Option One</a></li>
-                        <li><a href="#">Option Two</a></li>
-                        <li><a href="#">Option Three</a></li>
-                        <li>
-                            <a href="#">Submenu</a>
-                            <ul>
-                                <li><a href="#">Option One</a></li>
-                                <li><a href="#">Option Two</a></li>
-                                <li><a href="#">Option Three</a></li>
-                                <li><a href="#">Option Four</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li class="current"><a href="myAlbums.php">Generic</a></li>
-                <li><a href="elements.html">Elements</a></li>
-            </ul>
-        </nav>
-
-    </header>
+    <?php nav(); ?>
 
     <!-- Section -->
     <section class="main alt">
         <header>
             <h1>Administrative Functions Page</h1>
-            <p>This page allows the adminstrator to view all active albums. Furthermore, it allows the user to update
-                any active album and add any type of album </p>
+            <p>This page allows the administrator to view all active albums. Furthermore, it allows the user to update
+                any active album and add any type of album while also giving the option to add photographs to an
+                existing user.</p>
         </header>
         <div class="inner style2">
 
@@ -211,13 +59,18 @@
                 <input type="checkbox" id="activeAlb" name="activeAlb" onclick="showAlbumList()">
                 <label for="activeAlb">Show Active Albums Only</label>
             </div>
+            <ul class="actions special" style="width: 100%;">
+                <li>
+                    <button class="tablink" onclick="openPage('Albums', this, 'black'), showAlbumList()"
+                            id="defaultOpen">
+                        Albums
+                    </button>
 
-            <button class="tablink" onclick="openPage('Albums', this, 'black'), showAlbumList()" id="defaultOpen">
-                Albums
-            </button>
-            <button class="tablink" onclick="openPage('types', this, 'black'),showTypeList()">Types</button>
-            <button class="tablink" onclick="openPage('userAlbum', this, 'black')">User Albums</button>
+                    <button class="tablink" onclick="openPage('types', this, 'black'),showTypeList()">Types</button>
 
+                    <button class="tablink" onclick="openPage('userAlbum', this, 'black')">User Albums</button>
+                </li>
+            </ul>
             <div id="Albums" class="tabcontent">
                 <h4>List of Current Albums</h4>
                 <div class="table-wrapper">
@@ -342,7 +195,8 @@
                 <label>
                     Insert Files
                 </label>
-                <input type="file" id="userPhotos[]" name="userPhotos[]" multiple="multiple" style="margin-bottom:5%; "/>
+                <input type="file" id="userPhotos[]" name="userPhotos[]" multiple="multiple"
+                       style="margin-bottom:5%; "/>
                 <ul class="actions special">
                     <li>
                         <button class="button next" type="submit" id="addPhotoBtn">Add Photographs Button</button>
@@ -401,347 +255,6 @@
 <script src="../assets/js/breakpoints.min.js"></script>
 <script src="../assets/js/util.js"></script>
 <script src="../assets/js/main.js"></script>
-<script>
-    function openPage(pageName, elmnt, color) {
-        var i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-        }
-        tablinks = document.getElementsByClassName("tablink");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].style.backgroundColor = "";
-        }
-        document.getElementById(pageName).style.display = "block";
-        elmnt.style.backgroundColor = color;
-    }
-
-    // Get the element with id="defaultOpen" and click on it
-    document.getElementById("defaultOpen").click();
-
-    function addTypeModal() {
-        // Get the modal
-        var modal = document.getElementById("myModal");
-
-        // Get the button that opens the modal
-        var btn = document.getElementById("myBtn");
-
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
-
-        // When the user clicks the button, open the modal
-        modal.style.display = "block";
-
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function () {
-            modal.style.display = "none";
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-    }
-
-    $("form#addPhotoUserForm").submit(function (e) {
-        e.preventDefault();
-        var formData = new FormData(this);
-
-        $.ajax({
-            url:"../Util/addPhotoUser.php",
-            type: 'POST',
-            data: formData,
-            success: function (data) {
-                var x = document.getElementById("snackbar");
-                x.innerHTML = data;
-                x.className = "show";
-                setTimeout(function () {
-                    x.className = x.className.replace("show", "");
-                }, 3000);
-            },
-            cache: false,
-            contentType: false,
-            processData: false
-        });
-    });
-
-    function addPhotoModal(userId) {
-        // Get the modal
-        var modal = document.getElementById("addPhotographs");
-
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[3];
-
-        document.getElementById("hiddenUserId").value = userId;
-        // When the user clicks the button, open the modal
-        modal.style.display = "block";
-
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function () {
-            modal.style.display = "none";
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-    }
-
-    function showYourPhotographListModal(id)
-    {
-        showYourPhotographList(id);
-        // Get the modal
-        var modal = document.getElementById("viewYourPhotographs");
-
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[4];
-
-        // When the user clicks the button, open the modal
-        modal.style.display = "block";
-
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function () {
-            modal.style.display = "none";
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-    }
-
-    function showYourPhotographList(id)
-    {
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                var x = document.getElementById("listContainer");
-                x.innerHTML = this.responseText;
-            }
-        };
-        xhttp.open("POST", "../Util/showYourPhotographList.php", true);
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send("id=" + id);
-    }
-
-    function updateType(row) {
-        var name = document.getElementById("typeTable").rows[row].cells[1].innerHTML;
-        var active = document.getElementById("typeTable").rows[row].cells[2].innerHTML;
-        var id = document.getElementById("typeTable").rows[row].cells[0].innerHTML;
-
-        document.getElementById("typeName").value = name;
-        if (active == "Active") {
-            document.getElementById("active").checked = true;
-        } else {
-            document.getElementById("active").checked = false;
-        }
-
-        document.getElementById("id").value = id;
-        // Get the modal
-        var modal = document.getElementById("updateType");
-
-        modal.style.display = "block";
-
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[1];
-
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function () {
-            modal.style.display = "none";
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-    }
-
-    function updateTypeSQL() {
-        var id = document.getElementById("id").value;
-        var name = document.getElementById("typeName").value;
-        if (document.getElementById("active").checked) {
-            var isActive = 1;
-        } else {
-            var isActive = 0;
-        }
-
-        var xhttp1 = new XMLHttpRequest();
-        xhttp1.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                var x = document.getElementById("snackbar1");
-                x.innerHTML = this.responseText;
-                x.className = "show";
-                setTimeout(function () {
-                    x.className = x.className.replace("show", "");
-                }, 3000);
-
-                showTypeList();
-            }
-        };
-        xhttp1.open("POST", "../Util/updateType.php", true);
-        xhttp1.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp1.send("id=" + id + "&name=" + name + "&active=" + isActive);
-    }
-
-    function UploadType() {
-        var typeName = document.getElementById("name1").value;
-
-        var xhttp1 = new XMLHttpRequest();
-        xhttp1.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                var x = document.getElementById("snackbar");
-                x.innerHTML = this.responseText;
-                x.className = "show";
-                setTimeout(function () {
-                    x.className = x.className.replace("show", "");
-                }, 3000);
-                showTypeList();
-            }
-        };
-        xhttp1.open("POST", "../Util/addTypeLogic.php", true);
-        xhttp1.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp1.send("type=" + typeName);
-    }
-
-    function showTypeList() {
-        if (document.getElementById("seeActive").checked) {
-            var active = 1;
-        } else {
-            var active = 0;
-        }
-
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("types").innerHTML = this.responseText;
-            }
-        };
-        xhttp.open("POST", "../Util/showType.php", true);
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send("active=" + active);
-    }
-
-    function showAlbumList() {
-        if (document.getElementById("activeAlb").checked) {
-            var active = 1;
-        } else {
-            var active = 0;
-        }
-
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("albumContainer").innerHTML = this.responseText;
-            }
-        };
-        xhttp.open("POST", "../Util/showAlbumList.php", true);
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send("active=" + active);
-    }
-
-
-    function openDeleteModal(id, fname) {
-        // Get the modal
-        var modal = document.getElementById("delete");
-
-
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[2];
-
-        // When the user clicks the button, open the modal
-        modal.style.display = "block";
-
-        span.onclick = function () {
-            modal.style.display = "none";
-        }
-
-
-        document.getElementById("hiddenId").value = id;
-        document.getElementById("functionName").value = fname;
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-    }
-
-    function deleteObject() {
-        var id = document.getElementById("hiddenId").value;
-        var fname = document.getElementById("functionName").value;
-
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                var x = document.getElementById("snackbar");
-                x.innerHTML = this.responseText;
-                x.className = "show";
-                setTimeout(function () {
-                    x.className = x.className.replace("show", "");
-                }, 3000);
-                showTypeList();
-                showAlbumList();
-            }
-        };
-        xhttp.open("POST", "../Util/delete.php", true);
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send("id=" + id + " & fname=" + fname);
-    }
-
-    $('#search-box').on("keyup input", function () {
-        var input = $('#search-box').val();
-        var result = $("#search-table");
-        if (input.length) {
-            $.get("../Util/myAlbums_user_search.php", {term: input}).done(function (data) {
-                result.html(data);
-            });
-        } else {
-            result.empty();
-        }
-    });
-
-    function deletePhoto(id) {
-        var modal = document.getElementById("viewYourPhotographs");
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                var x = document.getElementById("snackbar");
-                x.innerHTML = this.responseText;
-                x.className = "show";
-                setTimeout(function () {
-                    x.className = x.className.replace("show", "");
-                }, 3000);
-
-                modal.style.display = "none";
-            }
-        };
-        xhttp.open("POST", "../Util/isPhotoActive.php", true);
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send("photoId=" + id + " &deleteP=2");
-    }
-
-    function isActive(id) {
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-               showYourPhotographList(id);
-            }
-        };
-        xhttp.open("POST", "../Util/isPhotoActive.php", true);
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send("photoId=" + id + " &isActive=2");
-    }
-
-
-</script>
-
+<script src="../Util/myAlbumsFunctions.js"></script>
 </body>
 </html>
