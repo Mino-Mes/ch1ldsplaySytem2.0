@@ -2,6 +2,11 @@
 <script>
     $(document).ready(function(){
 
+        /*
+        THIS CODE WILL NO LONGER BE IN USE, A FUNCTION WILL BE USED INSTEAD
+         */
+
+
         //var nav_a = document.getElementById('nav_a');
         var sb_txt = '';
         //two session variables that are set on successful login attempt

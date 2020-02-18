@@ -15,35 +15,39 @@
 
     $sql = '';
 
-    //put some input validation up here
+    //some if statements for testing
+    if($type == 'detail' && $table == 'user'){
+        $return .= '';
+
+    }
 
     switch($type){
-        case 'detail':
+        case 'detail': {
             switch($table){
-                case 'user':
+                case 'user':{
                     //$return = 'user!';
                     $sql = 'SELECT user_id,user_lname,user_fname,user_username,user_email,user_authentcation,user_creationDate FROM user';
                     $return .= ' DETAIL - USER';
-                    break;
-                case 'photo':
+                    break;}
+                case 'photo':{
                     //$sql = 'SELECT photo_id,album_id,user_id,photo_img FROM'.$table;
                     $sql = 'SELECT photo_id,album_id,user_id,photo_img FROM photo';
                     $return .= ' DETAIL - PHOTO ';
-                    break;
-                case 'album':
+                    break;}
+                case 'album':{
                     $sql = 'SELECT album_id,user_id,album_title,album_label,album_img FROM album';
                     $return .= ' DETAIL - ALBUM ';
-                    break;
-                default:
+                    break;}
+                default:{
                     $return = 'Error!1';
                     $err = true;
-                    break;
+                    break;}
             }
-            break;
-        case 'summary':
+            break;}
+        case 'summary':{
             //$return .= 's';
             switch($table){
-                case 'user':
+                case 'user':{
                     //$sql = 'SELECT user_id,user_authentication FROM '.$table;
                     $sql = 'SELECT user_id, user_authentication FROM user';
                     $return .= ' SUMMARY - USER ';
@@ -82,52 +86,52 @@
                     else{
                         $return = 'No data found!';
                     }
-                    break;
-                case 'photo': //probably dont need the image for summary reports
+                    break;}
+                case 'photo':{
                     $sql = 'SELECT photo_id,album_id,user_id,photo_img FROM photo';
                     $return .= ' SUMMARY - PHOTO  ';
-                    break;
-                case 'album': //same here
+                    break;}
+                case 'album':{ //same here
                     $sql = 'SELECT album_id,user_id,album_tite,album_label,album_img FROM album';
                     $return .= ' SUMMARY - ALBUM ';
-                    break;
-                default:
+                    break;}
+                default:{
                     $return = 'Error!2';
                     $err = true;
-                    break;
+                    break;}
             }
-            break;
-        case 'exception':
+            break;}
+        case 'exception':{
             //$return .= 'e';
             switch($table){
-                case 'user':
+                case 'user':{
                     $sql = "SELECT user_id,user_lname,user_fname,user_email,user_authentication,user_username,user_creationDate FROM user WHERE user_authentication = '".$input_1."' ORDER BY ".$input_2;
                     $return .= ' EXCEPTION - USER ';
-                    break;
-                case 'photo':
+                    break;}
+                case 'photo':{
                     //$sql = 'SELECT photo_id,album_id,user_id,photo_img FROM '.$table.
                            //' WHERE user_id = '.$sql_2_res;
                     $sql = 'SELECT photo_id,album_id,user_id,photo_img FROM photo WHERE user_id = ';
                     $req_sql_2 = true;
                     $return .= ' EXCEPTION - PHOTO ';
-                    break;
-                case 'album':
+                    break;}
+                case 'album':{
                     //$sql = 'SELECT album_id,user_id,album_tite,album_label,album_img FROM '.$table.
                            //' WHERE user_id = '.$sql_2_res;
                     $sql = 'SELECT * FROM album WHERE user_id = ';
                     $return .= ' EXCEPTION - ALBUM ';
                     $req_sql_2 = true;
-                    break;
-                default:
+                    break;}
+                default:{
                     $return = 'Error!3';
                     $err = true;
-                    break;
+                    break;}
             }
-            break;
-        default:
+            break;}
+        default:{
             $return = 'not found';
             $err = true;
-            break;
+            break;}
     }
 
 
