@@ -73,8 +73,8 @@ $_SESSION['current_page'] = 'admin_reports';
                     <select name="demo-category" id="select-report-subject" class="row_1_opts">
                         <option value="">- Report subject -</option>
                         <option value="user">User</option>
-                        <option value="album">Album</option>
                         <option value="photo">Photo</option>
+                        <option value="album">Album</option>
                     </select>
                 </div>
             </div>
@@ -111,29 +111,29 @@ $_SESSION['current_page'] = 'admin_reports';
                 switch(rpt_subject.options[rpt_subject.selectedIndex].value){
                     case 'user':
                         ex_row.innerHTML =
-                            '<div class="col-6-large">\n' +
+                            '<div class="col-6-large">' +
                             '<strong>User type</strong>'+
-                            '<select name="demo-category" id="select_user_type" class="row_2_opts">\n' +
-                            '<option value="">- User type -</option>\n' +
-                            '<option value="customer">Customer</option>\n' +
-                            '<option value="collaborator">Collaborator</option>\n' +
-                            '<option value="banned">Banned</option>\n' +
-                            '</select>\n' +
+                            '<select name="demo-category" id="select_user_type" class="row_2_opts">' +
+                            '<option value="">- User type -</option>' +
+                            '<option value="customer">Customer</option>' +
+                            '<option value="collaborator">Collaborator</option>' +
+                            '<option value="banned">Banned</option>' +
+                            '</select>' +
                             '</div>' +
-                            '<div class="col-6-large" style="padding-left:72px;">\n' +
+                            '<div class="col-6-large" style="padding-left:72px;">' +
                             '<strong>Order by</strong>'+
-                            '<select name="demo-category" id="select_order_by" class="row_2_opts">\n' +
-                            '<option value="">- Order by -</option>\n' +
-                            '<option value="user_fname">First name</option>\n' +
-                            '<option value="user_lname">Last name</option>\n' +
-                            '<option value="user_email">Email Address</option>\n' +
-                            '<option value="user_authentication">User Type</option>\n' +
-                            '</select>\n' +
+                            '<select name="demo-category" id="select_order_by" class="row_2_opts">' +
+                            '<option value="">- Order by -</option>' +
+                            '<option value="user_fname">First name</option>' +
+                            '<option value="user_lname">Last name</option>' +
+                            '<option value="user_email">Email Address</option>' +
+                            '<option value="user_authentication">User Type</option>' +
+                            '</select>' +
                             '</div>';
                         break;
                     case 'album':
                         ex_row.innerHTML =
-                            '<div class="col-6-large">\n' +
+                            '<div class="col-6-large">' +
                                 '<strong>Sort by username</strong>'+
                                 '<input type="text" id="enter_username" placeholder="Enter username">'+
                             '</div>';
@@ -141,7 +141,7 @@ $_SESSION['current_page'] = 'admin_reports';
                     case 'photo':
                         //document.write('works3');
                         ex_row.innerHTML =
-                            '<div class="col-6-large">\n' +
+                            '<div class="col-6-large">' +
                             '<strong>Sort by username</strong>'+
                             '<input type="text" id="enter_username" placeholder="Enter username">'+
                             '</div>';
@@ -174,7 +174,9 @@ $_SESSION['current_page'] = 'admin_reports';
             
             //here, get the data that will be sent over
             if(type == 'exception')
+            //apparently, there's an unexpected token on this line according to the console
             {
+                //i don't know where this unexpected token is...
                 switch(document.getElementById('select-report-subject').value){
                     case 'user':
                         input_1 = document.getElementById('select_user_type').options[document.getElementById('select_user_type').selectedIndex].value;
@@ -190,6 +192,9 @@ $_SESSION['current_page'] = 'admin_reports';
             else if(type == 'summary' || type == 'detail'){
                 input_1 = 'n/a';
                 input_2 = 'n/a';
+            }
+            else{
+
             }
 
             $.ajax({

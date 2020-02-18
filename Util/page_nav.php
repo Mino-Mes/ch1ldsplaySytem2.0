@@ -2,6 +2,9 @@
 <script>
     $(document).ready(function(){
 
+        /* THIS CODE IS NOW IN functions.php*/
+
+
         //var nav_a = document.getElementById('nav_a');
         var sb_txt = '';
         //two session variables that are set on successful login attempt
