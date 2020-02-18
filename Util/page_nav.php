@@ -28,7 +28,7 @@
                         break;
                     case 'administrator':
                         ?>
-                            document.getElementById('nav_ul').innerHTML += '<li><a href="Manage_users.php">Manage Users</a></li><li><a href="Reports.php">Reports</a></li>';
+                            document.getElementById('nav_ul').innerHTML += '<li><a href="Manage_users.php">Manage Users</a></li><li><a href="../View/Reports.php">Reports</a></li>';
                             sb_txt = 'Login Successful!';
                         <?php
                         break;

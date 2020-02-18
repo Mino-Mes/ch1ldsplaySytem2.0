@@ -2,7 +2,7 @@
 require "../Util/dbconn.php";
 
 $html="";
-$sql2="SELECT * FROM album";
+$sql2="SELECT * FROM album WHERE album_isActive=1";
 if(isset($_POST['type']))
 {
     $type = $_POST["type"];
@@ -22,7 +22,7 @@ if ($result2->num_rows > 0) {
 
         $count++;
         if ($count % 2 == 0) {
-            $html .="<article class=\"post style2 alt\"> 
+            $html .="<article class=\"post style2 alt fade-in\" id='galleryBox'> 
                                   <div class=\"content\"> 
                                    <header> 
                                     <span class=\"category\">$album_label</span> 
@@ -37,7 +37,7 @@ if ($result2->num_rows > 0) {
                                              </article>";
 
         } else {
-            $html .="<article class=\"post style2\"> 
+            $html .="<article class=\"post style2 fade-in\" id='galleryBox'> 
                             <div class=\"content\"> 
                             <header> 
                             <span class=\"category\">$album_label</span>

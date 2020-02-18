@@ -1,4 +1,5 @@
 <?php
+
 //for regs
 if(isset($_SESSION['reg_attempt']))
 {

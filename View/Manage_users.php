@@ -61,7 +61,7 @@ $_SESSION['current_page'] = 'admin_command';
                             <form method="post" action="#" class="alt">
                                 <div class="row gtr-uniform">
                                     <div class="col-12 col-12-xsmall" class="search-box">
-                                        <input type="text" name="demo-name" id="demo-name" value="" placeholder="Search username..." />
+                                        <input type="text" name="demo-name" class="search-box" id="demo-name" value="" placeholder="Search username..." />
                                     </div>
                                     <div class="col-4 col-12-xsmall">
                                         <input type="checkbox" id="demo-human" name="demo-human" checked>
