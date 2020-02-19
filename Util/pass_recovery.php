@@ -35,7 +35,7 @@ if(!$err){
     $token = bin2hex(random_bytes(50));
 
     //store token in password_reset table
-    $sql = "INSERT INTO password_reset(email, token) VALUES ('$email', '$token')";
+    $sql = "INSERT INTO password_reset(reset_email, reset_token) VALUES ('$email', '$token')";
     $res = $conn->query($sql) or die ('ERROR: Database Error');
 
     $to = $email;
@@ -53,7 +53,5 @@ else{
     $_SESSION['recover_email'] = $_POST['recover_email'];
     header('Location: ../View/Index.php');
 }
-
-
 ?>
 
