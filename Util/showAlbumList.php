@@ -18,7 +18,7 @@ if(isset($_POST))
         while ($albums = $result->fetch_assoc()) {
             $id = $albums["album_id"];
             $user_id = $albums["user_id"];
-            $album_title = $albums["album_description"];
+            $album_title = $albums["album_title"];
             $album_description = $albums["album_description"];
             $album_label = $albums["album_label"];
             $album_img = $albums["album_img"];

@@ -46,7 +46,7 @@ function addTypeModal() {
 $("form#addPhotoUserForm").submit(function (e) {
     e.preventDefault();
     var formData = new FormData(this);
-
+    var modal = document.getElementById("addPhotographs");
     $.ajax({
         url:"../Util/addPhotoUser.php",
         type: 'POST',
@@ -58,6 +58,7 @@ $("form#addPhotoUserForm").submit(function (e) {
             setTimeout(function () {
                 x.className = x.className.replace("show", "");
             }, 3000);
+            modal.style.display = "none";
         },
         cache: false,
         contentType: false,
@@ -182,6 +183,8 @@ function updateTypeSQL() {
             }, 3000);
 
             showTypeList();
+            var modal = document.getElementById("updateType");
+            modal.style.display = "none";
         }
     };
     xhttp1.open("POST", "../Util/updateType.php", true);
@@ -191,7 +194,7 @@ function updateTypeSQL() {
 
 function UploadType() {
     var typeName = document.getElementById("name1").value;
-
+    var modal = document.getElementById("myModal");
     var xhttp1 = new XMLHttpRequest();
     xhttp1.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -202,6 +205,7 @@ function UploadType() {
                 x.className = x.className.replace("show", "");
             }, 3000);
             showTypeList();
+            modal.style.display="none";
         }
     };
     xhttp1.open("POST", "../Util/addTypeLogic.php", true);
@@ -287,6 +291,8 @@ function deleteObject() {
             }, 3000);
             showTypeList();
             showAlbumList();
+            var modal = document.getElementById("delete");
+            modal.style.display = "none";
         }
     };
     xhttp.open("POST", "../Util/delete.php", true);
@@ -327,10 +333,19 @@ function deletePhoto(id) {
 }
 
 function isActive(id) {
+    var modal = document.getElementById("viewYourPhotographs");
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
+            var x = document.getElementById("snackbar");
+            x.innerHTML = this.responseText;
+            x.className = "show";
+            setTimeout(function () {
+                x.className = x.className.replace("show", "");
+            }, 3000);
+         //   modal.style.display = "block";
             showYourPhotographList(id);
+            modal.style.display = "none";
         }
     };
     xhttp.open("POST", "../Util/isPhotoActive.php", true);

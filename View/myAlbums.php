@@ -166,9 +166,9 @@ isCollab();
                     </li>
                 </ul>
             </div>
-            <div id="snackbar1" class="snackbar"></div>
         </div>
     </div>
+    <div id="snackbar1" class="snackbar"></div>
     <div id="delete" class="modal">
         <!-- Modal content -->
         <div class="modal-content">
@@ -232,17 +232,7 @@ isCollab();
     </div>
     <div id="snackbar"></div>
     <!-- Footer -->
-    <footer id="footer">
-        <ul class="icons">
-            <li><a href="#" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
-            <li><a href="#" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
-            <li><a href="#" class="icon alt fa-instagram"><span class="label">Instagram</span></a></li>
-            <li><a href="#" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
-            <li><a href="#" class="icon alt fa-phone"><span class="label">Phone</span></a></li>
-            <li><a href="#" class="icon alt fa-envelope-o"><span class="label">Email</span></a></li>
-        </ul>
-        <p class="copyright">&copy; Untitled. All rights reserved.</p>
-    </footer>
+  <?php footer();?>
 
 </div>
 

@@ -1,4 +1,8 @@
-<?php require "../Util/dbconn.php"; ?>
+<?php require "../Util/dbconn.php";
+require "../Util/navOtherPages.php";
+session_start();
+
+?>
 <!DOCTYPE HTML>
 <!--
 	Relativity by Pixelarity
@@ -7,19 +11,15 @@
 -->
 <html>
 <head>
-    <title>Untitled</title>
-    <meta charset="utf-8"/>
+    <title>Ch1ldsplay Media Production | YourPhotographs</title>
+    <link rel="icon" href="../Images/logo.png" type="image/gif" sizes="16x16">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
     <script type='text/javascript' src='../unitegallery-master/package/unitegallery/js/jquery-11.0.min.js'></script>
     <script type='text/javascript' src='../unitegallery-master/package/unitegallery/js/unitegallery.min.js'></script>
     <link rel="stylesheet" href="../assets/css/main.css"/>
     <link rel='stylesheet' href='../unitegallery-master/package/unitegallery/css/unite-gallery.css' type='text/css'/>
-    <script type='text/javascript'
-            src='../unitegallery-master/package/unitegallery/themes/tiles/ug-theme-tiles.js'></script>
-
-    <style>
-
-    </style>
+    <script type='text/javascript' src='../unitegallery-master/package/unitegallery/themes/tiles/ug-theme-tiles.js'></script>
 </head>
 <body class="is-preload">
 
@@ -27,86 +27,84 @@
 <div id="wrapper">
 
     <!-- Header -->
-    <header id="header">
+    <?php nav();
 
-        <!-- Logo -->
-        <div class="logo">
-            <a href="index.php"><strong>Login/Register</strong></a>
-        </div>
+    $noPhoto=false;
+    if (!isset($_SESSION['ln_username'])) {
+        echo "<h3 style='text-align: center;padding-top: 4%;'>Hey there !</h3>
+			<div class=\"box\" style='width: 50%;margin-left: 25%;margin-right: 25%;'>
+				<p>  This a page where our customers can view the pictures that we have taken for them. To request a photoshoot select business and inquiries and create an account !</p>
+			</div>";
+        $noPhoto=true;
+    } else if(isset($_GET["id"])){
 
-        <!-- Nav -->
-        <nav id="nav">
-            <ul>
-                <li><a href="index.php">Home</a></li>
-                <li><a href="index.php" class="current">Album</a></li>
-                <li><a href="index.php">Inquiries</a></li>
-                <li><a href="index.php">YourPhotographs</a></li>
-            </ul>
-        </nav>
+        $sql2 = "SELECT user_lname,user_fname FROM user WHERE user_id=" . $_GET["id"];
+        $result2 = $conn->query($sql2);
 
-    </header>
-    <?php
-    $sql = "SELECT * FROM my_photograph WHERE user_id=" . $_GET["id"];
-    $result = $conn->query($sql);
-
-    if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-    ?>
-    <!-- Section -->
-    <section class="main alt">
-        <header>
-            <h1></h1>
-            <p></p>
-            <?php
-              }
+        if ($result2->num_rows > 0) {
+            if ($row2 = $result2->fetch_assoc()) {
+                $fname = $row2["user_fname"];
+                $lname = $row2["user_fname"];
             }
-            ?>
-        </header>
-        <div id="gallery" style="display:none;width:90%;margin-left:5%;margin-right:5%;">
-            <?php
-            $sql = "SELECT * FROM photo WHERE album_id=" . $_GET["id"];
-            $result = $conn->query($sql);
+        }else
+        {
+            echo "			<h3 style='text-align: center;padding-top: 4%;'>Hey there !</h3>
+										<div class=\"box\" style='width: 50%;margin-left: 25%;margin-right: 25%;'>
+											<p>Looks like you have found the YourPhotographs but do not see any photos of you, well try and contacting by filling the form in business inquiries.</p>
+										</div>";
+            $noPhoto=true;
+        }
+        ?>
 
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    ?>
-                    <img alt=""
-                         src="<?php echo $row["photo_img"]; ?>"
-                         style="display:none">
+        <?php
+        if(!$noPhoto) {
+            ?>
+            <!-- Section -->
+            <section class="main alt">
+                <header>
+                    <h1>Photographs of <?= $fname ?> <?= $lname ?></h1>
+                    <h4>Enjoy and thanks again !</h4>
+                </header>
+                <div id="gallery" style="display:none;width:90%;margin-left:5%;margin-right:5%;">
                     <?php
-                }
-            } else {
-                echo "asdasdsada";
-            }
-            ?>
-        </div>
-    </section>
+                    $sql = "SELECT * FROM my_photograph WHERE user_id=" . $_GET["id"] . " AND isActive=1";
+                    $result = $conn->query($sql);
 
-    <!-- Footer -->
-    <footer id="footer">
-        <ul class="icons">
-            <li><a href="#" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
-            <li><a href="#" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
-            <li><a href="#" class="icon alt fa-instagram"><span class="label">Instagram</span></a></li>
-            <li><a href="#" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
-            <li><a href="#" class="icon alt fa-phone"><span class="label">Phone</span></a></li>
-            <li><a href="#" class="icon alt fa-envelope-o"><span class="label">Email</span></a></li>
-        </ul>
-        <p class="copyright">&copy; Untitled. All rights reserved.</p>
-    </footer>
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            ?>
+                            <img alt=""
+                                 src="<?php echo $row["img_path"]; ?>"
+                                 style="display:none">
+                            <?php
+                        }
+                    } else {
+                        echo "			<h3 style='text-align: center;padding-top: 4%;'>Hey there !</h3>
+										<div class=\"box\" style='width: 50%;margin-left: 25%;margin-right: 25%;'>
+											<p>Looks like you have found the YourPhotographs but do not see any photos of you, well try and contacting by filling the form in business inquiries.</p>
+										</div>";
+                    }
+                    ?>
+                </div>
+            </section>
 
+            <?php
+        }
+    }else
+    {
+        header("Location:index.php");
+        exit();
+    }
+    footer();
+    ?>
+   <?php if($noPhoto) {
+       ?>
+       <div id="test" style="padding-bottom:30%;"></div>
+       <?php
+   }
+    ?>
 </div>
 
-<!-- Scripts -->
-
-<!--
-HAD TO DELETE FROM THE TEMPLATE.
-<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.dropotron.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-
-			-->
 <script src="../assets/js/browser.min.js"></script>
 <script src="../assets/js/breakpoints.min.js"></script>
 <script src="../assets/js/util.js"></script>
