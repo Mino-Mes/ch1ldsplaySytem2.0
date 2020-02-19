@@ -67,26 +67,31 @@ catch(Exception $e)
 if(strlen($lname) > 35 || strlen($lname) < 1)
 {
     $arr_err['lname'] = true;
+    $_SESSION["message"] ="The last name must be between 1 and 35 characters";
 }
 if(!(preg_match('/^[A-Za-z]+$/',$lname)))
 {
     $arr_err['lname'] = true;
+    $_SESSION["message"] ="Invalid last name";
 }
 
 //first name
 if(strlen($fname) > 35 || strlen($fname) < 1)
 {
     $arr_err['fname'] = true;
+    $_SESSION["message"] ="first last name must be between 1 and 35 characters";
 }
 if(!(preg_match('/^[A-Za-z]+$/',$fname)))
 {
     $arr_err['fname'] = true;
+    $_SESSION["message"] ="Invalid first name";
 }
 
 //email
 if(strlen($email) > 255 || strlen($email) < 3)
 {
     $arr_err['email'] = true;
+    $_SESSION["message"] ="Invalid Email";
 }
 //remove all illegal characters from email
 $email = filter_var($email,FILTER_SANITIZE_EMAIL);
@@ -94,26 +99,31 @@ $email = filter_var($email,FILTER_SANITIZE_EMAIL);
 if(!(filter_var($email, FILTER_VALIDATE_EMAIL))){
     //email is not valid
     $arr_err['email'] = true;
+    $_SESSION["message"] ="Invalid Email";
 }
 
 //username
 if(strlen($username) > 20 || strlen($username) < 6)
 {
     $arr_err['username'] = true;
+    $_SESSION["message"] ="Invalid Username : must be between 6 to 20 characters";
 }
 if(!(preg_match('/^[a-zA-Z0-9_-]*$/',$username)))
 {
     $arr_err['username'] = true;
+    $_SESSION["message"] ="Invalid Username";
 }
 
 //password
 if(strlen($pass) > 35 || strlen($pass) < 8)
 {
     $arr_err['pass'] = true;
+    $_SESSION["message"] ="Invalid password: Invalid length - Min : 8, Max : 35";
 }
 if(!(preg_match('/^[a-zA-Z0-9_.%^&*$#@!()=+-]*$/',$pass)))
 {
     $arr_err['pass'] = true;
+    $_SESSION["message"] ="Invalid password";
 }
 
 //check if password and confirm password match
@@ -121,6 +131,7 @@ if(strcmp($pass,$confirm_pass) !== 0)
 {
     //password doesn't match
     $arr_err['confirm_pass'] = true;
+    $_SESSION["message"] ="Passwords do not match";
 }
 
 //now find the errors we've encountered
@@ -129,7 +140,6 @@ foreach($arr_err as $key => $value)
     if($value == true)
     {
         //we've got invalid inputs, throw them back to index with an error message
-        $_SESSION["message"] = 'ERROR: Registration failed Please enter valid inputs';
         $_SESSION['reg_msg'] = $msg;
         $_SESSION['reg_arr_err'] = $arr_err;
         $_SESSION['reg_arr_form_vals'] = $arr_form_vals;
@@ -154,14 +164,17 @@ if($res->num_rows > 0)
         if(strcmp(strtolower($row['user_username']),strtolower($username)) ==0)
         {
             $arr_err['username'] = true;
+            $msg="Username already in use";
         }
         if(strcmp(strtolower($row['user_email']),strtolower($email)) ==0)
         {
             $arr_err['username'] = true;
+            $msg="Email already in use";
         }
     }
     if($arr_err['username'] && !$arr_err['email'])
     {
+
         //username is already taken
         $_SESSION['reg_err_arr'] = $arr_err;
         $_SESSION['reg_arr_form_vals'] = $arr_form_vals;
