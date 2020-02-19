@@ -65,6 +65,7 @@ if(isset($_POST))
                     //echo "Not found";
                     $conn->close();
                     header('Location: ../View/index.php');
+                    exit();
                 }
             }
         }

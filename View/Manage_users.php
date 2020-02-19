@@ -1,11 +1,15 @@
 <?php
 session_start();
+require "../Util/dbconn.php";
+require "../Util/navOtherPages.php";
 $_SESSION['current_page'] = 'admin_command';
+
+onlyAdmin();
 ?>
 <html>
 	<head>
-		<title>Untitled</title>
-		<meta charset="utf-8" />
+        <title>Ch1ldsplay Media Production | Manage Users</title>
+        <link rel="icon" href="../Images/logo.png" type="image/gif" sizes="16x16">
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <link rel="stylesheet" href="../assets/css/main.css"/>
     </head>
@@ -15,40 +19,7 @@ $_SESSION['current_page'] = 'admin_command';
 			<div id="wrapper">
 
 				<!-- Header -->
-					<header id="header">
-
-						<!-- Logo -->
-							<div class="logo">
-								<a href="../orange/index.html"><strong>Relativity</strong> by Pixelarity</a>
-							</div>
-
-						<!-- Nav -->
-							<nav id="nav">
-								<ul>
-									<li><a href="../orange/index.html">Home</a></li>
-									<li>
-										<a href="#" class="icon fa-angle-down">Dropdown</a>
-										<ul>
-											<li><a href="#">Option One</a></li>
-											<li><a href="#">Option Two</a></li>
-											<li><a href="#">Option Three</a></li>
-											<li>
-												<a href="#">Submenu</a>
-												<ul>
-													<li><a href="#">Option One</a></li>
-													<li><a href="#">Option Two</a></li>
-													<li><a href="#">Option Three</a></li>
-													<li><a href="#">Option Four</a></li>
-												</ul>
-											</li>
-										</ul>
-									</li>
-									<li class="current"><a href="../orange/generic.html">Generic</a></li>
-									<li><a href="../orange/elements.html">Elements</a></li>
-								</ul>
-							</nav>
-
-					</header>
+				<?php nav();?>
 
 				<!-- Section -->
 					<section class="main alt">
@@ -83,21 +54,19 @@ $_SESSION['current_page'] = 'admin_command';
 					</section>
 
 				<!-- Footer -->
-					<footer id="footer">
-						<p class="copyright">&copy; Untitled. All rights reserved.</p>
-					</footer>
+					<?php footer();?>
 
 			</div>
 
 		<!-- Scripts -->
-			<script src="../orange/assets/js/jquery.min.js"></script>
-			<script src="../orange/assets/js/jquery.dropotron.min.js"></script>
-			<script src="../orange/assets/js/jquery.scrollex.min.js"></script>
-			<script src="../orange/assets/js/jquery.scrolly.min.js"></script>
-			<script src="../orange/assets/js/browser.min.js"></script>
-			<script src="../orange/assets/js/breakpoints.min.js"></script>
-			<script src="../orange/assets/js/util.js"></script>
-			<script src="../orange/assets/js/main.js"></script>
+        <script src="../assets/js/jquery.min.js"></script>
+        <script src="../assets/js/jquery.dropotron.min.js"></script>
+        <script src="../assets/js/jquery.scrollex.min.js"></script>
+        <script src="../assets/js/jquery.scrolly.min.js"></script>
+        <script src="../assets/js/browser.min.js"></script>
+        <script src="../assets/js/breakpoints.min.js"></script>
+        <script src="../assets/js/util.js"></script>
+        <script src="../assets/js/main.js"></script>
 
             <script type="text/javascript">
                 $(document).ready(function(){

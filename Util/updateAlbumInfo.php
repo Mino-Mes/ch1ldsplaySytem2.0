@@ -12,12 +12,19 @@ if(isset($_POST))
     $verified_images = false;
 
     $title=$_POST["albumTitle"];
+    $title=$_POST["albumTitle"];
     $album_label=$_POST["albumLabel"];
     $type=$_POST["type"];
-    $isActive=$_POST["isActive"];
     $description=$_POST["description"];
     $id=$_POST["id"];
 
+    if(isset($_POST["isActive"]))
+    {
+        $isActive=1;
+    }else
+    {
+        $isActive=0;
+    }
 
     if (empty($title) || is_numeric($title)) {
         $message .= "The title can not be a numeric value or empty <br>";
@@ -76,7 +83,6 @@ if(isset($_POST))
         $message = "In order to update the album information, the form must be completely filled in all the form";
     }else if($verified_description ==false && $verified_title ==false && $verified_service ==false && $verified_label ==false)
     {
-
         if($verified_img ==true)
         {
             $img=$_POST["dfltImage"];
@@ -85,21 +91,11 @@ if(isset($_POST))
             $img="../Images/album_".$id."/".$_FILES["myPhoto"]["name"];
         }
 
-        if(isset($isActive))
-        {
-            $isActive=1;
-        }else
-        {
-            $isActive =0;
-        }
-
         $sql2 ="UPDATE album SET album_title='$title', album_description='$description', album_label='$album_label', album_isActive= $isActive, album_img= '$img' , typeId= $type WHERE album_id=".$id;
 
         if($conn->query($sql2)==true)
         {
             $message="The album has been updated!";
-
-            echo "noice";
         }
         else
         {
@@ -108,11 +104,8 @@ if(isset($_POST))
             echo $conn->error;
         }
     }
-
 }else
 {
     $message="Fill in the form in order to update an album";
 }
-
-header("Location: ../View/viewAlbum.php?id=80&message=".$message);
-exit();
+echo $message;

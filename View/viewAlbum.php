@@ -1,4 +1,6 @@
-<?php require "../Util/dbconn.php"; ?>
+<?php require "../Util/dbconn.php";
+require "../Util/navOtherPages.php";
+session_start();?>
 <!DOCTYPE HTML>
 <!--
 	Relativity by Pixelarity
@@ -7,82 +9,14 @@
 -->
 <html>
 <head>
-    <title>MyAlbums</title>
+    <title>Ch1ldsplay Media Production | viewAlbums</title>
+    <link rel="icon" href="../Images/logo.png" type="image/gif" sizes="16x16">
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
     <link rel="stylesheet" href="../assets/css/main.css"/>
     <link rel="stylesheet" href="../css/snack_back.css"/>
     <link rel="stylesheet" href="../css/ln_snackbar.css">
-    <style>
-        th, td {
-            vertical-align: middle;
-        }
-
-        .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1; /* Sit on top */
-            padding-top: 100px; /* Location of the box */
-            left: 0;
-            top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgb(0, 0, 0); /* Fallback color */
-            background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
-        }
-
-        /* Modal Content */
-        .modal-content {
-            background-color: #fefefe;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 40%;
-            -webkit-animation-name: animatetop;
-            -webkit-animation-duration: 1s;
-            animation-name: animatetop;
-            animation-duration: 1s
-        }
-
-        /* The Close Button */
-        .close {
-            color: #aaaaaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: #000;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        @-webkit-keyframes animatetop {
-            from {
-                top: -500px;
-                opacity: 0
-            }
-            to {
-                top: 0;
-                opacity: 1
-            }
-        }
-
-        @keyframes animatetop {
-            from {
-                top: -500px;
-                opacity: 0
-            }
-            to {
-                top: 0;
-                opacity: 1
-            }
-        }
-
-    </style>
+    <link rel="stylesheet" href="../css/viewAlbum.css">
 </head>
 <body class="is-preload">
 
@@ -90,47 +24,12 @@
 <div id="wrapper">
 
     <!-- Header -->
-    <header id="header">
-
-        <!-- Logo -->
-        <div class="logo">
-            <a href="index.php"><strong>Relativity</strong> by Pixelarity</a>
-        </div>
-
-        <!-- Nav -->
-        <nav id="nav">
-            <ul>
-                <li><a href="index.php">Home</a></li>
-                <li>
-                    <a href="#" class="icon fa-angle-down">Dropdown</a>
-                    <ul>
-                        <li><a href="#">Option One</a></li>
-                        <li><a href="#">Option Two</a></li>
-                        <li><a href="#">Option Three</a></li>
-                        <li>
-                            <a href="#">Submenu</a>
-                            <ul>
-                                <li><a href="#">Option One</a></li>
-                                <li><a href="#">Option Two</a></li>
-                                <li><a href="#">Option Three</a></li>
-                                <li><a href="#">Option Four</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li class="current"><a href="myAlbums.php">Generic</a></li>
-                <li><a href="elements.html">Elements</a></li>
-            </ul>
-        </nav>
-
-    </header>
-
+  <?php nav();?>
     <!-- Section -->
     <section class="main alt">
         <header>
-            <h1>Administrative Functions Page</h1>
-            <p>This page allows the adminstrator to view all active albums. Furthermore, it allows the user to update
-                any active album and add any type of album </p>
+            <h1>Update Album Page</h1>
+            <p>This page allows the administrator to update an album information and add photographs to it. </p>
         </header>
         <?php
         $sql = "SELECT * FROM album WHERE album_id=" . $_GET["id"];
@@ -150,13 +49,12 @@
         ?>
         <div class="inner style2">
 
-            <form method="post" action="../Util/updateAlbumInfo.php" class="alt" enctype="multipart/form-data"
-                  id="albumInfo">
+            <form method="post" action="../Util/updateAlbumInfo.php" id="updateForm" class="alt" enctype="multipart/form-data">
                 <div class="row gtr-uniform">
                     <!-- Break -->
                     <div class="col-12">
                         <ul class="actions" style="float:right">
-                            <li><input type="submit" value="Update Album Information" form="albumInfo"/></li>
+                            <li><input type="submit" value="Update Album Information" form="updateForm"/></li>
                             <li><a href="javascript:void(0)" onclick="addPhotoModal()" class="button alt">+Add a
                                     photograph</a></li>
                         </ul>
@@ -202,18 +100,7 @@
                     <input type="hidden" value="<?= $_GET["id"] ?>" id="id" name="id"/>
                     <!-- Break -->
                     <div class="col-6 col-12-small">
-                        <?php
-                        if ($isActive == 1) {
-                            ?>
-                            <input type="checkbox" id="isActive" name="isActive" checked>
-                            <?php
-                        } else {
-                            ?>
-                            <input type="checkbox" id="isActive" name="isActive">
-                            <?php
-                        }
-                        ?>
-
+                        <input type="checkbox" id="isActive" name="isActive" <?php if($isActive == 1) {echo "checked";}?>>
                         <label for="isActive">Album is Active</label>
                     </div>
                     <!-- Break -->
@@ -282,7 +169,7 @@
     <div class="modal-content">
         <span class="close">&times;</span>
         <h1 style="text-align: center">Add a Photograph</h1>
-        <form method="POST" action="../Util/addPhoto.php" enctype="multipart/form-data" class="alt">
+        <form method="POST" action="../Util/addPhoto.php" id="addPhotoForm" enctype="multipart/form-data" class="alt">
             <div class="row gtr-uniform">
                 <div class="col-12">
                     <label>
@@ -336,18 +223,7 @@ if (isset($_GET["message"])) {
 }
 ?>
 
-<!-- Footer -->
-<footer id="footer">
-    <ul class="icons">
-        <li><a href="#" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
-        <li><a href="#" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
-        <li><a href="#" class="icon alt fa-instagram"><span class="label">Instagram</span></a></li>
-        <li><a href="#" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
-        <li><a href="#" class="icon alt fa-phone"><span class="label">Phone</span></a></li>
-        <li><a href="#" class="icon alt fa-envelope-o"><span class="label">Email</span></a></li>
-    </ul>
-    <p class="copyright">&copy; Untitled. All rights reserved.</p>
-</footer>
+<?php footer();?>
 
 </div>
 
@@ -360,42 +236,8 @@ if (isset($_GET["message"])) {
 <script src="../assets/js/breakpoints.min.js"></script>
 <script src="../assets/js/util.js"></script>
 <script src="../assets/js/main.js"></script>
+<script src="../Util/viewAlbumFunctions.js"></script>
 <script>
-
-    function PreviewImage() {
-        var oFReader = new FileReader();
-        oFReader.readAsDataURL(document.getElementById("uploadImage").files[0]);
-
-        oFReader.onload = function (oFREvent) {
-            document.getElementById("uploadPreview").src = oFREvent.target.result;
-        };
-    };
-
-    function addPhotoModal() {
-        // Get the modal
-        var modal = document.getElementById("myModal");
-
-        // Get the button that opens the modal
-        var btn = document.getElementById("myBtn");
-
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
-
-        // When the user clicks the button, open the modal
-        modal.style.display = "block";
-
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function () {
-            modal.style.display = "none";
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-    }
 
     function addImage() {
 
@@ -431,68 +273,6 @@ if (isset($_GET["message"])) {
     }
 
     showAlbumPhotoList();
-
-    function isActive(id) {
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                showAlbumPhotoList();
-            }
-        };
-        xhttp.open("POST", "../Util/isPhotoActive.php", true);
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send("photoId=" + id + " &isActive=1");
-    }
-
-    function openDeleteModal(id)
-    {
-        // Get the modal
-        var modal = document.getElementById("deleteP");
-
-        // Get the button that opens the modal
-        var btn = document.getElementById("myBtn");
-
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[1];
-
-        // When the user clicks the button, open the modal
-        modal.style.display = "block";
-
-        span.onclick = function () {
-            modal.style.display = "none";
-        }
-
-
-        document.getElementById("photoIdHidden").value=id;
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-    }
-
-
-    function deletePhoto() {
-
-        var id=document.getElementById("photoIdHidden").value;
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                showAlbumPhotoList();
-                var x = document.getElementById("snackbar");
-                x.innerHTML = this.responseText;
-                x.className = "show";
-                setTimeout(function () {
-                    x.className = x.className.replace("show", "");
-                }, 3000);
-            }
-        };
-        xhttp.open("POST", "../Util/isPhotoActive.php", true);
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send("photoId=" + id + " &deleteP=1");
-    }
-
 </script>
 
 </body>

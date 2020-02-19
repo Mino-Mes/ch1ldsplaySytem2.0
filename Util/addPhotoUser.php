@@ -19,9 +19,9 @@ function getDir($id)
     $img = "../Images/album_" . $id . "/" . basename($fileName);
     return $img;
 }
-
+$total = count($_FILES['userPhotos']['name']);
 if (isset($_POST)) {
-    if ($_FILES['userPhotos']['name'] != "" && $_FILES['userPhotos']['name']) {
+    if ($_FILES['userPhotos']['name'] != "" && !empty($_FILES['userPhotos']['name']) && $total > 0) {
         $userId = $_POST["hiddenUserId"];
         $dir = createDir($userId);
 
@@ -36,11 +36,11 @@ if (isset($_POST)) {
                 if ($conn->query($sql) == true) {
                     $message = "The Photos have been added, great work!";
                 } else {
-                    $message = "The Photos have not been added,, please contact the administrator Error: $newFilePath" . $conn->error;
+                    $message = "The Photos have not been added, please contact the administrator Error: $newFilePath" . $conn->error;
                 }
             }else
             {
-                $message = "The Photos were not added, please contact the administrator Error: " . $conn->error;
+                $message = "Please upload the images in order to add photographs" . $conn->error;
             }
         }
     }

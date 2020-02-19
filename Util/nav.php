@@ -36,6 +36,7 @@ function isCollab()
     {
         if(isset($_SESSION["ln_usertype"]))
         { $user_name =$_SESSION["ln_username"];
+            $id=$_SESSION["ln_userId"];
             if($_SESSION["ln_usertype"] == "administrator")
             {
 
@@ -52,7 +53,7 @@ function isCollab()
                 <li class=\"current\"><a href=\"../View/index.php#scrollToHome\">Home</a></li>
                 <li><a href=\"../View/index.php#scrollToAl\">Album</a></li>
                 <li><a href=\"../View/index.php#scrollToB\">Inquiries</a></li>
-                <li><a href='../View/yourPhotographs.php'>YourPhotographs</a></li>
+                <li><a href='../View/yourPhotographs.php?id=$id'>YourPhotographs</a></li>
                 <li><a href='../View/myAlbums.php'>Administrative Functions</a></li>
                 <li><a href='../View/Manage_users.php'>Manage Users</a></li>
                 <li><a href='../View/Reports.php'>Reports</a></li>
@@ -76,7 +77,7 @@ function isCollab()
                 <li class=\"current\"><a href=\"../View/index.php#scrollToHome\">Home</a></li>
                 <li><a href=\"../View / index.php#scrollToAl\">Album</a></li>
             <li><a href = \"../View/index.php#scrollToB\" > Inquiries</a ></li >
-                <li><a href='../View/yourPhotographs.php'>YourPhotographs</a></li>
+                <li><a href='../View/yourPhotographs.php>id=$id'>YourPhotographs</a></li>
                 <li><a href='../View/myAlbums.php'>Administrative Functions</a></li>
             </ul>
         </nav>
