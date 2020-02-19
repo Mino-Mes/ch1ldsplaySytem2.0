@@ -241,7 +241,7 @@ if(!$err){
                                 '<td>'.$row['photo_id'].'</td>'.
                                 '<td>'.$row['album_id'].'</td>'.
                                 '<td>'.$row['user_id'].'</td>'.
-                                '<td><img src="'.$row['photo_img'].'" height="25" width="25"></td>'.
+                                '<td style="width: 20%;"><span class="image fit"><img src="'.$row['photo_img'].'" style="width=:5%;"></span></td>'.
                                 '</tr>';
                         }
                         $return .= '</tbody></table>';
@@ -269,7 +269,7 @@ if(!$err){
                                 '<td>'.$row['user_id'].'</td>'.
                                 '<td>'.$row['album_title'].'</td>'.
                                 '<td>'.$row['album_label'].'</td>'.
-                                '<td><img src="'.$row['album_img'].'" height="25" width="25"></td>'.
+                                '<td style="width: 20%;"><span class="image fit"><img src="'.$row['album_img'].'" style="width=:5%;"></span></td>'.
                                 '</tr>';
                         }
                         $return .= '</tbody></table>';
@@ -332,12 +332,13 @@ if(!$err){
                             '</tr>'.
                             '</thead><tbody>';
                         while($row = $res->fetch_assoc()){
+                            $img = $row["photo_img"];
                             $return .=
                                 '<tr>'.
                                 '<td>'.$row['photo_id'].'</td>'.
                                 '<td>'.$row['album_id'].'</td>'.
                                 '<td>'.$row['user_id'].'</td>'.
-                                '<td><img src="'.$row['photo_img'].'" height="25" width="25"></td>'.
+                                '<td style="width: 20%;"><span class="image fit"><img src="'.$img.'"  style="width: 100%;"></span></td>'.
                                 '</tr>';
                         }
                         $return .= '</tbody></table>';
@@ -368,7 +369,7 @@ if(!$err){
                                 '<td>'.$row['user_id'].'</td>'.
                                 '<td>'.$row['album_title'].'</td>'.
                                 '<td>'.$row['album_label'].'</td>'.
-                                '<td><img src="'.$row['album_img'].'" height="25" width="25"></td>'.
+                                '<td style="width: 20%;"><span class="image fit"><img src="'.$row['album_img'].'" style="width: 5%;"></span></td>'.
                                 '</tr>';
                         }
                         $return .= '</tbody></table>';

@@ -81,10 +81,7 @@ if (isset($_REQUEST['term'])) {
                         echo '<td><form method="post" action="../Util/Manage_users_modify.php">'
                             . '<input type="hidden" name="action" value="ban">'
                             . '<input type="hidden" name="user" value="' . $row['user_username'] . '">'
-                            . '<input id="ban_' . $row['user_username'] . '" id="btn_ban" class="btn" type="submit" value="BAN"></form></td>'
-                            . '<td><form method="post" action="hrefgoeshere.php">'
-                            . '<input type="hidden" name="action" value="add">'
-                            . '<input type="hidden" name="user" value="' . $row['user_username'] . '">';
+                            . '<input id="ban_' . $row['user_username'] . '" id="btn_ban" class="btn" type="submit" value="BAN"></form></td>';
                     }
                 }
                 echo '</tbody></tr></table>';

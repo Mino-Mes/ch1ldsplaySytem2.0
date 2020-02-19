@@ -11,6 +11,14 @@ onlyAdmin();
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="../assets/css/main.css"/>
+
+    <style>
+       td{
+           display: table-cell;
+           vertical-align: middle;
+        }
+    </style>
+
 </head>
 <body class="is-preload">
 
