@@ -198,7 +198,7 @@ $_SESSION['current_page'] = 'admin_reports';
             }
 
             $.ajax({
-                url: 'Reports_backend.php',
+                url: '../Util/Reports_backend_V2.php',
                 type: "POST",
                 dataType:'json', // add json datatype to get json
                 data: ({type: type,subject: subject,input_1: input_1,input_2: input_2}),
