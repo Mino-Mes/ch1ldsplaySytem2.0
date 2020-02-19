@@ -13,8 +13,6 @@ $_SESSION['recover_attempt'] = false;
 
 //this code needs to be better optimized
 
-$_SESSION['log_msg'] = '';
-$_SESSION['log_err'] = false;
 
 if(isset($_POST))
 {
@@ -59,11 +57,10 @@ if(isset($_POST))
                     $_SESSION['ln_userId']=$row2["user_id"];
                     $conn->close();
                     header('Location: ../View/index.php?');
+                    exit();
                 }
                 else{
-                    $_SESSION['log_err'] = true;
-                    $_SESSION['log_msg'] = 'Error: incorrect Username or Password';
-                    //echo "Not found";
+                    $_SESSION["message"] = "Incorrect username or password";
                     $conn->close();
                     header('Location: ../View/index.php');
                     exit();
@@ -72,19 +69,19 @@ if(isset($_POST))
         }
         else
         {
-            $_SESSION['log_err'] = true;
-            $_SESSION['log_msg'] = 'Error: incorrect Username or Password';
+            $_SESSION["message"] =  'Error: incorrect Username or Password';
             //echo "Not found";
             $conn->close();
             header('Location: ../View/index.php');
+            exit();
 
         }
     }
     else{
-        $_SESSION['log_err'] = true;
-        $_SESSION['log_msg'] = 'Error: incorrect Username or Password';
+        $_SESSION["message"] =  'Error: incorrect Username or Password';
         $conn->close();
         header('Location: ../View/index.php');
+        exit();
     }
     echo 'test 1';
 }

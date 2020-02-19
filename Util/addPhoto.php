@@ -1,5 +1,6 @@
 <?php
 require "dbconn.php";
+session_start();
 
 $message="Can't access Form";
 if (isset($_POST)) {
@@ -15,7 +16,8 @@ if (isset($_POST)) {
 
             if (move_uploaded_file($tmpFilePath, $newFilePath)) {
 
-                    $sql3 = "INSERT INTO photo(user_id,photo_img,photo_isActive,album_id) VALUES('1','$newFilePath','1', $album_id)";
+                $userId=$_SESSION["ln_userId"];
+                    $sql3 = "INSERT INTO photo(user_id,photo_img,photo_isActive,album_id) VALUES($userId,'$newFilePath','1', $album_id)";
 
                     if ($conn->query($sql3) == true) {
                         $message = "The photos have been uploaded, great work!";

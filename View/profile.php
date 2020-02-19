@@ -69,7 +69,7 @@ if(isset($_GET["logout"]))
                                   </form>
                               </div>
 						</div>
-                        <div class="box" style='width: 50%;margin-left: 25%;margin-right: 25%;background-color: white;'>
+                   <!--     <div class="box" style='width: 50%;margin-left: 25%;margin-right: 25%;background-color: white;'>
                             <div>
                                 <h4  style="text-align: center;">Change Password</h4>
                                 <form>
@@ -86,7 +86,7 @@ if(isset($_GET["logout"]))
                                     </ul>
                                 </form>
                             </div>
-                        </div>
+                        </div>-->
 
 					</section>
 

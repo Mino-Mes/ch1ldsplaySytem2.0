@@ -13,11 +13,14 @@ function sendEmail(){
         if(this.readyState==4 && this.status ==200)
         {
             var x = document.getElementById("snackbar");
-            if(this.responseText == "An email has been sent,<br>the owner will contact you soon, Thank you !")
+
+            var str=this.responseText;
+
+            if(str == "An email has been sent,the owner will contact you soon, Thank you !")
             {
                 x.style.backgroundColor="green";
             }
-            x.innerHTML=this.responseText;
+            x.innerHTML=str;
             x.className = "show";
             setTimeout(function () {
                 x.className = x.className.replace("show", "");

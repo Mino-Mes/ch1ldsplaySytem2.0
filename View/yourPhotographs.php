@@ -20,6 +20,9 @@ session_start();
     <link rel="stylesheet" href="../assets/css/main.css"/>
     <link rel='stylesheet' href='../unitegallery-master/package/unitegallery/css/unite-gallery.css' type='text/css'/>
     <script type='text/javascript' src='../unitegallery-master/package/unitegallery/themes/tiles/ug-theme-tiles.js'></script>
+    <link rel="stylesheet" href="../css/stylesheet_main.css">
+    <link rel="stylesheet" href="../css/animation.css">
+    <link rel="stylesheet" href="../css/Stylesheet_popup.css">
 </head>
 <body class="is-preload">
 
@@ -109,6 +112,8 @@ session_start();
 <script src="../assets/js/breakpoints.min.js"></script>
 <script src="../assets/js/util.js"></script>
 <script src="../assets/js/main.js"></script>
+<script src="../Util/indexFunctions.js"></script>
+<script src="../js/Script_popup.js"></script>
 
 <script type="text/javascript">
 
@@ -126,5 +131,20 @@ session_start();
     });
 
 </script>
+<div id="myModal" class="modal" style="overflow: hidden;">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div id="popup_content"></div>
+    </div>
+</div>
+<div id="myModal1" class="modal" style="overflow: hidden;">
+    <!-- Modal content -->
+    <div class="modal1-content">
+        <span class="close">&times;</span>
+        <div id="popup_content1"></div>
+    </div>
+</div>
+
 </body>
 </html>

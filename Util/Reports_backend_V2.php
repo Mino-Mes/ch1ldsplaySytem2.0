@@ -369,7 +369,7 @@ if(!$err){
                                 '<td>'.$row['user_id'].'</td>'.
                                 '<td>'.$row['album_title'].'</td>'.
                                 '<td>'.$row['album_label'].'</td>'.
-                                '<td style="width: 20%;"><span class="image fit"><img src="'.$row['album_img'].'" style="width: 5%;"></span></td>'.
+                                '<td style="width: 20%;"><span class="image fit"><img src="'.$row['album_img'].'" style="width: 100%;"></span></td>'.
                                 '</tr>';
                         }
                         $return .= '</tbody></table>';

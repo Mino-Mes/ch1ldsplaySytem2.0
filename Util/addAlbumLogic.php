@@ -152,6 +152,7 @@ if (isset($_POST)) {
 
             if($inserted_album)
             {
+                $userId=$_SESSION["ln_userId"];
                 for ($i = 0; $i < $total; $i++) {
                     $tmpFilePath = $_FILES['albumImages']['tmp_name'][$i];
                     $dir = albDir($album_id);
@@ -159,7 +160,7 @@ if (isset($_POST)) {
 
                     if (move_uploaded_file($tmpFilePath, $newFilePath)) {
 
-                        $sql3 = "INSERT INTO photo(user_id,photo_img,photo_isActive,album_id) VALUES('1','$newFilePath','1', $album_id)";
+                        $sql3 = "INSERT INTO photo(user_id,photo_img,photo_isActive,album_id) VALUES( $userId,'$newFilePath','1', $album_id)";
 
                         if ($conn->query($sql3) == true) {
                             $message = "The Album has been created, great work!";

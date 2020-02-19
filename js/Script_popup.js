@@ -73,6 +73,7 @@ function Reg() {
 
 // When the user clicks on the Login button, open the modal
 function Login(){
+    var modal = document.getElementById("myModal");
     var modalOther = document.getElementById("myModal1");
     modalOther.style.display = "none";
     modal.style.display = "block";

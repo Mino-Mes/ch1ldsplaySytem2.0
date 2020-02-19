@@ -53,11 +53,12 @@ try
 catch(Exception $e)
 {
     //something weird went wrong, send them back to index with an error message
-    $msg = 'ERROR: Registration failed! Please enter valid inputs';
+    $_SESSION["message"] = 'ERROR: Registration failed! Please enter valid inputs';
     $_SESSION['reg_msg'] = $msg;
     $_SESSION['reg_arr_form_vals'] = $arr_form_vals;
     $conn->close();
     header('Location: ../index.php');
+    exit();
 }
 
 //back-end validation
@@ -128,7 +129,7 @@ foreach($arr_err as $key => $value)
     if($value == true)
     {
         //we've got invalid inputs, throw them back to index with an error message
-        $msg = 'ERROR: Registration failed Please enter valid inputs';
+        $_SESSION["message"] = 'ERROR: Registration failed Please enter valid inputs';
         $_SESSION['reg_msg'] = $msg;
         $_SESSION['reg_arr_err'] = $arr_err;
         $_SESSION['reg_arr_form_vals'] = $arr_form_vals;
@@ -164,7 +165,7 @@ if($res->num_rows > 0)
         //username is already taken
         $_SESSION['reg_err_arr'] = $arr_err;
         $_SESSION['reg_arr_form_vals'] = $arr_form_vals;
-        $msg = 'ERROR: the username: ' . $username . ' is already in use';
+        $_SESSION["message"] = 'ERROR: the username: ' . $username . ' is already in use';
         $_SESSION['reg_msg'] = $msg;
         $res->close();
         $conn->close();
@@ -176,7 +177,7 @@ if($res->num_rows > 0)
         //email is already taken
         $_SESSION['reg_err_arr'] = $arr_err;
         $_SESSION['reg_arr_form_vals'] = $arr_form_vals;
-        $msg = 'ERROR: the email address: ' . $email . 'is already in use';
+        $_SESSION["message"]= 'ERROR: the email address: ' . $email . 'is already in use';
         $_SESSION['reg_msg'] = $msg;
         $res->close();
         $conn->close();
@@ -188,7 +189,7 @@ if($res->num_rows > 0)
         //both are already taken
         $_SESSION['reg_err_arr'] = $arr_err;
         $_SESSION['reg_arr_form_vals'] = $arr_form_vals;
-        $msg = 'ERROR: the username: ' . $username . ' and email address: ' . $email . ' are both already in use';
+        $_SESSION["message"] = 'ERROR: the username: ' . $username . ' and email address: ' . $email . ' are both already in use';
         $_SESSION['reg_msg'] = $msg;
         $res->close();
         $conn->close();
@@ -210,26 +211,31 @@ else{
 if($no_err)
 {
     $hash=password_hash($pass,PASSWORD_BCRYPT);
-    $sql = $conn->prepare("INSERT INTO user (user_lname,user_fname,user_email,user_username,user_password,user_creationDate)
+
+
+  /*  $sql = $conn->prepare("INSERT INTO user (user_lname,user_fname,user_email,user_username,user_password,user_creationDate)
                 VALUES (?,?,?,?,?,?)");
     $sql->bind_param('ssssss', $lname,$fname,$email,$username, $hash,$date);
-
+*/
     $date = date('Y-m-d',time());
+    $sql="INSERT INTO user (user_lname,user_fname,user_email,user_username,user_password,user_creationDate) VALUES ('$lname','$fname','$email','$username', '$hash','$date')";
+    if($conn->query($sql) === TRUE)
+    {
+        $last_id=$conn->insert_id;
+        echo $last_id;
+    }
 
-    $sql->execute();
-    $sql->close();
-    $conn->close();
 
     $msg = 'Registration Successful!';
     $_SESSION['reg_msg'] = $msg;
 
     $reg_success = true;
 
-    $sql2="SELECT user_fname,user_authentication,user_id FROM user WHERE user_id=LAST_INSERT_ID";
-    $result2=$conn->query($sql2);
-    if($result2->num_rows >0)
+    $sql3="SELECT * FROM user WHERE user_id=".$last_id;
+    $result3=$conn->query($sql3);
+    if($result3->num_rows >0)
     {
-        while($row=$result2->fetch_assoc())
+        while($row=$result3->fetch_assoc())
         {
             $_SESSION['ln_usertype'] =$row["user_authentication"];
             $_SESSION['ln_username'] =$row["user_fname"];
@@ -237,12 +243,12 @@ if($no_err)
         }
     }
     $_SESSION['reg_success'] = $reg_success;
-
+    $conn->close();
     header('Location: ../View/index.php');
     exit();
 }
 else{
-    $msg = 'Something seriously went wrong!';
+    $_SESSION["message"] = 'Something seriously went wrong!';
     $_SESSION['reg_msg'] = $msg;
     $_SESSION['reg_arr_form_vals'] = $arr_form_vals;
 

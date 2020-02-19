@@ -29,7 +29,7 @@ function sendEmail($fname,$lname,$email,$subject,$body)
 {
     $mail = new PHPMailer\PHPMailer\PHPMailer(true);
     $mail->IsSMTP();
-    $mail->SMTPDebug = 1;
+    $mail->SMTPDebug = false;
     $mail->SMTPAuth = true;
     $mail->SMTPSecure = 'ssl';
     $mail->Host = "smtp.gmail.com";
@@ -48,7 +48,7 @@ function sendEmail($fname,$lname,$email,$subject,$body)
 
     try {
         if (!$mail->Send()) {
-            echo "Mailer Error: " . $mail->ErrorInfo;
+         //  echo "Mailer Error: " . $mail->ErrorInfo;
         } else { return true;}
     } catch (\PHPMailer\PHPMailer\Exception $e) {}
 }
@@ -121,7 +121,7 @@ if (isset($_POST)) {
 
         sendEmail($first_name,$last_name,$email,$email_subject,$email_body);
 
-         $message = "An email has been sent,<br>the owner will contact you soon, Thank you !";
+         $message = "An email has been sent,the owner will contact you soon, Thank you !";
     }
 
 }

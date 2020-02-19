@@ -24,7 +24,6 @@ include '../Util/Popup_return_handler.php';
     <link rel="stylesheet" href="../css/animation.css">
 </head>
 <body class="is-preload">
-
 <!-- Wrapper -->
 <div id="wrapper" >
 <div id="scrollToHome"></div>
@@ -126,9 +125,48 @@ include '../Util/Popup_return_handler.php';
                     </ul>
                 </div>
             </form>
-             <div id="snackbar"></div>
         </div>
     </section>
+    <div id="snackbar"></div>
+    <?php
+    if(isset($_SESSION["message"]))
+    {
+        $error= $_SESSION["message"];
+        ?>
+        <script>
+                var message="<?php echo $error;?>";
+                var x = document.getElementById("snackbar");
+                x.innerHTML = message;
+                x.className = "show";
+                setTimeout(function () {
+                    x.className = x.className.replace("show", "");
+                }, 3000);
+
+        </script>
+        <?php
+        unset($_SESSION["message"]);
+    }
+    ?>
+    <?php
+    if(isset($_SESSION["reset_pwd_message"]))
+    { $error= $_SESSION["reset_pwd_message"];
+        ?>
+        <script>
+            function cookie() {
+                var x = document.getElementById("snackbar");
+                x.innerHTML = "<?php echo $error;?>";
+                x.className = "show";
+                setTimeout(function () {
+                    x.className = x.className.replace("show", "");
+                }, 3000);
+
+            }
+            cookie();
+        </script>
+        <?php
+        unset( $_SESSION["reset_pwd_message"]);
+    }
+    ?>
 
     <!-- Footer -->
     <?php footer();?>
