@@ -7,6 +7,7 @@ include("dbconn.php");
 //keeping track that a registration was attempted
 $_SESSION['reg_attempt'] = true;
 $_SESSION['log_attempt'] = false;
+$_SESSION['recover_attempt'] = false;
 
 //put some regex functions here if necessary
 

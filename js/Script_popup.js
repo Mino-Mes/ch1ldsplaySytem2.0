@@ -1,7 +1,32 @@
+function forgot_pass(){
+    document.getElementById("popup_content").innerHTML =
+        '<form method="post" action="../Util/pass_recovery.php" class="alt"><div class="row gtr-uniform">'+
+        '<div class="col-12"><h2 style="text-align: center;">Recover password</h2></div>'+
+        '<div class="col-12"><label style="color:black;">Email Address</label><input type="email" name="recover_email" id="recover_email" value="" placeholder="Email" required/></div>'+
+        '<ul class="actions special" style="margin-top: 4%;">' +
+        ' <li><button class="button next" type="submit">Recover</button></li>' +
+        ' </ul>'+
+        '</div></form>'+
+        '<a id="forgot_pass" href="javascript:forgot_cancel()">Cancel</a>'+
+        '<h5 id="popup_err_txt"></h5>';
+}
+function forgot_cancel(){
+    document.getElementById("popup_content").innerHTML =
+        '<form method="post" action="../Util/Login.php" class="alt"><div class="row gtr-uniform">'+
+        '<div class="col-12"><h2 style="text-align: center;">Login</h2></div>'+
+        '<div class="col-12"><label style="color:black;">Username / Email</label><input type="text" name="log_username" id="log_username" value="" placeholder="Username or Email" required/></div>'+
+        '<div class="col-12"><label style="color:black;">Password</label><input type="password" name="log_password" id="log_password" value="" placeholder="Password" required/></div>'+
+        '<ul class="actions special" style="margin-top: 4%;">' +
+        ' <li><button class="button next" type="submit">Login</button></li>' +
+        ' </ul>'+
+        '</div></form>'+
+        '<a id="forgot_pass" href="javascript:forgot_pass()">Forgot password?</a>'+
+        '<h5 id="popup_err_txt"></h5>';
+
+}
+
 // Get the modal
 var modal = document.getElementById("myModal");
-
-
 
 // When the user clicks on the Register button, open the modal
 function Reg() {
@@ -61,6 +86,7 @@ function Login(){
         ' <li><button class="button next" type="submit">Login</button></li>' +
         ' </ul>'+
         '</div></form>'+
+        '<a id="forgot_pass" href="javascript:forgot_pass()">Forgot password?</a>'+
         '<h5 id="popup_err_txt"></h5>';
 
 

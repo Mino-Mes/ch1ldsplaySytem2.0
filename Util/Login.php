@@ -4,6 +4,7 @@ require "dbconn.php";
 
 $_SESSION['reg_attempt'] = false;
 $_SESSION['log_attempt'] = true;
+$_SESSION['recover_attempt'] = false;
 
 //for security reasons, we will not specify what field was incorrectly filled out
 //rather we will just inform the user that they have entered incorrect credentials

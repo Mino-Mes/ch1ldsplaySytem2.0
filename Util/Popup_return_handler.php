@@ -103,14 +103,16 @@ if(isset($_SESSION['log_attempt']))
                 //re-open the login popup(modal)
                 document.getElementById('myModal').style.display = "block";
                 document.getElementById("popup_content").innerHTML =
-                    '<div class="inner"><form method="post" action="../Util/Login.php" class="alt"><div class="row gtr-uniform">'+
-                    '<div class="col-12"><h2 style="color:black;">LOGIN</h2></div>'+
-                    '<div class="col-12"><label style="color:black;">Username / Email</label><input type="text" name="log_username" id="log_username" value="" placeholder="Username or Email" required></div>'+
-                    '<div class="col-12"><label style="color:black;">Password</label><input type="password" name="log_password" id="log_password" value="" placeholder="Password" required></div>'+
-                    '<div class="col-12" id="center_button" class="reg_log_submit_btn"><input type="submit" value="Login"></div>'+
+                    '<form method="post" action="../Util/Login.php" class="alt"><div class="row gtr-uniform">'+
+                    '<div class="col-12"><h2 style="text-align: center;">Login</h2></div>'+
+                    '<div class="col-12"><label style="color:black;">Username / Email</label><input type="text" name="log_username" id="log_username" value="" placeholder="Username or Email" required/></div>'+
+                    '<div class="col-12"><label style="color:black;">Password</label><input type="password" name="log_password" id="log_password" value="" placeholder="Password" required/></div>'+
+                    '<ul class="actions special" style="margin-top: 4%;">' +
+                    ' <li><button class="button next" type="submit">Login</button></li>' +
+                    ' </ul>'+
                     '</div></form>'+
-                    '<h5 id="popup_err_txt" style="color:red;"></h5>'+
-                    '</div>';
+                    '<a id="forgot_pass" href="javascript:forgot_pass()">Forgot password?</a>'+
+                    '<h5 id="popup_err_txt"></h5>';
 
                 //make the form sticky
                 var user = document.getElementById('log_username');
@@ -124,11 +126,47 @@ if(isset($_SESSION['log_attempt']))
                 //send back a message
                 document.getElementById('popup_err_txt').innerHTML =
                 <?php echo json_encode($_SESSION['log_msg']); ?>;
+
             </script>
             <?php
         }
     }
 }
+//for pass recovery
+if(isset($_SESSION['recover_attempt']))
+{
+    if($_SESSION['recover_attempt'] == true){
+        $_SESSION['recover_attempt'] == false;
+        //create a popup with the recovery message
+        if($_SESSION['recover_err']) {
+            ?>
+            <script>
+                document.getElementById('myModal').style.display = "block";
+                document.getElementById("popup_content").innerHTML =
+                    '<form method="post" action="../Util/pass_recovery.php" class="alt"><div class="row gtr-uniform">' +
+                    '<div class="col-12"><h2 style="text-align: center;">Recover password</h2></div>' +
+                    '<div class="col-12"><label style="color:black;">Email Address</label><input type="email" name="recover_email" id="recover_email" value="" placeholder="Email" required/></div>' +
+                    '<ul class="actions special" style="margin-top: 4%;">' +
+                    ' <li><button class="button next" type="submit">Recover</button></li>' +
+                    ' </ul>' +
+                    '</div></form>' +
+                    '<a id="forgot_pass" href="javascript:forgot_cancel()">Cancel</a>' +
+                    '<h5 id="popup_err_txt"></h5>';
+
+                var recover = document.getElementById('recover_email');
+                recover.value = <?php echo json_encode($_SESSION['log_pass']);?>;
+                recover.style.borderColor = 'red';
+
+                //send back a message
+                document.getElementById('popup_err_txt').innerHTML =
+                <?php echo json_encode($_SESSION['recover_msg']); ?>;
+            </script>
+            <?php
+        }
+    }
+}
+
+
 ?>
 
 
