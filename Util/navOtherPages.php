@@ -8,7 +8,12 @@ function onlyAdmin(){
             unset($_SESSION['ln_username']);
             unset($_SESSION['ln_userId']);
             header('Location: ../View/index.php');
+            exit();
         }
+    }
+    else{
+        header('Location: ../View/index.php');
+        exit();
     }
 }
 
@@ -20,9 +25,11 @@ function isCollab()
             unset($_SESSION['ln_username']);
             unset($_SESSION['ln_userId']);
             header('Location: ../View/index.php');
+            exit();
         }
     }else{
         header('Location: ../View/index.php');
+        exit();
     }
 }
     //call this function immediately on all admin pages

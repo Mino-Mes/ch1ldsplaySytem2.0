@@ -34,4 +34,5 @@ if(isset($_POST['action']))
 else{
     $_SESSION['msg_modify'] = 'Something seriously went wrong!';
 }
-header('Location: Manage_users.php');
+header('Location: ../View/Manage_users.php');
+exit();
