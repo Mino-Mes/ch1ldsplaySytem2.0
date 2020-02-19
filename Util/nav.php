@@ -44,7 +44,7 @@ function isCollab()
 
         <!-- Logo -->
         <div class=\"logo\">
-            <strong><a href='javascript:void(0)'>Hello, $user_name</a></strong>
+            <strong><a href='../View/profile.php'>Hello, $user_name</a></strong>
         </div>
 
         <!-- Nav -->
@@ -68,7 +68,7 @@ function isCollab()
 
         <!-- Logo -->
         <div class=\"logo\">
-              <strong><a href='javascript:void(0)'>Hello, $user_name</a></strong>
+              <strong><a href='../View/profile.php'>Hello, $user_name</a></strong>
         </div>
 
         <!-- Nav -->
@@ -90,7 +90,7 @@ function isCollab()
 
         <!-- Logo -->
         <div class=\"logo\">
-                <strong><a href='javascript:void(0)'>Hello, $user_name</a></strong>
+                <strong><a href='../View/profile.php'>Hello, $user_name</a></strong>
         </div>
 
         <!-- Nav -->

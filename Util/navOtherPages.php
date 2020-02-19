@@ -37,12 +37,7 @@ function isCollab()
             }
         }
     }
-    function logout(){
-        unset($_SESSION['ln_username']);
-        unset($_SESSION['ln_usertype']);
-        unset($_SESSION['ln_userId']);
-        header('Location: ../View/index.php');
-    }
+
 
     function nav()
     {
@@ -56,7 +51,7 @@ function isCollab()
 
         <!-- Logo -->
         <div class=\"logo\">
-            <strong><a href='javascript:void(0)'>Hello, $user_name</a></strong>
+            <strong><a href='../View/profile.php'>Hello, $user_name</a></strong>
         </div>
 
         <!-- Nav -->
@@ -80,7 +75,7 @@ function isCollab()
 
         <!-- Logo -->
         <div class=\"logo\">
-              <strong><a href='javascript:void(0)'>Hello, $user_name</a></strong>
+              <strong><a href='../View/profile.php'>Hello, $user_name</a></strong>
         </div>
 
         <!-- Nav -->
@@ -102,7 +97,7 @@ function isCollab()
 
         <!-- Logo -->
         <div class=\"logo\">
-                <strong><a href='javascript:void(0)'>Hello, $user_name</a></strong>
+                <strong><a href='../View/profile.php'>Hello, $user_name</a></strong>
         </div>
 
         <!-- Nav -->
