@@ -1,6 +1,7 @@
 <?php
-session_start();
+
 require "dbconn.php";
+session_start();
 
 $_SESSION['reg_attempt'] = false;
 $_SESSION['log_attempt'] = true;
@@ -49,6 +50,12 @@ if(isset($_POST))
         {
             while($row2=$result2->fetch_assoc())
             {
+                if($row2["user_authentication"] == "banned")
+                {
+                    $_SESSION["message"]="This is account is banned";
+                    header('Location: ../View/index.php?');
+                    exit();
+                }
                 if(password_verify($password, $row2["user_password"]))
                 {
                     //ln = logged in

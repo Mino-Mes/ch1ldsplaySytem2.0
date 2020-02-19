@@ -149,11 +149,23 @@ if(!$err){
                                     break;
                             }
                             $return =
-                                '<p>There are '.$users.' total users</p>'.
-                                '<p>'.$customer.' customers</p>'.
-                                '<p>'.$collab.' collaborators</p>'.
-                                '<p>'.$admin.' admins</p>'.
-                                '<p>'.$banned.' banned users</p>';
+                                '<div class="table-wrapper"><table>'.
+                                '<thead>'.
+                                '<tr>'.
+                                '<th>Total Users</th>'.
+                                '<th>Total Customers</th>'.
+                                '<th>Total Collaborators</th>'.
+                                '<th>Total Administrators</th>'.
+                                '<th>Total Banned Users</th>'.
+                                '</tr>'.
+                                '</thead><tbody>'.
+                                '<tr>'.
+                                '<td>'.$users.'</td>'.
+                                '<td>'.$customer.'</td>'.
+                                '<td>'.$collab.'</td>'.
+                                '<td>'.$admin.'</td>'.
+                                '<td>'.$banned.'</td>'.
+                                '</tr></tbody></table></div>';
 
                         }
                     }
@@ -167,7 +179,7 @@ if(!$err){
                         while($row = $res->fetch_assoc()){
                             $photos++;
                         }
-                        $return = '<p>There are a total of '.$photos.' photos</p>';
+                        $return = '<h3>There are a total of <em>'.$photos.' photos</em></h3>';
                     }
                     break;
                 case 'album':
@@ -179,7 +191,7 @@ if(!$err){
                         while($row = $res->fetch_assoc()){
                             $albums++;
                         }
-                        $return = '<p>There are a total of '.$albums.' albums</p>';
+                        $return = '<h3>There are a total of <em>'.$albums.' albums</em></h3>';
                     }
                     break;
                 default:
