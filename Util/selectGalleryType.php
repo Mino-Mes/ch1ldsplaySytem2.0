@@ -42,7 +42,7 @@ if ($result2->num_rows > 0) {
                             <header> 
                             <span class=\"category\">$album_label</span>
                             <h3>$album_title</h3>
-                              </header
+                             </header>
                              <p>$album_description</p>
                             <ul class=\"actions\">
                              <li><a href=\"album.php?id=$album_id \"class=\"button next\">View Full Album</a></li> 
@@ -54,7 +54,10 @@ if ($result2->num_rows > 0) {
     }
 }
 else{
-    $html="<h3>There is no existing Gallery for this type, please select another type</h3>";
+    $html="<div class=\"box\" style='width: 50%;margin-left: 25%;margin-right: 25%;background-color: white;'>
+                              <div style=\"text-align: center;\">
+                              <h4>There is no existing Gallery for that Type. Please select another type !</h4>
+                              </div>";
 }
 echo $html;
 

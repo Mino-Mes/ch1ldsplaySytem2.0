@@ -1,8 +1,9 @@
 <?php
-session_start();
+
 require "../Util/dbconn.php";
 require "../Util/nav.php";
 include '../Util/Popup_return_handler.php';
+session_start();
 ?>
 <!DOCTYPE HTML>
 <!--
@@ -152,7 +153,7 @@ include '../Util/Popup_return_handler.php';
     { $error= $_SESSION["reset_pwd_message"];
         ?>
         <script>
-            function cookie() {
+
                 var x = document.getElementById("snackbar");
                 x.innerHTML = "<?php echo $error;?>";
                 x.className = "show";
@@ -160,7 +161,7 @@ include '../Util/Popup_return_handler.php';
                     x.className = x.className.replace("show", "");
                 }, 3000);
 
-            }
+
             cookie();
         </script>
         <?php
