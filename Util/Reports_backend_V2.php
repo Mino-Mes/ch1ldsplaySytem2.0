@@ -29,16 +29,16 @@ switch($type)
         $return .= $type.',';
         switch($table){
             case 'user':
-                $return .= $table.',';
+                //$return .= $table.',';
                 $sql = 'SELECT user_id, user_authentication FROM user';
                 break;
             case 'photo':
-                $return .= $table.',';
+                //$return .= $table.',';
                 $sql = 'SELECT photo_id,album_id,user_id,photo_img FROM photo';
                 break;
             case 'album':
-                $return .= $table.',';
-                $sql = 'SELECT album_id,user_id,album_tite,album_label,album_img FROM album';
+                //$return .= $table.',';
+                $sql = 'SELECT album_id,user_id,album_title,album_label,album_img FROM album';
                 break;
             default:
                 $err = true;
@@ -49,15 +49,15 @@ switch($type)
         $return .= $type.',';
         switch($table){
             case 'user':
-                $return .= $table.',';
+                //$return .= $table.',';
                 $sql = 'SELECT user_id,user_lname,user_fname,user_username,user_email,user_authentication,user_creationDate FROM user';
                 break;
             case 'photo':
-                $return .= $table.',';
+                //$return .= $table.',';
                 $sql = 'SELECT photo_id,album_id,user_id,photo_img FROM photo';
                 break;
             case 'album':
-                $return .= $table.',';
+                //$return .= $table.',';
                 $sql = 'SELECT album_id,user_id,album_title,album_label,album_img FROM album';
                 break;
             default:
@@ -268,7 +268,7 @@ if(!$err){
                                 '<td>'.$row['album_id'].'</td>'.
                                 '<td>'.$row['user_id'].'</td>'.
                                 '<td>'.$row['album_title'].'</td>'.
-                                '<td>'.$row['user_label'].'</td>'.
+                                '<td>'.$row['album_label'].'</td>'.
                                 '<td><img src="'.$row['album_img'].'" height="25" width="25"></td>'.
                                 '</tr>';
                         }
