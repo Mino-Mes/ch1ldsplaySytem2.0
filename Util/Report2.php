@@ -1,3 +1,12 @@
+<?php
+
+require "dbconn.php";
+require "navOtherPages.php";
+include 'Popup_return_handler.php';
+session_start();
+
+//onlyAdmin();
+?>
 <!DOCTYPE HTML>
 <!--
 	Relativity by Pixelarity
@@ -6,10 +15,12 @@
 -->
 <html>
 	<head>
-		<title>Untitled</title>
+        <title>Chi1dsplay Media Production | Report</title>
+        <link rel="icon" href="../Images/logo.png" type="image/gif" sizes="16x16">
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="../assets/css/main.css" />
+        <link rel="stylesheet" href="../css/myAlbums.css">
 	</head>
 	<body class="is-preload">
 
@@ -17,83 +28,211 @@
 			<div id="wrapper">
 
 				<!-- Header -->
-					<header id="header">
-
-						<!-- Logo -->
-							<div class="logo">
-								<a href="index.html"><strong>Relativity</strong> by Pixelarity</a>
-							</div>
-
-						<!-- Nav -->
-							<nav id="nav">
-								<ul>
-									<li><a href="index.html">Home</a></li>
-									<li>
-										<a href="#" class="icon fa-angle-down">Dropdown</a>
-										<ul>
-											<li><a href="#">Option One</a></li>
-											<li><a href="#">Option Two</a></li>
-											<li><a href="#">Option Three</a></li>
-											<li>
-												<a href="#">Submenu</a>
-												<ul>
-													<li><a href="#">Option One</a></li>
-													<li><a href="#">Option Two</a></li>
-													<li><a href="#">Option Three</a></li>
-													<li><a href="#">Option Four</a></li>
-												</ul>
-											</li>
-										</ul>
-									</li>
-									<li class="current"><a href="generic.html">Generic</a></li>
-									<li><a href="elements.html">Elements</a></li>
-								</ul>
-							</nav>
-
-					</header>
+					<?php nav(); ?>
 
 				<!-- Section -->
 					<section class="main alt">
 						<header>
-							<h1>Generic Page</h1>
-							<p>Aenean ornare velit lacus varius enim ullamcorper proin aliquam facilisis ante sed etiam magna interdum congue. Sed consequat amet dolor magna consequat. Lorem ipsum dolor amet nullam sed etiam veroeros.</p>
+							<h1>Report Page</h1>
 						</header>
 						<div class="inner style2">
-							<div class="image main" data-position="center"><img src="images/banner.jpg" alt="" /></div>
-							<h3>Magna feugiat consequat</h3>
-							<p>Vis accumsan feugiat adipiscing nisl amet adipiscing accumsan blandit accumsan sapien blandit ac amet faucibus aliquet placerat commodo. Interdum ante aliquet commodo accumsan vis phasellus adipiscing. Ornare a in lacinia. Vestibulum accumsan ac metus massa tempor. Accumsan in lacinia ornare massa amet. Ac interdum ac non praesent. Cubilia lacinia interdum massa faucibus blandit nullam. Accumsan phasellus nunc integer. Accumsan euismod nunc adipiscing lacinia erat ut sit. Arcu amet. Id massa aliquet arcu accumsan lorem amet accumsan.</p>
-							<p>Amet nibh adipiscing adipiscing. Commodo ante vis placerat interdum massa massa primis. Tempus condimentum tempus non ac varius cubilia adipiscing placerat lorem turpis at. Aliquet lorem porttitor interdum. Amet lacus. Aliquam lobortis faucibus blandit ac phasellus. In amet magna non interdum volutpat porttitor metus a ante ac neque. Nisi turpis. Commodo col. Interdum adipiscing mollis ut aliquam id ante adipiscing commodo integer arcu amet Ac interdum ac non praesent. Cubilia lacinia interdum massa faucibus blandit nullam. Accumsan phasellus nunc integer. Accumsan euismod nunc adipiscing lacinia erat ut sit. Arcu amet. Id massa aliquet arcu accumsan lorem amet accumsan commodo odio cubilia ac eu interdum placerat placerat arcu commodo lobortis adipiscing semper ornare pellentesque. Lorem turpis ipsum dolor sit amet at. Aliquet lorem porttitor interdum. Amet lacus. Aliquam lobortis faucibus blandit ac phasellus. In amet magna non interdum volutpat porttitor metus a ante ac neque. Nisi turpis. Commodo col. Interdum adipiscing mollis ut aliquam id ante adipiscing commodo integer arcu amet blandit adipiscing arcu ante. Amet nibh adipiscing adipiscing. Commodo ante vis placerat interdum massa massa primis. Tempus condimentum tempus.</p>
-							<hr class="major" />
-							<h3>Etiam aliquam sed adipiscing</h3>
-							<p>Vis accumsan feugiat adipiscing nisl amet adipiscing accumsan blandit accumsan sapien blandit ac amet faucibus aliquet placerat commodo. Interdum ante aliquet commodo accumsan vis phasellus adipiscing. Ornare a in lacinia. Vestibulum accumsan ac metus massa tempor. Accumsan in lacinia ornare massa amet. Ac interdum ac non praesent. Cubilia lacinia interdum massa faucibus blandit nullam. Accumsan phasellus nunc integer. Accumsan euismod nunc adipiscing lacinia erat ut sit. Arcu amet. Id massa aliquet arcu accumsan lorem amet accumsan.</p>
-							<p>Faucibus volutpat porttitor metus a ante ac neque. Nisi turpis. Commodo col. Interdum adipiscing mollis ut aliquam id ante adipiscing commodo integer arcu amet Ac interdum ac non praesent. Cubilia lacinia interdum massa faucibus blandit nullam. Accumsan phasellus nunc integer. Accumsan euismod nunc adipiscing lacinia erat ut sit. Arcu amet. Id massa aliquet arcu accumsan lorem amet accumsan commodo odio cubilia ac eu interdum placerat placerat arcu commodo lobortis adipiscing semper ornare pellentesque. Lorem turpis ipsum dolor sit amet at. Aliquet lorem porttitor interdum. Amet lacus. Aliquam lobortis faucibus blandit ac phasellus. In amet magna non interdum volutpat porttitor metus a ante ac neque. Nisi turpis. Commodo col. Interdum adipiscing mollis ut aliquam id ante adipiscing commodo integer arcu amet blandit adipiscing arcu ante. Amet nibh adipiscing adipiscing. Commodo ante vis placerat interdum.</p>
+                            <ul class="actions special" style="width: 100%;">
+                                <li>
+                                    <button class="tablink" onclick="openPage('Users', this, 'black')"
+                                            id="defaultOpen">
+                                        Users
+                                    </button>
+
+                                    <button class="tablink" onclick="openPage('Albums', this, 'black')">Albums</button>
+
+                                    <button class="tablink" onclick="openPage('Photographs', this, 'black')">Photographs</button>
+                                </li>
+                            </ul>
+                            <div id="Users" class="tabcontent">
+                                <ul class='actions special' >
+                                    <li><a href="javascript:void(0)"  onclick="showAllUsers()" class="button alt" style="float:left;">Show All Users</a></li>
+                                    <li><a href="javascript:void(0)" class="button alt" style="float:left;">Specify</a></li>
+                                </ul>
+                                <form method="POST" action="#" class="alt">
+                                    <div class="row gtr-uniform">
+                                        <div class="col-4">
+                                        </div>
+                                        <div class="col-5">
+                                            <input type="radio" id="type1" name="type"  onclick="defaultSettings()" checked>
+                                            <label for="type1">Show All Users (default)</label>
+                                            <input type="radio" id="type2" name="type" onclick="showAdvancedSettings()">
+                                            <label for="type2"> +Advanced</label>
+
+                                        </div>
+                                        <div class="col-3">
+                                        </div>
+                                        <div class="col-12" id="advancedContainer">
+
+                                        </div>
+                                        <div class="col-2">
+                                            <input type="radio" id="orderFname" name="order"  checked>
+                                            <label for="orderFname">First Name</label>
+                                        </div>
+                                        <div class="col-2">
+                                            <input type="radio" id="orderLname" name="order">
+                                            <label for="orderLname">Last Name</label>
+                                        </div>
+                                        <div class="col-2">
+                                            <input type="radio" id="orderNewest" name="order">
+                                            <label for="orderNewest">Creation Date (Newest)</label>
+                                        </div>
+                                        <div class="col-2">
+                                            <input type="radio" id="orderOldest" name="order">
+                                            <label for="orderOldest">Creation Date (Oldest)</label>
+                                        </div>
+                                        <div class="col-2">
+                                            <input type="radio" id="orderUserId" name="order">
+                                            <label for="orderUserId">UserId</label>
+                                        </div>
+                                        <div class="col-2">
+                                            <input type="radio" id="orderUsername" name="order">
+                                            <label for="orderUsername">Username</label>
+                                        </div>
+                                        <div class="col-4" id="orderViewsContainer">
+
+                                        </div>
+                                        <div class="col-12">
+                                            <h4>Date</h4>
+                                            <input type="radio" name="date" id="allTime" onclick="dateRange(0)">
+                                            <label for="allTime"> All Time</label>
+                                            <input type="radio" name="date" id="rangeDate" onclick="dateRange(1)">
+                                            <label for="rangeDate">Range</label>
+                                            <div id="dateRangeContainer">
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <h4>User Type</h4>
+                                            <input type="checkbox" name="customerC" id="customerC">
+                                            <label for="customerC">Customer</label>
+                                            <input type="checkbox" name="collaboratorC" id="collaboratorC">
+                                            <label for="collaboratorC">Collaborator</label>
+                                            <input type="checkbox" name="adminC" id="adminC">
+                                            <label for="adminC">Administrator</label>
+                                        </div>
+                                        <div class="col-12">
+                                            <h4>Creator Views</h4>
+                                            <input type="checkbox" name="showViews" id="showViews" onclick="orderByViews()">
+                                            <label for="showViews">Show Creator Views</label>
+                                            <h4>Creator</h4>
+                                            <input type="checkbox" name="albumsC" id="albumsC">
+                                            <label for="albumsC">Number of Albums</label>
+                                            <input type="checkbox" name="photoC" id="photoC">
+                                            <label for="photoC">Number of Photographs</label>
+                                        </div>
+                                        <div class="col-12">
+                                            <h4>Search a user</h4>
+                                            <label for="lastNameS">by Last Name</label>
+                                            <input type="text" name="lastNameS" id="lastNameS" style="width:50%;">
+                                            <label for="usernameS">by Username</label>
+                                            <input type="text" name="usernameS" id="usernameS" style="width:50%;">
+
+                                        </div>
+                                    </div>
+                                </form>
+                                <input type="checkbox" id="demo-priority-low" name="demo-priority" checked>
+                                <div id="tableContainer">
+
+                                </div>
+                            </div>
+                            <div id="Albums" class="tabcontent">
+                            </div>
+                            <div id="Photographs" class="tabcontent">
+                            </div>
 						</div>
 					</section>
 
 				<!-- Footer -->
-					<footer id="footer">
-						<ul class="icons">
-							<li><a href="#" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
-							<li><a href="#" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
-							<li><a href="#" class="icon alt fa-instagram"><span class="label">Instagram</span></a></li>
-							<li><a href="#" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
-							<li><a href="#" class="icon alt fa-phone"><span class="label">Phone</span></a></li>
-							<li><a href="#" class="icon alt fa-envelope-o"><span class="label">Email</span></a></li>
-						</ul>
-						<p class="copyright">&copy; Untitled. All rights reserved.</p>
-					</footer>
+            <?php footer(); ?>
 
 			</div>
 
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.dropotron.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.dropotron.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/browser.min.js"></script>
+			<script src="../assets/js/breakpoints.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+
+    <script>
+        function openPage(pageName, elmnt, color) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablink");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].style.backgroundColor = "";
+            }
+            document.getElementById(pageName).style.display = "block";
+            elmnt.style.backgroundColor = color;
+        }
+
+        document.getElementById("defaultOpen").click();
+
+        function showAllUsers()
+        {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var x = document.getElementById("tableContainer");
+                    x.innerHTML = this.responseText;
+                }
+            };
+            xhttp.open("POST", "report2Logic.php", true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send("function=showAllUsers");
+        }
+        function showAdvancedSettings()
+        {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var x = document.getElementById("advancedContainer");
+                    x.innerHTML = this.responseText;
+                }
+            };
+            xhttp.open("POST", "report2Logic.php", true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send("function=showAdvancedSettings");
+        }
+        function defaultSettings()
+        {
+            var x =document.getElementById("advancedContainer");
+            x.innerHTML="";
+        }
+        function dateRange(isActive) {
+            if (isActive == 1) {
+                document.getElementById("dateRangeContainer").innerHTML = "<label>Specify Date</label><input type='date' name='dateS' id='dateS'>";
+            }
+            if (isActive == 0) {
+                document.getElementById("dateRangeContainer").innerHTML = "";
+            }
+
+        }
+        function orderByViews()
+        {
+            var x=document.getElementById("showViews");
+            if(x.checked ==true)
+            {
+                document.getElementById("orderViewsContainer").innerHTML="asdasd";
+            }else if(x.checked ==false)
+            {
+                document.getElementById("orderViewsContainer").innerHTML=" ";
+            }
+
+        }
+
+
+    </script>
 
 	</body>
 </html>
