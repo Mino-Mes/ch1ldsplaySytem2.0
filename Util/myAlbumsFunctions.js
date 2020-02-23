@@ -176,6 +176,10 @@ function updateTypeSQL() {
     xhttp1.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var x = document.getElementById("snackbar1");
+            if(this.responseText == "The Type has been updated, great work!")
+            {
+                x.style.backgroundColor="green";
+            }
             x.innerHTML = this.responseText;
             x.className = "show";
             setTimeout(function () {
@@ -199,6 +203,7 @@ function UploadType() {
     xhttp1.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var x = document.getElementById("snackbar");
+            if(this.responseText ==  "Type has been added, great work!")
             x.innerHTML = this.responseText;
             x.className = "show";
             setTimeout(function () {
@@ -284,6 +289,10 @@ function deleteObject() {
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var x = document.getElementById("snackbar");
+            if(this.responseText == "The album and the photographs were deleted" || this.responseText =="The Type has been deleted")
+            {
+                x.style.backgroundColor="green";
+            }
             x.innerHTML = this.responseText;
             x.className = "show";
             setTimeout(function () {
@@ -318,6 +327,10 @@ function deletePhoto(id) {
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var x = document.getElementById("snackbar");
+            if (this.responseText == "The photograph was deleted.")
+            {
+                x.style.backgroundColor="green";
+            }
             x.innerHTML = this.responseText;
             x.className = "show";
             setTimeout(function () {
@@ -338,6 +351,10 @@ function isActive(id) {
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var x = document.getElementById("snackbar");
+            if(this.responseText == "The Photos have been added, great work!")
+            {
+                x.style.backgroundColor="green";
+            }
             x.innerHTML = this.responseText;
             x.className = "show";
             setTimeout(function () {

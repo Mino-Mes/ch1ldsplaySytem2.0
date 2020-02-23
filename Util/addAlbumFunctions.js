@@ -8,6 +8,10 @@ $("form#addAlbumForm").submit(function (e) {
         data: formData,
         success: function (data) {
             var x = document.getElementById("snackbar");
+            if(data == "The Album has been created, great work!")
+            {
+                x.style.backgroundColor="green";
+            }
             x.innerHTML = data;
             x.className = "show";
             setTimeout(function () {

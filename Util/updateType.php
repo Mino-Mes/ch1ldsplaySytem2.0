@@ -46,7 +46,7 @@ if(isset($_POST))
 
             $sql ="UPDATE type SET typeName='$typeName',isActive=$isActive WHERE typeId=".$typeId;
             if ($conn->query($sql) == true) {
-                $message="The Type has been updated, great work! ";
+                $message="The Type has been updated, great work!";
             }else{
                 $message="The type could not be updated,please contact the administrator : ".$conn->error;
             }
@@ -58,5 +58,6 @@ if(isset($_POST))
     }else{
         $message="In order to update a type, the name can not be empty or equal to space";
     }
+    trim($message);
     echo $message;
 }

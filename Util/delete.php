@@ -1,5 +1,6 @@
 <?php
 require "dbconn.php";
+require "deleteDir.php";
 if(isset($_POST))
 {
     if($_POST["fname"] =="t")
@@ -18,41 +19,12 @@ if(isset($_POST))
 
     if($_POST["fname"] == "a")
     {
-
-        $sqlAlb="SELECT album_img FROM album WHERE album_id=".$_POST["id"];
-        $result1=$conn->query($sqlAlb);
-        if($result1->num_rows>0)
-        {
-            while($row=$result1->fetch_assoc())
-            {
-                if(unlink($row["album_img"]))
-                {
-                //    echo "The Album path was deleted<br>";
-                }else{
-                 //   echo "The Album path was not deleted<br>";
-                }
-            }
-        }
-
-        $sqlP ="SELECT photo_img FROM photo WHERE album_id=".$_POST["id"];
-        $result2=$conn->query($sqlP);
-        if($result2->num_rows>0)
-        {
-            while($row2=$result2->fetch_assoc())
-            {
-                if(unlink($row2["photo_img"]))
-                {
-                  //  echo "The photos path were deleted<br>";
-                }else{
-                 //   echo "The photos path were not deleted<br>";
-                }
-            }
-        }
+         $id=trim($_POST["id"]);
+        delete_files('../images/album_'.$id.'/');
 
         $sql="DELETE FROM album where album_id=".$_POST["id"];
         if($conn->query($sql) == true)
         {
-            echo " and the album has been deleted in the database";
 
             $sql2="DELETE FROM photo where album_id=".$_POST["id"];
             if($conn->query($sql2) == true)

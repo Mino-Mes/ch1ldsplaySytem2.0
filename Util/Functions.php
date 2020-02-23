@@ -38,7 +38,7 @@ function sendEmail($fname,$lname,$email,$subject,$body)
     $mail->Username = "meslevrai@gmail.com";
     $mail->Password = "sasuke12345";
     try {
-        $mail->AddAddress("aladdinemes@gmail.com");
+        $mail->AddAddress("$email");
     } catch (\PHPMailer\PHPMailer\Exception $e) {}
     try {
         $mail->SetFrom("meslevrai@gmail.com");

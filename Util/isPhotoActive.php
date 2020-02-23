@@ -52,13 +52,12 @@ if (isset($_POST)) {
             $result = $conn->query($sqlImg);
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
-                    if (unlink($row["photo_img"]))
-                    {
-                        echo "The Image path was deleted<br>";
-                    }else
-                    {
-                        echo "The image path was not deleted<br>";
-                    }
+                    $imgpath = $row["photo_img"];
+                }
+                if (unlink($imgpath)) {
+                    //echo "The image was deleted";
+                } else {
+                    echo "The image was not deleted";
                 }
             }
         } else if ($_POST["deleteP"] == 2) {
@@ -69,18 +68,17 @@ if (isset($_POST)) {
             $result = $conn->query($sqlImg);
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
-                    if (unlink($row["img_path"]))
-                    {
-                        echo "The photos were path deleted.<br>";
-                    }else
-                    {
-                        echo "The photos path were not deleted.<br>";
-                    }
-            }
+                    $imgpath = $row["img_path"];
+                }
+                if (unlink($imgpath)) {
+                    //echo "The image was deleted";
+                } else {
+                    echo "The image was not deleted";
+                }
             }
         }
         if ($conn->query($sql) == true) {
-            echo " and the photograph was deleted in the database.";
+            echo "The photograph was deleted.";
         } else {
             echo " and the photograph were not deleted in the database, contact the administrator :Error: " . $conn->error;
         }

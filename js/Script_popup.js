@@ -7,7 +7,7 @@ function forgot_pass(){
         ' <li><button class="button next" type="submit">Recover</button></li>' +
         ' </ul>'+
         '</div></form>'+
-        '<a id="forgot_pass" href="javascript:forgot_cancel()">Cancel</a>'+
+        '<div style="margin:auto;width: 50%;padding-bottom: 15px;text-align:center;"><a id="forgot_pass" href="javascript:forgot_cancel()" >Cancel</a></div>'+
         '<h5 id="popup_err_txt"></h5>';
 }
 function forgot_cancel(){
@@ -20,7 +20,7 @@ function forgot_cancel(){
         ' <li><button class="button next" type="submit">Login</button></li>' +
         ' </ul>'+
         '</div></form>'+
-        '<a id="forgot_pass" href="javascript:forgot_pass()">Forgot password?</a>'+
+        '<div style="margin:auto;width: 50%;padding-bottom: 15px;text-align: center;"><a id="forgot_pass" href="javascript:forgot_pass()"  style="margin:auto;width: 50%;padding-bottom: 15px;text-align: center;">Forgot password?</a></div>'+
         '<h5 id="popup_err_txt"></h5>';
 
 }
@@ -87,7 +87,7 @@ function Login(){
         ' <li><button class="button next" type="submit">Login</button></li>' +
         ' </ul>'+
         '</div></form>'+
-        '<a id="forgot_pass" href="javascript:forgot_pass()">Forgot password?</a>'+
+        '<div style="margin:auto;width: 50%;padding-bottom: 15px;text-align: center;"><a id="forgot_pass" href="javascript:forgot_pass()">Forgot password?</a></div>'+
         '<h5 id="popup_err_txt"></h5>';
 
 
