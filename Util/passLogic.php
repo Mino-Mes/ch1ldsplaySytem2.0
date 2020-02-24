@@ -3,9 +3,8 @@ require "dbconn.php";
 session_start();
 if(!isset($_GET['psswd']) || !isset($_GET['new_psswd'])) {
 $_SESSION["error_pssd"] = "Fill in the Form";
-header("Location:new_password.php?token=".$_GET["tokenValue"]);
+header("Location:new_password.php/?token=".$_GET["tokenValue"]);
 exit();
-
 }else
 {
     $message="Did not update password try again";
@@ -71,5 +70,5 @@ exit();
     }
 }
 $_SESSION["reset_pwd_message"] = $message;
-header("Location:new_password.php?token=".$_GET["tokenValue"]);
+header("Location:new_password.php/?token=".$_GET["tokenValue"]);
 exit();
