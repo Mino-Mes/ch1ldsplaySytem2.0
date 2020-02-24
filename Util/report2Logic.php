@@ -144,6 +144,7 @@ function showAllusersAdvanced($conn, $date, $customer, $collab, $admin, $views, 
 
     $sql .= " ORDER BY " . $orderBy;
 
+  //  return $sql;
 
     $result = $conn->query($sql) or die("Error: " . $conn->error);
 
@@ -513,7 +514,7 @@ if (isset($_POST)) {
             } else if ($_POST["order"] == "username") {
                 $message = showAllUsers($conn, "user_username");
             }
-            echo $message;
+           echo $message;
         } else if ($_POST["type"] == "advanced") {
             if ($_POST["date"] == "allTime") {
                 $date = 1;
