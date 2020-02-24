@@ -103,7 +103,7 @@ isCollab();
 
             <div id="userAlbum" class="tabcontent">
                 <label>
-                    Input User username (<em>Write 'All' to view All users</em>)
+                    Search By <span style="color:blue;">username</span> or <span style="color:orange">Id</span> or <span style="color:red;">Last name </span>(<em>Write 'All' to view All users</em>)
                 </label>
                 <input id="search-box" type="text" placeholder="Search username"/>
                 <div id="search-table" class="table-wrapper" style="margin-top:4%;">

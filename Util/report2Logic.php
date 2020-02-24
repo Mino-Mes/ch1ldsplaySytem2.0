@@ -24,24 +24,15 @@ function showAdvancedSetting()
                                             <label for=\"adminC\">Administrator</label>
                                         </div>
                                         <div class=\"col-4\">
-                                            <h4>Creator Views</h4>
+                                            <h4>Creator Views - <span style='color:red;'>Note :Disregards User Type Selected</span></h4>
                                             <input type=\"checkbox\" name=\"showViews\" id=\"showViews\" onclick=\"orderByViews()\">
-                                            <label for=\"showViews\">Show Creator Views</label>
-                                            <h4>Creator</h4>
-                                            <input type=\"checkbox\" name=\"albumsC\" id=\"albumsC\">
-                                            <label for=\"albumsC\">Number of Albums</label>
-                                            <input type=\"checkbox\" name=\"photoC\" id=\"photoC\">
-                                            <label for=\"photoC\">Number of Photographs</label>
+                                            <label for=\"showViews\">Show Creator Information (Total album Views, Total Album Added,Total Photo Added )</label>
                                         </div>
                                         <div class=\"col-6\">
                                             <h4>Search a user</h4>
                                             <label for=\"lastNameS\">by Last Name</label>
                                             <input type=\"text\" name=\"lastNameS\" id=\"lastNameS\" style=\"width:30%;margin-left:36%;\">
                                         </div>
-                                         <div class=\"col-6\">   
-                                            <label for=\"usernameS\">by Username</label>
-                                            <input type=\"text\" name=\"usernameS\" id=\"usernameS\" style=\"width:30%;margin-left:36%;\">
-
                                         </div> ";
 }
 
@@ -89,7 +80,7 @@ function showAllUsers($conn, $orderBy)
     return $table;
 }
 
-function showAllusersAdvanced($conn,$date,$customer,$collab,$admin,$views,$album,$photo,$orderBy)
+function showAllusersAdvanced($conn,$date,$customer,$collab,$admin,$views,$search,$orderBy)
 {
     $dateisSet=false;
     $sql = "SELECT * FROM USER ";
@@ -147,7 +138,33 @@ function showAllusersAdvanced($conn,$date,$customer,$collab,$admin,$views,$album
         }
     }
 
- //return $sql;
+    $isView=false;
+    if($views==1)
+    { $isView=true;
+        if($dateisSet)
+        {
+            $sql = "SELECT * FROM USER WHERE user_creationDate < '".date('Y-m-d H:i:s', strtotime(str_replace('-', '/', $date)))."'AND user_authentication ='collaborator' OR user_authentication = 'administrator'";
+        }else if(!$dateisSet)
+        {
+            $sql = "SELECT * FROM USER WHERE user_authentication ='collaborator' OR user_authentication = 'administrator'";
+        }
+    }
+
+    if($search != 0)
+    {
+        $isView=false;
+        if($dateisSet)
+        {
+            $sql = "SELECT * FROM USER WHERE user_creationDate < '".date('Y-m-d H:i:s', strtotime(str_replace('-', '/', $date)))."'AND user_lname ='$search'";
+        }else if(!$dateisSet)
+        {
+            $sql = "SELECT * FROM USER WHERE user_lname ='$search'";
+        }
+    }
+
+    $sql .= " ORDER BY ".$orderBy;
+
+//return $sql;
 
     $result = $conn->query($sql) or die("Error: ". $conn->error);
 
@@ -163,22 +180,53 @@ function showAllusersAdvanced($conn,$date,$customer,$collab,$admin,$views,$album
             . "<th>First Name</th>"
             . "<th>Email</th>"
             . "<th>Authentication Level</th>"
-            . "<th>Username</th>"
-            . "<th>Creation Date</th>"
+            . "<th>Username</th>";
+            if($isView)
+            {
+                $table.="<th>Total Views</th>";
+                $table.="<th>Album Created</th>";
+                $table.="<th>Photo Created</th>";
+            }
+          $table .= "<th>Creation Date</th>"
             . "</tr>"
             . "</thead>"
             . "<tbody>";
 
 
         while ($row = $result->fetch_assoc()) {
+
+
             $table .= "<tr>"
                 . "<td>" . $row["user_id"] . "</td>"
                 . "<td>" . $row["user_lname"] . "</td>"
                 . "<td>" . $row["user_fname"] . "</td>"
                 . "<td>" . $row["user_email"] . "</td>"
                 . "<td>" . $row["user_authentication"] . "</td>"
-                . "<td>" . $row["user_username"] . "</td>"
-                . "<td>" . $row["user_creationDate"] . "</td>"
+                . "<td>" . $row["user_username"] . "</td>";
+                if($isView)
+                {
+                    $table .= "<td>" . $row["totalViews"] . "</td>";
+                    $sql2="SELECT count('user_id') as 'countUser' FROM album WHERE user_id=".$row["user_id"];
+                    $result2=$conn->query($sql2);
+                    if($result2->num_rows>0)
+                    {
+                        while($row2=$result2->fetch_assoc())
+                        {
+                            $table .= "<td>" . $row2["countUser"] . "</td>";
+                        }
+                    }
+                    $sql3="SELECT count('user_id') as 'countUser' FROM photo WHERE user_id=".$row["user_id"];
+                    $result3=$conn->query($sql3);
+                    if($result3->num_rows>0)
+                    {
+                        while($row3=$result3->fetch_assoc())
+                        {
+                            $table .= "<td>" . $row3["countUser"] . "</td>";
+                        }
+                    }
+
+                }
+               $table .= "<td>" . $row["user_creationDate"] . "</td>"
                 . "</tr>";
         }
 
@@ -247,17 +295,14 @@ if (isset($_POST)) {
             } else {
                     $views=0;
             }
+            if(!empty($_POST["lastNameS"]) && isset($_POST["lastNameS"]))
+            {
+                $search=$_POST["lastNameS"];
+            }else
+            {
+                $search=0;
+            }
 
-            if (isset($_POST["albumsC"])) {
-                    $album=1;
-            } else {
-                    $album=0;
-            }
-            if (isset($_POST["photoC"])) {
-                    $photo=1;
-            } else {
-                    $photo=0;
-            }
             if ($_POST["order"] == "fname") {
               $orderBy ="user_fname";
             } else if ($_POST["order"] == "lname") {
@@ -270,9 +315,15 @@ if (isset($_POST)) {
                 $orderBy ="user_id";
             } else if ($_POST["order"] == "username") {
                 $orderBy ="user_username";
+            }else if($_POST["order"] == "lowViews")
+            {
+                $orderBy ="totalViews ASC";
+            }else if($_POST["order"] == "HighViews")
+            {
+                $orderBy ="totalViews DESC";
             }
 
-            $message =showAllusersAdvanced($conn,$date,$customer,$collab,$admin,$views,$album,$photo,$orderBy);
+            $message =showAllusersAdvanced($conn,$date,$customer,$collab,$admin,$views,$search,$orderBy);
             echo $message;
         }
     }

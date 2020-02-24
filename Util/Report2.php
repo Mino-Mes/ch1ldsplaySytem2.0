@@ -101,12 +101,12 @@ session_start();
                         <li><input type="submit" value="Generate Report"></li>
                     </ul>
                 </form>
-
                 <div id="tableContainer">
 
                 </div>
             </div>
             <div id="Albums" class="tabcontent">
+
             </div>
             <div id="Photographs" class="tabcontent">
             </div>

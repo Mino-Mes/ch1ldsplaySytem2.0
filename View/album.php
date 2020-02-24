@@ -10,6 +10,22 @@ if(!isset($_GET["id"]))
 //Add a view to the album
 $sql="UPDATE album SET album_views = album_views+1 WHERE album_id=".$_GET["id"];
 $conn->query($sql);
+//Get the user_id
+$sql2="SELECT user_id  FROM album WHERE album_id=".$_GET["id"];
+$result=$conn->query($sql2);
+
+if($result->num_rows>0)
+{
+    while($album=$result->fetch_assoc())
+    {
+        $user_id=$album["user_id"];
+    }
+}
+
+//Add view to user
+$sql3="UPDATE user SET totalViews =totalViews+1 WHERE user_id =".$user_id;
+$conn->query($sql3);
+
 ?>
 <!DOCTYPE HTML>
 <!--
