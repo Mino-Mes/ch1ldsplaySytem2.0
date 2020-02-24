@@ -96,22 +96,23 @@ function showAllusersAdvanced($conn,$date,$customer,$collab,$admin,$views,$album
     if($date != 1)
     {
        $fdate= date('Y-m-d', strtotime($date));
-        $sql .=" WHERE user_creationDate > $fdate ";
+        $sql .=" WHERE user_creationDate < $fdate ";
         $dateisSet=true;
+        return $date;
     }
 
     if($dateisSet)
     {
-        if($customer == 1 && $date)
+        if($customer == 1)
         {
-            $sql .= "AND user_authentication ='customer' ";
+            $sql .= " AND user_authentication ='customer' ";
         }
         if($collab == 1 && $customer == 1)
         {
             $sql .=" OR user_authentication = 'collaborator'";
         }else if($collab ==1 && $customer==0)
         {
-            $sql .= "AND user_authentication ='collaborator'";
+            $sql .= " AND user_authentication ='collaborator'";
         }
         if($admin == 1 && $collab ==1 )
         {
@@ -121,11 +122,11 @@ function showAllusersAdvanced($conn,$date,$customer,$collab,$admin,$views,$album
             $sql .= " OR user_authentication LIKE 'administrator'";
         }else if($admin == 1 && $customer ==0 && $collab ==0)
         {
-            $sql .="AND user_authentication ='administrator'";
+            $sql .=" AND user_authentication ='administrator'";
         }
     }else if(!$dateisSet)
     {
-        if($customer == 1 && $date)
+        if($customer == 1 )
         {
             $sql .= "WHERE user_authentication ='customer' ";
         }

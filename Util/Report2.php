@@ -197,7 +197,7 @@ session_start();
 
     function dateRange(isActive) {
         if (isActive == 1) {
-            document.getElementById("dateRangeContainer").innerHTML = "<label>Specify Date</label><input type='date' name='dateS' id='dateS'>";
+            document.getElementById("dateRangeContainer").innerHTML = "<label>Specify Date</label><input type='datetime-local' name='dateS' id='dateS'>";
         }
         if (isActive == 0) {
             document.getElementById("dateRangeContainer").innerHTML = "";
