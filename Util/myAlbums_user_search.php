@@ -13,14 +13,14 @@ $returnString="";
             $sql = 'SELECT * FROM user';
             $noBindParam=true;
         }else{
-            $sql = 'SELECT * FROM user WHERE user_username LIKE ? OR user_id LIKE ?';
+            $sql = 'SELECT * FROM user WHERE user_username LIKE ? OR user_lname LIKE ? OR user_id LIKE ?';
         }
 
         if($stmt = mysqli_prepare($conn, $sql)){
 
             if(!$noBindParam)
             {
-                mysqli_stmt_bind_param($stmt,'ss',$param_term,$param_term);
+                mysqli_stmt_bind_param($stmt,'sss',$param_term,$param_term, $param_term);
             }
             $param_term = $_REQUEST['term'] . '%';
 
