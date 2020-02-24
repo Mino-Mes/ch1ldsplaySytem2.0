@@ -6,6 +6,10 @@ if(!isset($_GET["id"]))
     header("Location:index.php");
     exit();
 }
+
+//Add a view to the album
+$sql="UPDATE album SET album_views = album_views+1 WHERE album_id=".$_GET["id"];
+$conn->query($sql);
 ?>
 <!DOCTYPE HTML>
 <!--
