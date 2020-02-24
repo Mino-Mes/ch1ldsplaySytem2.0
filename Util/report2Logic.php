@@ -80,93 +80,72 @@ function showAllUsers($conn, $orderBy)
     return $table;
 }
 
-function showAllusersAdvanced($conn,$date,$customer,$collab,$admin,$views,$search,$orderBy)
+function showAllusersAdvanced($conn, $date, $customer, $collab, $admin, $views, $search1, $orderBy)
 {
-    $dateisSet=false;
+    $dateisSet = false;
     $sql = "SELECT * FROM USER ";
-    if($date != 1)
-    {
-        $sql .="WHERE user_creationDate < '".date('Y-m-d H:i:s', strtotime(str_replace('-', '/', $date)))."' ";
-        $dateisSet =true;
+    if ($date != 1) {
+        $sql .= "WHERE user_creationDate < '" . date('Y-m-d H:i:s', strtotime(str_replace('-', '/', $date))) . "' ";
+        $dateisSet = true;
     }
 
-    if($dateisSet)
-    {
-        if($customer == 1)
-        {
+    if ($dateisSet) {
+        if ($customer == 1) {
             $sql .= " AND user_authentication ='customer' ";
         }
-        if($collab == 1 && $customer == 1)
-        {
-            $sql .=" OR user_authentication = 'collaborator'";
-        }else if($collab ==1 && $customer==0)
-        {
+        if ($collab == 1 && $customer == 1) {
+            $sql .= " OR user_authentication = 'collaborator'";
+        } else if ($collab == 1 && $customer == 0) {
             $sql .= " AND user_authentication ='collaborator'";
         }
-        if($admin == 1 && $collab ==1 )
-        {
+        if ($admin == 1 && $collab == 1) {
             $sql .= " OR user_authentication ='administrator'";
-        }else if($admin == 1 && $customer ==1)
-        {
+        } else if ($admin == 1 && $customer == 1) {
             $sql .= " OR user_authentication LIKE 'administrator'";
-        }else if($admin == 1 && $customer ==0 && $collab ==0)
-        {
-            $sql .=" AND user_authentication ='administrator'";
+        } else if ($admin == 1 && $customer == 0 && $collab == 0) {
+            $sql .= " AND user_authentication ='administrator'";
         }
-    }else if(!$dateisSet)
-    {
-        if($customer == 1 )
-        {
+    } else if (!$dateisSet) {
+        if ($customer == 1) {
             $sql .= "WHERE user_authentication ='customer' ";
         }
-        if($collab == 1 && $customer == 1)
-        {
-            $sql .=" OR user_authentication = 'collaborator'";
-        }else if($collab ==1 && $customer==0)
-        {
+        if ($collab == 1 && $customer == 1) {
+            $sql .= " OR user_authentication = 'collaborator'";
+        } else if ($collab == 1 && $customer == 0) {
             $sql .= "WHERE user_authentication ='collaborator'";
         }
-        if($admin == 1 && $collab ==1 )
-        {
+        if ($admin == 1 && $collab == 1) {
             $sql .= " OR user_authentication ='administrator'";
-        }else if($admin == 1 && $customer ==1)
-        {
+        } else if ($admin == 1 && $customer == 1) {
             $sql .= " OR user_authentication = 'administrator'";
-        }else if($admin == 1 && $customer ==0 && $collab ==0)
-        {
-            $sql .="WHERE user_authentication ='administrator'";
+        } else if ($admin == 1 && $customer == 0 && $collab == 0) {
+            $sql .= "WHERE user_authentication ='administrator'";
         }
     }
 
-    $isView=false;
-    if($views==1)
-    { $isView=true;
-        if($dateisSet)
-        {
-            $sql = "SELECT * FROM USER WHERE user_creationDate < '".date('Y-m-d H:i:s', strtotime(str_replace('-', '/', $date)))."'AND user_authentication ='collaborator' OR user_authentication = 'administrator'";
-        }else if(!$dateisSet)
-        {
+    $isView = false;
+    if ($views == 1) {
+        $isView = true;
+        if ($dateisSet) {
+            $sql = "SELECT * FROM USER WHERE user_creationDate < '" . date('Y-m-d H:i:s', strtotime(str_replace('-', '/', $date))) . "'AND user_authentication ='collaborator' OR user_authentication = 'administrator'";
+        } else if (!$dateisSet) {
             $sql = "SELECT * FROM USER WHERE user_authentication ='collaborator' OR user_authentication = 'administrator'";
         }
     }
 
-    if($search != 0)
-    {
-        $isView=false;
-        if($dateisSet)
-        {
-            $sql = "SELECT * FROM USER WHERE user_creationDate < '".date('Y-m-d H:i:s', strtotime(str_replace('-', '/', $date)))."'AND user_lname ='$search'";
-        }else if(!$dateisSet)
-        {
-            $sql = "SELECT * FROM USER WHERE user_lname ='$search'";
+    if ($search1 != "") {
+        $isView = false;
+        if ($dateisSet) {
+            $sql = "SELECT * FROM USER WHERE user_creationDate < '" . date('Y-m-d H:i:s', strtotime(str_replace('-', '/', $date))) . "'AND user_lname ='$search1'";
+        } else if (!$dateisSet) {
+            $sql = "SELECT * FROM USER WHERE user_lname ='$search1'";
         }
     }
 
-    $sql .= " ORDER BY ".$orderBy;
+    $sql .= " ORDER BY " . $orderBy;
 
-//return $sql;
 
-    $result = $conn->query($sql) or die("Error: ". $conn->error);
+    $result = $conn->query($sql) or die("Error: " . $conn->error);
 
     $table = "";
     if ($result->num_rows > 0) {
@@ -181,13 +160,12 @@ function showAllusersAdvanced($conn,$date,$customer,$collab,$admin,$views,$searc
             . "<th>Email</th>"
             . "<th>Authentication Level</th>"
             . "<th>Username</th>";
-            if($isView)
-            {
-                $table.="<th>Total Views</th>";
-                $table.="<th>Album Created</th>";
-                $table.="<th>Photo Created</th>";
-            }
-          $table .= "<th>Creation Date</th>"
+        if ($isView) {
+            $table .= "<th>Total Views</th>";
+            $table .= "<th>Album Created</th>";
+            $table .= "<th>Photo Created</th>";
+        }
+        $table .= "<th>Creation Date</th>"
             . "</tr>"
             . "</thead>"
             . "<tbody>";
@@ -203,30 +181,25 @@ function showAllusersAdvanced($conn,$date,$customer,$collab,$admin,$views,$searc
                 . "<td>" . $row["user_email"] . "</td>"
                 . "<td>" . $row["user_authentication"] . "</td>"
                 . "<td>" . $row["user_username"] . "</td>";
-                if($isView)
-                {
-                    $table .= "<td>" . $row["totalViews"] . "</td>";
-                    $sql2="SELECT count('user_id') as 'countUser' FROM album WHERE user_id=".$row["user_id"];
-                    $result2=$conn->query($sql2);
-                    if($result2->num_rows>0)
-                    {
-                        while($row2=$result2->fetch_assoc())
-                        {
-                            $table .= "<td>" . $row2["countUser"] . "</td>";
-                        }
+            if ($isView) {
+                $table .= "<td>" . $row["totalViews"] . "</td>";
+                $sql2 = "SELECT count('user_id') as 'countUser' FROM album WHERE user_id=" . $row["user_id"];
+                $result2 = $conn->query($sql2);
+                if ($result2->num_rows > 0) {
+                    while ($row2 = $result2->fetch_assoc()) {
+                        $table .= "<td>" . $row2["countUser"] . "</td>";
                     }
-                    $sql3="SELECT count('user_id') as 'countUser' FROM photo WHERE user_id=".$row["user_id"];
-                    $result3=$conn->query($sql3);
-                    if($result3->num_rows>0)
-                    {
-                        while($row3=$result3->fetch_assoc())
-                        {
-                            $table .= "<td>" . $row3["countUser"] . "</td>";
-                        }
-                    }
-
                 }
-               $table .= "<td>" . $row["user_creationDate"] . "</td>"
+                $sql3 = "SELECT count('user_id') as 'countUser' FROM photo WHERE user_id=" . $row["user_id"];
+                $result3 = $conn->query($sql3);
+                if ($result3->num_rows > 0) {
+                    while ($row3 = $result3->fetch_assoc()) {
+                        $table .= "<td>" . $row3["countUser"] . "</td>";
+                    }
+                }
+
+            }
+            $table .= "<td>" . $row["user_creationDate"] . "</td>"
                 . "</tr>";
         }
 
@@ -238,6 +211,85 @@ function showAllusersAdvanced($conn,$date,$customer,$collab,$admin,$views,$searc
     return $table;
 }
 
+function albumReport($conn, $searchType, $images, $albumViews, $orderBy)
+{
+    $sql = "";
+    if ($searchType == "all") {
+        $sql .= "SELECT * FROM album";
+    } else {
+        $sql .= "SELECT * FROM album WHERE album_title = '$searchType'";
+    }
+
+    $sql .= " ORDER BY " . $orderBy;
+//return $sql;
+    $result = $conn->query($sql);
+    $table = "";
+    if ($result->num_rows > 0) {
+        $table .= "<h4>List of Albums</h4>"
+            . "<div class='table-wrapper'>"
+            . "<table>"
+            . "<thead>"
+            . "<tr>";
+        if ($images == 1) {
+            $table .= "<th>Image</th>";
+        }
+        $table .= "<th>album_id</th>"
+            ."<th>Creator</th>"
+            . "<th>Title</th>"
+            . "<th>Description</th>"
+            . "<th>Label</th>"
+            . "<th>Type</th>";
+        if ($albumViews == 1) {
+            $table .= "<th>Total Views</th>";
+        }
+        $table .="</tr>"
+                  ."</thead>"
+                  ."<tbody>";
+
+        while($row=$result->fetch_assoc())
+        {
+            $table .="<tr>";
+            if($images==1)
+            {
+                $album_img = $row["album_img"];
+                $table .="<td style='width: 20%;'><img src='$album_img' alt=\"\" style='width: 100%;' ></td>";
+            }
+            $table .="<td>".$row["album_id"]."</td>";
+            $sql2 ="SELECT user_username FROM user WHERE user_id=".$row["user_id"];
+            $result2=$conn->query($sql2);
+            if($result2->num_rows>0)
+            {
+                while($row2=$result2->fetch_assoc())
+                {
+                    $table .="<td>".$row2["user_username"]."</td>";
+                }
+            }
+            $table .="<td>".$row["album_title"]."</td>"
+                     ."<td>".$row["album_description"]."</td>"
+                     ."<td>".$row["album_label"]."</td>";
+
+            $sql3="SELECT typeName FROM type WHERE typeId =".$row["typeId"];
+            $result3=$conn->query($sql3);
+            if($result3->num_rows>0)
+            {
+                while($row3=$result3->fetch_assoc())
+                {
+                    $table .="<td>".$row3["typeName"]."</td>";
+                }
+            }
+            if($albumViews == 1)
+            {
+                $table .="<td>".$row["album_views"]."</td>";
+            }
+             $table .="</tr>";
+        }
+        $table .="</tbody>"
+                  ."</table>"
+                  ."</div>";
+    }
+ return $table;
+}
+
 if (isset($_POST)) {
     /*  if($_POST["function"] == "showAllUsers")
       {
@@ -245,10 +297,48 @@ if (isset($_POST)) {
           echo $message;
       }
   */
+
     if (isset($_POST["function"])) {
         if ($_POST["function"] == "showAdvancedSettings") {
             echo showAdvancedSetting();
         }
+    }
+
+    if (isset($_POST["search"])) {
+        if ($_POST["search"] == "search") {
+
+            if(isset($_POST["album"]))
+            {
+                $searchType = $_POST["albumTitle"];
+            }
+        } else if ($_POST["search"] == "all") {
+            $searchType = "all";
+        }
+
+        if (isset($_POST["images"])) {
+            $images = 1;
+        } else {
+            $images = 0;
+        }
+        if (isset($_POST["albumViews"])) {
+            $Albumviews = 1;
+        } else {
+            $Albumviews = 0;
+        }
+
+        if (isset($_POST["albumOrder"])) {
+            if ($_POST["albumOrder"] == "orderTitle") {
+                $orderBy = "album_title";
+            } else if ($_POST["albumOrder"] == "orderId") {
+                $orderBy = "album_id";
+            } else if ($_POST["albumOrder"] == "lowViews") {
+                $orderBy = "album_views ASC";
+            } else if ($_POST["albumOrder"] == "HighViews") {
+                $orderBy = "album_views DESC";
+            }
+        }
+       $message =  albumReport($conn, $searchType, $images, $Albumviews, $orderBy);
+        echo $message;
     }
 
     if (isset($_POST["type"])) {
@@ -269,61 +359,53 @@ if (isset($_POST)) {
             echo $message;
         } else if ($_POST["type"] == "advanced") {
             if ($_POST["date"] == "allTime") {
-                $date=1;
+                $date = 1;
             } else if ($_POST["date"] == "rangeDate") {
-                    $date =$_POST["dateS"];
+                $date = $_POST["dateS"];
             }
             if (isset($_POST["customerC"])) {
-                   $customer=1;
+                $customer = 1;
             } else {
-                $customer=0;
+                $customer = 0;
             }
 
             if (isset($_POST["collaboratorC"])) {
-                    $collab=1;
+                $collab = 1;
             } else {
-                $collab=0;
+                $collab = 0;
             }
 
             if (isset($_POST["adminC"])) {
-                    $admin=1;
+                $admin = 1;
             } else {
-                    $admin=0;
+                $admin = 0;
             }
             if (isset($_POST["showViews"])) {
-                    $views=1;
+                $views = 1;
             } else {
-                    $views=0;
+                $views = 0;
             }
-            if(!empty($_POST["lastNameS"]) && isset($_POST["lastNameS"]))
-            {
-                $search=$_POST["lastNameS"];
-            }else
-            {
-                $search=0;
-            }
+            $search = $_POST["lastNameS"];
 
             if ($_POST["order"] == "fname") {
-              $orderBy ="user_fname";
+                $orderBy = "user_fname";
             } else if ($_POST["order"] == "lname") {
-                $orderBy ="user_lname";
+                $orderBy = "user_lname";
             } else if ($_POST["order"] == "newest") {
-                $orderBy ="user_creationDate DESC";
+                $orderBy = "user_creationDate DESC";
             } else if ($_POST["order"] == "oldest") {
-                $orderBy ="user_creationDate ASC";
+                $orderBy = "user_creationDate ASC";
             } else if ($_POST["order"] == "id") {
-                $orderBy ="user_id";
+                $orderBy = "user_id";
             } else if ($_POST["order"] == "username") {
-                $orderBy ="user_username";
-            }else if($_POST["order"] == "lowViews")
-            {
-                $orderBy ="totalViews ASC";
-            }else if($_POST["order"] == "HighViews")
-            {
-                $orderBy ="totalViews DESC";
+                $orderBy = "user_username";
+            } else if ($_POST["order"] == "lowViews") {
+                $orderBy = "totalViews ASC";
+            } else if ($_POST["order"] == "HighViews") {
+                $orderBy = "totalViews DESC";
             }
 
-            $message =showAllusersAdvanced($conn,$date,$customer,$collab,$admin,$views,$search,$orderBy);
+            $message = showAllusersAdvanced($conn, $date, $customer, $collab, $admin, $views, $search, $orderBy);
             echo $message;
         }
     }

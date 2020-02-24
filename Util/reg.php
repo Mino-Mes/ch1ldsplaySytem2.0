@@ -27,6 +27,8 @@ $msg = '';
 $reg_success = false;
 $_SESSION['reg_success'] = $reg_success;
 
+
+
 //try catch for corner cases(if the clientside is messed with)
 try
 {
@@ -47,6 +49,11 @@ try
 
     $confirm_pass = trim($_POST['reg_confirm_password']);
     $arr_form_vals['confirm_pass']=$confirm_pass;
+
+    $_SESSION["username"]= $username;
+    $_SESSION["email"] =$email;
+    $_SESSION["lname"]=$lname;
+    $_SESSION["fname"]=$fname;
 
     $date = date('Y-m-d',time());
 }
@@ -165,6 +172,7 @@ if($res->num_rows > 0)
         {
             $arr_err['username'] = true;
             $msg="Username already in use";
+
         }
         if(strcmp(strtolower($row['user_email']),strtolower($email)) ==0)
         {

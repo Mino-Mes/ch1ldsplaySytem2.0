@@ -16,7 +16,7 @@ function sendEmail($to,$subject,$msg,$headers)
 {
     $mail = new PHPMailer\PHPMailer\PHPMailer(true);
     $mail->IsSMTP();
-    $mail->SMTPDebug = 1;
+    $mail->SMTPDebug = false;
     $mail->SMTPAuth = true;
     $mail->SMTPSecure = 'ssl';
     $mail->Host = "smtp.gmail.com";
@@ -74,14 +74,16 @@ if($res->num_rows > 0){
        $headers = 'From: Ch1ldsplay Media Production';
        if (sendEmail($to,$subject,$msh,$headers))
        {
-           echo "The email was sent";
+           $_SESSION["message"]= "The email was sent";
        }else{
-            echo "The email was not sent";
+           $_SESSION["message"]= "The email was not sent";
        }
    }else
    {
         echo "Error :".$conn->error;
    }
+   header("Location:../View/index.php");
+   exit();
 }
 
 

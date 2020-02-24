@@ -69,6 +69,10 @@ function UploadType() {
     xhttp1.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var x = document.getElementById("snackbar");
+            if(this.responseText == "Type has been added, great work!")
+            {
+                x.style.backgroundColor="green";
+            }
             x.innerHTML = this.responseText;
             x.className = "show";
             setTimeout(function () {
