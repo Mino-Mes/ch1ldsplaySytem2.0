@@ -11,6 +11,7 @@ onlyAdmin();
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="../assets/css/main.css"/>
+    <link rel="stylesheet" href="../css/snack_back.css"/>
 </head>
 <body class="is-preload">
 
@@ -32,25 +33,40 @@ onlyAdmin();
             <form method="post" action="#" class="alt">
                 <div class="row gtr-uniform">
                     <div class="col-12 col-12-xsmall" id="search-box">
-                        <label>Enter the username of an account to find a specific account or input <em>'All'<em> to view All users. </label>
-                        <input type="text" name="demo-name" id="demo-name" value="" placeholder="Search username..." style="width:27%;" />
+                        <label>Enter the username or ID of an account to find a specific user. Alternatively, you can input <em>'All'</em> to view all users. </label>
+                        <input type="text" name="demo-name" id="demo-name" value="" placeholder="Search username or ID..." style="width:27%;" />
                     </div>
                 </div>
             </form>
             <!-- the dynamic table goes here -->
-            <div id="result">
-                <?php
-                if(isset($_SESSION['msg_modify'])){
-                    echo $_SESSION['msg_modify'];
-                    unset($_SESSION['msg_modify']);
-                }
-                ?>
-            </div>
-
+            <div id="result"></div>
         </div>
     </section>
+    <div id="snackbar"></div>
 
     <?php footer();?>
+    <?php
+    if(isset($_SESSION['msg_modify'])){
+
+        ?>
+        <script>
+            //var message="<?php echo $_SESSION['msg_modify']; ?>";
+            var x = document.getElementById("snackbar");
+            var y = "<?php echo $_SESSION["msg_modify_isErr"]; ?>";
+            if(y != "false"){
+                x.style.background="green";
+            }
+            x.innerHTML = "<?php echo $_SESSION['msg_modify']; ?>";
+            x.className = "show";
+            setTimeout(function () {
+                x.className = x.className.replace("show", "");
+            }, 3000);
+
+        </script>
+        <?php
+        unset($_SESSION['msg_modify']);
+    }
+    ?>
 
 </div>
 
@@ -68,7 +84,7 @@ onlyAdmin();
         $('#search-box input[type="text"]').on("keyup input", function(){
             /* Get input value on change */
             var inputVal = $(this).val();
-            var showban = true;
+            var showban = true; //this var is probably not need - remove later
             var resultDropdown = $("#result");
             if(inputVal.length){
                 $.get("../Util/Manage_users_backend.php", {term: inputVal}).done(function(data){
@@ -79,22 +95,6 @@ onlyAdmin();
                 resultDropdown.empty();
             }
         });
-        //if you do or do not want to include banned users in the search
-        /*
-        var checkbox = document.getElementById("demo-human");
-        checkbox.addEventListener("click",function(){
-            document.write = 'test0';
-           if(checkbox.checked) {
-               showban = true;
-               document.write = 'test1';
-           }
-           else{
-               showban = false;
-               document.write = 'test2';
-           }
-        });
-        */
-
     });
 </script>
 </body>

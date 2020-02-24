@@ -9,12 +9,13 @@ if ($conn == false) {
 
 if (isset($_REQUEST['term'])) {
     $noBindParam=false;
-    if ($_REQUEST['term'] == "All") {
+    if ($_REQUEST['term'] == 'All') {
         $sql = $sql = 'SELECT * FROM user';
         $noBindParam=true;
     }else
     {
-        $sql = 'SELECT * FROM user WHERE user_username LIKE ?';
+        //$sql = 'SELECT * FROM user WHERE user_username LIKE ?';
+        $sql = 'SELECT * FROM user WHERE user_username LIKE ? OR user_id LIKE ?';
     }
 
 
@@ -22,7 +23,7 @@ if (isset($_REQUEST['term'])) {
 
         if(!$noBindParam)
         {
-            mysqli_stmt_bind_param($stmt, 's', $param_term);
+            mysqli_stmt_bind_param($stmt, 'ss', $param_term, $param_term);
             $param_term = $_REQUEST['term'] . '%';
         }
 
