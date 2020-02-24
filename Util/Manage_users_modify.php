@@ -1,6 +1,10 @@
 <?php
 session_start();
-//include 'Auth_security.php';
+//include 'Auth_security.php'; <- probably don't need this
+
+//for snackbar
+$_SESSION["msg_modify_isErr"] = "false";
+
 if(isset($_POST['action']))
 {
     try{
@@ -29,10 +33,14 @@ if(isset($_POST['action']))
     }
     catch(Exception $e){
         $_SESSION['msg_modify'] = 'ERROR: Failed to update '.$_POST['user']."'s  user account!";
+        $_SESSION["msg_modify_isErr"] = "true";
     }
 }
 else{
     $_SESSION['msg_modify'] = 'Something seriously went wrong!';
+    $_SESSION["msg_modify_isErr"] = "true";
 }
+
+$_SESSION["msg_modify_isErr"] = "true";
 header('Location: ../View/Manage_users.php');
 exit();
