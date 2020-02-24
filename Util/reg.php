@@ -27,7 +27,10 @@ $msg = '';
 $reg_success = false;
 $_SESSION['reg_success'] = $reg_success;
 
-
+$_SESSION["username"]= $_POST['reg_username'];
+$_SESSION["email"] =$_POST['reg_email'];
+$_SESSION["lname"]=$_POST['reg_lname'];
+$_SESSION["fname"]=$_POST['reg_fname'];
 
 //try catch for corner cases(if the clientside is messed with)
 try
@@ -50,10 +53,7 @@ try
     $confirm_pass = trim($_POST['reg_confirm_password']);
     $arr_form_vals['confirm_pass']=$confirm_pass;
 
-    $_SESSION["username"]= $username;
-    $_SESSION["email"] =$email;
-    $_SESSION["lname"]=$lname;
-    $_SESSION["fname"]=$fname;
+
 
     $date = date('Y-m-d',time());
 }

@@ -1,3 +1,28 @@
+$("form#addAlbumForm").submit(function (e) {
+    e.preventDefault();
+    var formData = new FormData(this);
+
+    $.ajax({
+        url:"../Util/addAlbumLogic.php",
+        type: 'POST',
+        data: formData,
+        success: function (data) {
+            var x = document.getElementById("snackbar");
+            if(data == "The Album has been created, great work!")
+            {
+                x.style.backgroundColor="green";
+            }
+            x.innerHTML = data;
+            x.className = "show";
+            setTimeout(function () {
+                x.className = x.className.replace("show", "");
+            }, 3000);
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+});
 
 
 function PreviewImage() {

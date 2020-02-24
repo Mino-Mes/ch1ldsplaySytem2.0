@@ -211,7 +211,7 @@ function showAllusersAdvanced($conn, $date, $customer, $collab, $admin, $views, 
     return $table;
 }
 
-function albumReport($conn, $searchType, $images, $albumViews, $orderBy)
+function albumReport($conn, $searchType, $images, $albumViews,$totalPhotos, $orderBy)
 {
     $sql = "";
     if ($searchType == "all") {
@@ -241,6 +241,10 @@ function albumReport($conn, $searchType, $images, $albumViews, $orderBy)
             . "<th>Type</th>";
         if ($albumViews == 1) {
             $table .= "<th>Total Views</th>";
+        }
+        if($totalPhotos ==1)
+        {
+            $table .= "<th>Total Photographs</th>";
         }
         $table .="</tr>"
                   ."</thead>"
@@ -281,6 +285,19 @@ function albumReport($conn, $searchType, $images, $albumViews, $orderBy)
             {
                 $table .="<td>".$row["album_views"]."</td>";
             }
+            if($totalPhotos ==1)
+            {
+                $sql4="SELECT count('album_id') AS 'countPhoto' FROM photo WHERE album_id=".$row["album_id"];
+                $result4=$conn->query($sql4);
+
+                if($result4->num_rows >0)
+                {
+                    while($row4=$result4->fetch_assoc())
+                    {
+                        $table .="<td>".$row4["countPhoto"]."</td>";
+                    }
+                }
+            }
              $table .="</tr>";
         }
         $table .="</tbody>"
@@ -307,7 +324,7 @@ if (isset($_POST)) {
     if (isset($_POST["search"])) {
         if ($_POST["search"] == "search") {
 
-            if(isset($_POST["album"]))
+            if(isset($_POST["albumTitle"]))
             {
                 $searchType = $_POST["albumTitle"];
             }
@@ -325,19 +342,26 @@ if (isset($_POST)) {
         } else {
             $Albumviews = 0;
         }
-
+        if(isset($_POST["totalPhotos"]))
+        {
+            $totalPhotos=1;
+        }
+        else
+        {
+            $totalPhotos=0;
+        }
         if (isset($_POST["albumOrder"])) {
             if ($_POST["albumOrder"] == "orderTitle") {
                 $orderBy = "album_title";
             } else if ($_POST["albumOrder"] == "orderId") {
                 $orderBy = "album_id";
-            } else if ($_POST["albumOrder"] == "lowViews") {
+            } else if ($_POST["albumOrder"] == "LowOrderViews") {
                 $orderBy = "album_views ASC";
-            } else if ($_POST["albumOrder"] == "HighViews") {
+            } else if ($_POST["albumOrder"] == "highOrderViews") {
                 $orderBy = "album_views DESC";
             }
         }
-       $message =  albumReport($conn, $searchType, $images, $Albumviews, $orderBy);
+       $message =  albumReport($conn, $searchType, $images, $Albumviews,$totalPhotos, $orderBy);
         echo $message;
     }
 

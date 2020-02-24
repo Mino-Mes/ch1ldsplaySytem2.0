@@ -144,16 +144,18 @@ session_start();
                         <div class="col-12">
                             <h4 style="text-align: center">Specify</h4>
                         </div>
-                        <div class="col-4">
+                        <div class="col-3">
 
                         </div>
-                        <div class="col-4">
+                        <div class="col-6">
                             <input type="checkbox" name="images" id="images">
                             <label for="images">Images</label>
                             <input type="checkbox" name="albumViews" id="albumViews" onclick="orderByViews1()">
                             <label for="albumViews">Album Views</label>
+                            <input type="checkbox" name="totalPhotos" id="totalPhotos" onclick="orderByViews1()">
+                            <label for="totalPhotos">Total Photographs</label>
                         </div>
-                        <div class="col-4">
+                        <div class="col-3">
 
                         </div>
                         <div class="col-12">
@@ -224,7 +226,7 @@ session_start();
             /* Get input value on change */
             var inputVal = $(this).val();
             var showban = true; //this var is probably not need - remove later
-            var resultDropdown = $("#photoReportContainer");
+            var resultDropdown = $("#result");
             if(inputVal.length){
                 $.get("report2Logic.php", {term: inputVal}).done(function(data){
                     // Display the returned data in browser
