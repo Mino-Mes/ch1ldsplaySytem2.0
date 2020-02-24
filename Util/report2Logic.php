@@ -306,6 +306,103 @@ function albumReport($conn, $searchType, $images, $albumViews,$totalPhotos, $ord
     }
  return $table;
 }
+function showPhotoReport($conn,$search,$searchValue,$showImage,$orderBy)
+{
+    if($search == "byCreator")
+    {
+        $sql2="SELECT user_id FROM user WHERE user_username='$searchValue'";
+        $result2=$conn->query($sql2);
+        if($result2->num_rows >0)
+        {
+            while($row2=$result2->fetch_assoc())
+            {
+                $user_id=$row2["user_id"];
+            }
+        }else
+        {
+            return "<h3>There is no Photograph created by this User</h3>";
+        }
+
+
+        $sql ="SELECT * FROM photo WHERE user_id=".$user_id;
+    }else if($search == "albumTitle")
+    {
+        $sql2="SELECT album_id FROM album WHERE album_title='$searchValue'";
+        $result2=$conn->query($sql2);
+        if($result2->num_rows >0)
+        {
+            while($row2=$result2->fetch_assoc())
+            {
+                $album_id=$row2["album_id"];
+            }
+        }else
+        {
+            return "<h3>There is no Photograph corresponding to this album</h3>";
+        }
+        $sql ="SELECT * FROM photo WHERE album_id=".$album_id;
+    }else if($search =="all")
+    {
+        $sql="SELECT * FROM photo";
+    }
+
+    $sql .=" ORDER BY ".$orderBy;
+
+    $table="";
+    $result=$conn->query($sql);
+    if($result->num_rows>0)
+    {
+        $table = "<h4>List of Photographs</h4>"
+            . "<div class='table-wrapper'>"
+            . "<table>"
+            . "<thead>"
+            . "<tr>";
+        if($showImage ==1)
+        {
+            $table .="<th>Photo Image</th>";
+        }
+           $table .="<th>photo_id</th>"
+            ."<th>Creator</th>"
+            ."<th>Album</th>"
+            ."</tr>"
+            ."</thead>"
+             ."<tbody>";
+        while($row=$result->fetch_assoc())
+        {
+            $table.="<tr>";
+            if($showImage ==1)
+            {
+                $photo_img=$row["photo_img"];
+                $table .="<td style='width: 20%;'><img src='$photo_img' alt=\"\" style='width: 100%;' ></td>";
+            }
+            $table .="<td>".$row["photo_id"]."</td>";
+            $sql2="SELECT user_username FROM user WHERE user_id=".$row["user_id"];
+            $result2=$conn->query($sql2);
+            if($result2->num_rows >0)
+            {
+                while($row2=$result2->fetch_assoc())
+                {
+                    $username=$row2["user_username"];
+                    $table .="<td>$username</td>";
+                }
+            }
+            $sql3="SELECT album_title FROM album WHERE album_id=".$row["album_id"];
+            $result3=$conn->query($sql3);
+            if($result3->num_rows >0)
+            {
+                while($row3=$result3->fetch_assoc())
+                {
+                    $title=$row3["album_title"];
+                    $table .="<td>$title</td>";
+                }
+            }
+            $table .="</tr>";
+        }
+        $table .="</tbody>"
+            ."</table>"
+            ."</div>";
+    }
+    return $table;
+}
 
 if (isset($_POST)) {
     /*  if($_POST["function"] == "showAllUsers")
@@ -314,6 +411,42 @@ if (isset($_POST)) {
           echo $message;
       }
   */
+
+    if(isset($_POST["photoSearch"]))
+    {
+        if($_POST["photoSearch"] == "byCreator")
+        {
+            $search="byCreator";
+            $searchValue=$_POST["creatorSearch"];
+        }else if($_POST["photoSearch"] == "albumTitle")
+        {
+            $search="albumTitle";
+            $searchValue=$_POST["albumSearch"];
+        }else if($_POST["photoSearch"] == "all")
+        {
+            $search="all";
+            $searchValue=0;
+        }
+        if(isset($_POST["photoImages"]))
+        {
+            $showImage=1;
+        }else
+        {
+            $showImage=0;
+        }
+        if(isset($_POST["photoOrder"]))
+        {
+            if($_POST["photoOrder"] =="creator")
+            {
+                $orderBy ="user_id";
+            }else if($_POST["photoOrder"] =="album")
+            {
+                $orderBy ="album_id";
+            }
+        }
+        $message =showPhotoReport($conn,$search,$searchValue,$showImage,$orderBy);
+        echo $message;
+    }
 
     if (isset($_POST["function"])) {
         if ($_POST["function"] == "showAdvancedSettings") {
