@@ -95,10 +95,8 @@ function showAllusersAdvanced($conn,$date,$customer,$collab,$admin,$views,$album
     $sql = "SELECT * FROM USER ";
     if($date != 1)
     {
-       $fdate= date('Y-m-d', strtotime($date));
-        $sql .=" WHERE user_creationDate < $fdate ";
-        $dateisSet=true;
-        return $date;
+        $sql .="WHERE user_creationDate < '".date('Y-m-d H:i:s', strtotime(str_replace('-', '/', $date)))."' ";
+        $dateisSet =true;
     }
 
     if($dateisSet)
@@ -142,14 +140,14 @@ function showAllusersAdvanced($conn,$date,$customer,$collab,$admin,$views,$album
             $sql .= " OR user_authentication ='administrator'";
         }else if($admin == 1 && $customer ==1)
         {
-            $sql .= " OR user_authentication LIKE 'administrator'";
+            $sql .= " OR user_authentication = 'administrator'";
         }else if($admin == 1 && $customer ==0 && $collab ==0)
         {
             $sql .="WHERE user_authentication ='administrator'";
         }
     }
 
-
+ //return $sql;
 
     $result = $conn->query($sql) or die("Error: ". $conn->error);
 
