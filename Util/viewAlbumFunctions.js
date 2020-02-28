@@ -29,6 +29,10 @@ $("form#addPhotoForm").submit(function (e) {
         data: formData,
         success: function (data) {
             var x = document.getElementById("snackbar");
+            if(data =="The photos have been uploaded, great work!")
+            {
+                x.style.backgroundColor="green";
+            }
             x.innerHTML = data;
             x.className = "show";
             setTimeout(function () {
@@ -129,6 +133,10 @@ function deletePhoto() {
         if (this.readyState == 4 && this.status == 200) {
             showAlbumPhotoList();
             var x = document.getElementById("snackbar");
+            if(this.responseText =="The photograph was deleted.")
+            {
+                x.style.backgroundColor="green";
+            }
             x.innerHTML = this.responseText;
             x.className = "show";
             setTimeout(function () {
